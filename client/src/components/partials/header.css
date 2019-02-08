@@ -1,0 +1,71 @@
+header {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  top: 0;
+  width: 100%;
+}
+
+header #logoheader {
+  position: fixed;
+  background-color: #17171b !important;
+  width: 300px;
+  height: 120px;
+}
+
+header #logoheader div {
+  text-align: center;
+  margin-top: 20px;
+}
+
+header #logoheader div img {
+  width: 80px;
+  margin-right: 10px;
+}
+
+header #logoheader div h1 {
+  display: inline-block;
+  font-size: 20px;
+  font-family: 'McLaren', cursive !important;
+}
+
+header #menuheader {
+  -webkit-box-flex: 1;
+      -ms-flex: auto;
+          flex: auto;
+  -webkit-box-pack: right;
+      -ms-flex-pack: right;
+          justify-content: right;
+  height: 120px;
+  background-color: transparent;
+}
+
+header .linksnav1 {
+  color: white !important;
+  position: absolute;
+  top: 34px;
+  right: 110px;
+  margin-right: 0;
+  text-decoration: none !important;
+  background-color: #1c1d22;
+  padding: 5px 10px;
+}
+
+header .linksnav2 {
+  color: white !important;
+  position: absolute;
+  top: 34px;
+  right: 40px;
+  margin-right: 0;
+  text-decoration: none !important;
+  background-color: #1c1d22;
+  padding: 5px 10px;
+}
+/*# sourceMappingURL=header.css.map */

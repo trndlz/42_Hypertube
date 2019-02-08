@@ -1,0 +1,14 @@
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 300px;
+}
+
+footer div {
+  background-color: #17171b !important;
+}
+
+footer div span {
+  color: white;
+}
+/*# sourceMappingURL=footer.css.map */

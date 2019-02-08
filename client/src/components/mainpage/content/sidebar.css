@@ -1,0 +1,112 @@
+aside {
+  background-color: #1c1d22;
+  width: 300px;
+  position: fixed;
+  height: 100vh;
+  text-align: center;
+}
+
+aside form {
+  height: 100%;
+}
+
+aside form #sortby button {
+  border-top: 1px solid #1c1d22 !important;
+  background-image: none;
+}
+
+aside form .searchbtn i {
+  font-size: 14px;
+  position: absolute;
+  right: 7px;
+  margin-top: 5px;
+}
+
+aside form .card-body {
+  background-color: #17171b !important;
+  padding-bottom: 0px !important;
+  padding-top: 25px !important;
+}
+
+aside form button {
+  width: 100%;
+  padding: 4px !important;
+  border-radius: 0px !important;
+  border: none !important;
+  background-color: #17171b !important;
+  font-size: 16px !important;
+  margin-top: 30px;
+}
+
+aside form button:hover {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+aside form .sort-option-btn {
+  margin-top: 0px;
+}
+
+aside form #search-content {
+  height: 100%;
+}
+
+aside form #search-content .rating {
+  direction: rtl;
+  color: #ddd;
+  height: 25px;
+}
+
+aside form #search-content .rating input {
+  display: none;
+}
+
+aside form #search-content .rating label:hover,
+aside form #search-content .rating label:hover ~ label,
+aside form #search-content .rating input:checked + label,
+aside form #search-content .rating input:checked + label ~ label {
+  cursor: pointer;
+  color: #ffc107;
+}
+
+aside form #search-content input {
+  display: block;
+  width: 180px !important;
+  background-color: #2a2b30 !important;
+  color: white;
+  border: none !important;
+  border-radius: 0px !important;
+  margin: 0px auto 20px auto;
+}
+
+aside form #search-content .select-date {
+  cursor: pointer;
+  margin: 20px 5px 20px 5px;
+  border-radius: 0px !important;
+  display: inline-block !important;
+  width: 85px !important;
+  background-color: #2a2b30 !important;
+  color: white !important;
+  border: none !important;
+}
+
+aside form #search-content .select-date option {
+  background-color: #2a2b30 !important;
+  color: white;
+}
+
+aside form #search-content .select-genre {
+  cursor: pointer;
+  margin: 10px auto 25px auto;
+  border-radius: 0px !important;
+  display: block !important;
+  width: 180px !important;
+  background-color: #2a2b30 !important;
+  color: white !important;
+  border: none !important;
+}
+
+aside form #search-content .select-genre option {
+  background-color: #2a2b30 !important;
+  color: white;
+}
+/*# sourceMappingURL=sidebar.css.map */

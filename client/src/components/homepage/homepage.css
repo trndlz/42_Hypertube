@@ -1,0 +1,136 @@
+@media (max-width: 992px) {
+  #description {
+    display: block !important;
+  }
+}
+
+#logoheader {
+  position: fixed;
+  background-color: #17171b !important;
+  background-color: #1c1d22;
+  width: 100%;
+  height: 90px;
+}
+
+#logoheader div {
+  text-align: center;
+  margin-top: 15px;
+}
+
+#logoheader div img {
+  width: 60px;
+  margin-right: 10px;
+}
+
+#logoheader div h1 {
+  display: inline-block;
+  font-size: 20px;
+  font-family: 'McLaren', cursive !important;
+}
+
+#myContainer {
+  height: 100vh;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  margin-top: auto;
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+main {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
+#description {
+  width: 50vw;
+  height: 400px;
+  padding-top: 70px;
+  border: 1px solid black;
+  text-align: center;
+  color: white;
+  background-color: #17171b;
+}
+
+#sign {
+  margin-top: 10px;
+  margin-left: 30px;
+}
+
+#sign .nav {
+  border-bottom: 1px solid #17171b !important;
+  width: 300px !important;
+  background-color: #17171b;
+}
+
+#sign .nav .nav-item {
+  text-align: center;
+  border: 1px solid #17171b;
+}
+
+#sign .nav .nav-link {
+  padding: 0.3rem 1rem !important;
+}
+
+#sign .nav .nav-link.active {
+  background-color: #2a2b30 !important;
+}
+
+#sign .nav a {
+  color: white !important;
+  font-weight: bold;
+  border-bottom: none !important;
+}
+
+#sign .nav .active {
+  color: white !important;
+}
+
+#sign #p2 {
+  padding-top: 5px;
+}
+
+#sign i {
+  color: #17171b;
+}
+
+#sign .tab-content {
+  width: 300px;
+  background-color: #2a2b30;
+  border: 1px solid #17171b;
+  border-top: none;
+}
+
+#sign .btn-validate {
+  width: 100%;
+  border: 1px solid #17171b;
+  height: 38px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  background-color: #17171b;
+}
+
+#sign .btn-validate:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+*:focus {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
+input[type=text]:focus {
+  outline: 1px solid #17171b;
+}
+/*# sourceMappingURL=homepage.css.map */
