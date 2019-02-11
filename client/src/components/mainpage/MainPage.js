@@ -14,12 +14,12 @@ class MainPage extends Component {
       <Fragment>
         <Header/>
         <Sidebar />
-        <div style={{marginLeft: "300px"}}>
+        {/* <div style={{marginLeft: "300px"}}> */}
           <Route path="/mainpage/gallery" component={Gallery}/>
           <Route path="/mainpage/profile" component={Profile}/>
           <Route path="/mainpage/settings" component={Settings}/>
           <Route path="/mainpage/video" component={Video}/>
-        </div>
+        {/* </div> */}
       </Fragment>        
     )
   }

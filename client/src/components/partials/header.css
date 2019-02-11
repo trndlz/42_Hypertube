@@ -1,4 +1,6 @@
 header {
+  z-index: 20;
+  position: fixed;
   display: -webkit-box !important;
   display: -ms-flexbox !important;
   display: flex !important;
@@ -14,10 +16,9 @@ header {
 }
 
 header #logoheader {
-  position: fixed;
   background-color: #17171b !important;
   width: 300px;
-  height: 120px;
+  height: 90px;
 }
 
 header #logoheader div {
@@ -26,7 +27,7 @@ header #logoheader div {
 }
 
 header #logoheader div img {
-  width: 80px;
+  width: 60px;
   margin-right: 10px;
 }
 
@@ -43,14 +44,14 @@ header #menuheader {
   -webkit-box-pack: right;
       -ms-flex-pack: right;
           justify-content: right;
-  height: 120px;
-  background-color: transparent;
+  height: 90px;
+  background-color: #17171b;
 }
 
 header .linksnav1 {
   color: white !important;
   position: absolute;
-  top: 34px;
+  top: 28px;
   right: 110px;
   margin-right: 0;
   text-decoration: none !important;
@@ -61,11 +62,32 @@ header .linksnav1 {
 header .linksnav2 {
   color: white !important;
   position: absolute;
-  top: 34px;
+  top: 28px;
   right: 40px;
   margin-right: 0;
   text-decoration: none !important;
   background-color: #1c1d22;
   padding: 5px 10px;
+}
+
+@media (max-width: 500px) {
+  #logoheader {
+    background-color: #17171b !important;
+    width: 30% !important;
+    height: 90px;
+  }
+  #logoheader div {
+    text-align: center;
+    margin-top: 20px;
+  }
+  #logoheader div img {
+    width: 60px;
+    margin-left: 20px !important;
+  }
+  #logoheader div h1 {
+    display: none !important;
+    font-size: 20px;
+    font-family: 'McLaren', cursive !important;
+  }
 }
 /*# sourceMappingURL=header.css.map */

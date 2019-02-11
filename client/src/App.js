@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
-            <div>
+            <div style={{marginBottom: "60px"}}>
               <Route exact path="/" component={HomePage}/>
               <Route path="/mainpage" component={MainPage}/>
             </div>

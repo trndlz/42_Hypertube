@@ -8,6 +8,7 @@ $backColor: #2a2b30;
 }
 
 #logoheader {
+    z-index: 20;
     position: fixed;
     background-color: #17171b !important;
     background-color: #1c1d22; 
@@ -28,30 +29,41 @@ $backColor: #2a2b30;
     }
 }
 
-#myContainer{
+main{    
     height: 100vh; 
-    display: flex !important;
-    margin-top: auto;
-    align-items: center !important;
-    flex-direction: row;
-    justify-content: center;
-}
-
-main{
-    display: flex !important;
+    display: grid !important;
+    grid-template-columns: 1fr 4fr 1fr 1fr;
+    align-content: center;
 }
 
 #description {
-    width: 50vw;
+    grid-column: 2;
+    display: grid !important;
+    grid-template-rows: 1fr 100px 40px 40px 1fr;
+    min-width: 300px;
+    width: 100%;
     height: 400px;
-    padding-top: 70px;
+    padding: 0 20px;
+    justify-self: center;
     border: 1px solid black;
     text-align: center; 
     color: white;
     background-color: #17171b;
+    h1{
+        grid-row: 2;
+        justify-self: center;
+        align-self: center;
+    }
+    p{
+        grid-row: 3;
+        align-self: start;
+    }    
 }
 
 #sign {
+    z-index: 10;
+    grid-column: 3;
+    justify-self: start;
     margin-top: 10px;
     margin-left: 30px;
     .nav { 
@@ -108,4 +120,36 @@ main{
 
 input[type=text]:focus{
     outline: 1px solid $majColor;
+}
+
+/* Small devices (landscape phones) */
+@media (max-width: 576px) {
+}
+/* Medium devices (tablets) */
+@media (max-width: 768px) {
+    main{    
+        grid-template-columns: 1fr;
+        align-content: start;
+    }
+    #description {
+        width: 90%;
+        margin-top: 150px;
+        grid-column: 1;
+    }
+    
+    #sign {
+        margin-top: 30px;
+        padding-bottom: 60px;
+        margin-left: 0px;
+        justify-self: center;
+        grid-column: 1;
+    }
+}
+/* Large devices (desktops) */
+@media (min-width: 992px) {
+
+}
+/* Extra large devices (large desktops) */
+@media (min-width: 1200px) {
+
 }
