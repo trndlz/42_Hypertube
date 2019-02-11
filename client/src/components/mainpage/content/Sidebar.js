@@ -6,11 +6,16 @@ class Sidebar extends Component {
   componentDidMount() {
     let searchIcon = document.querySelector(".search-icon");
     $("#collapseExample").on("hide.bs.collapse", e => {
-      searchIcon.className = "fas fa-arrow-circle-down";
+      // searchIcon.className = "fas fa-arrow-circle-down";
+      // document.querySelector(".gallery").style.marginTop = 0 + "px";
     });
     $("#collapseExample").on("show.bs.collapse", e => {
       searchIcon.className = "fas fa-arrow-circle-up";
     });
+    // $("#collapseExample").on("shown.bs.collapse", e => {
+    //   let height = document.querySelector("#search-content").offsetHeight;
+    //   document.querySelector(".gallery").style.marginTop = height + 30 + "px";
+    // });
     let sortIcon = document.querySelector(".sort-icon");
     $("#sortby").on("hide.bs.collapse", e => {
       sortIcon.className = "fas fa-arrow-circle-down";

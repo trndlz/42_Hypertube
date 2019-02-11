@@ -2,7 +2,6 @@ aside {
   z-index: 10;
   width: 100%;
   margin-top: 100px;
-  height: 40px;
   position: relative;
 }
 
@@ -55,10 +54,6 @@ aside #sortby button {
 
 aside #sortby button:hover {
   background-color: #0e0e11 !important;
-}
-
-aside form {
-  height: 100%;
 }
 
 aside form .searchbtn {
