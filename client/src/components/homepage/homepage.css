@@ -4,7 +4,7 @@
   }
 }
 
-#logoheader {
+#logoheaderconnection {
   z-index: 20;
   position: fixed;
   background-color: #17171b !important;
@@ -13,17 +13,17 @@
   height: 90px;
 }
 
-#logoheader div {
+#logoheaderconnection div {
   text-align: center;
   margin-top: 15px;
 }
 
-#logoheader div img {
+#logoheaderconnection div img {
   width: 60px;
   margin-right: 10px;
 }
 
-#logoheader div h1 {
+#logoheaderconnection div h1 {
   display: inline-block;
   font-size: 20px;
   font-family: 'McLaren', cursive !important;

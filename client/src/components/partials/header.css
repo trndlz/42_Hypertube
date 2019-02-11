@@ -72,7 +72,6 @@ header .linksnav2 {
 
 @media (max-width: 500px) {
   #logoheader {
-    background-color: #17171b !important;
     width: 30% !important;
     height: 90px;
   }

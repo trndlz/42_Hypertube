@@ -21,7 +21,7 @@ class HomePage extends Component {
     render() {
         return (
             <Fragment>
-                <div id="logoheader">
+                <div id="logoheaderconnection">
                     <div>
                         <img src={animal} alt="logo" />
                         <h1>Hypertube</h1>

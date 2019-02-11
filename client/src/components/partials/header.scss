@@ -1,20 +1,11 @@
 header {
     z-index: 20;
-    position: fixed;
     display: flex !important;   
-    flex-direction: row;
     justify-content: space-between;
-    top: 0;
-    width: 100%;
     #logoheader {
-        // position: fixed;
-        background-color: #17171b !important;
         width: 300px;
         height: 90px;
         div {
-            text-align: center;
-            margin-top: 20px;
-            img {
                 width: 60px;
                 margin-right: 10px;
             }
@@ -56,22 +47,13 @@ header {
 
 @media (max-width: 500px) {
     #logoheader {
-        // position: fixed;
-        background-color: #17171b !important;
         width: 30% !important;
-        height: 90px;
         div {
-            text-align: center;
-            margin-top: 20px;
             img {
-                width: 60px;
                 margin-left: 20px !important;
             }
             h1 {
                 display: none !important;
-                // display: inline-block;
-                font-size: 20px;
-                font-family: 'McLaren', cursive !important;
             }
         }
     }
