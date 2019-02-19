@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import './sidebar.css';
+import './searchBar.css';
 
 class Sidebar extends Component {
   componentDidMount() {
     let searchIcon = document.querySelector(".search-icon");
-    $("#collapseExample").on("hide.bs.collapse", e => {
-      // searchIcon.className = "fas fa-arrow-circle-down";
-      // document.querySelector(".gallery").style.marginTop = 0 + "px";
+    $("#searchby").on("hide.bs.collapse", e => {
+      searchIcon.className = "fas fa-arrow-circle-down";
     });
-    $("#collapseExample").on("show.bs.collapse", e => {
+    $("#searchby").on("show.bs.collapse", e => {
       searchIcon.className = "fas fa-arrow-circle-up";
+      $("#sortby").collapse('hide');
     });
-    // $("#collapseExample").on("shown.bs.collapse", e => {
-    //   let height = document.querySelector("#search-content").offsetHeight;
-    //   document.querySelector(".gallery").style.marginTop = height + 30 + "px";
-    // });
     let sortIcon = document.querySelector(".sort-icon");
     $("#sortby").on("hide.bs.collapse", e => {
       sortIcon.className = "fas fa-arrow-circle-down";
     });
     $("#sortby").on("show.bs.collapse", e => {
       sortIcon.className = "fas fa-arrow-circle-up";
+      $("#searchby").collapse('hide');
     });
   }
 
@@ -32,15 +29,12 @@ class Sidebar extends Component {
   }
   render() {
     return (
-      <aside>
+      <div className="searchBar">
         <form>
-          
-
-
-          <button className="btn btn-secondary searchbtn" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          <button className="btn btn-secondary searchbtn" type="button" data-toggle="collapse" data-target="#searchby" aria-expanded="false" aria-controls="searchby">
             Search <i className="search-icon fas fa-arrow-circle-down"/>
           </button>
-          <div className="collapse" id="collapseExample">
+          <div className="collapse" id="searchby">
             <div className="card card-body">
               <div id="search-content">
                 <input type="text" placeholder="Search" className="form-control" />
@@ -144,7 +138,7 @@ class Sidebar extends Component {
             <button onClick={this.selectSortBy} className="btn btn-secondary sort-option-btn">Stars</button>
             <button onClick={this.selectSortBy} className="btn btn-secondary sort-option-btn">Date</button>
           </div>
-      </aside>
+      </div>
     )
   }
 }

@@ -1,0 +1,31 @@
+.header {
+    position: fixed;
+    top: 3rem;
+    left: 3rem;
+    right: 3rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 3rem;
+    background-color: $color-grey-dark-2;
+    border-bottom: $line;
+    z-index: 100;
+    &__logo {
+        display: flex;
+        align-items: center;
+        img {
+            transform: translateY(.8rem);
+            height: 6rem;
+            margin-right: 1rem;
+        }
+    }
+
+    &__nav {
+        align-self: center;
+        * {
+            font-size: 1.4rem;
+        }
+        *:not(:last-child) {
+            margin-right: 3rem;
+        }
+    }
+}

@@ -1,7 +1,7 @@
-aside {
+.searchBar {
     z-index: 10;
     width: 100%;
-    margin-top: 100px;
+    margin-top: 15px;
     position: relative;
     .sortBy {
         margin-right: 40px;
@@ -16,7 +16,7 @@ aside {
         background-color: #17171b !important;
         color: white !important;
         border: none !important;
-        padding: 4px !important;
+        padding: 4px 4px 4px 20px!important;
         option {
             background-color: #2a2b30 !important;
             color: white;
@@ -24,6 +24,7 @@ aside {
         i {
             font-size: 14px;
             margin-top: 5px;
+            margin-right: 5px;
             margin-left: 0;
             float: right;
         }
@@ -52,9 +53,11 @@ aside {
         .searchbtn {
             margin-left: 40px;
             height: 40px;
+            padding-left: 20px !important; 
             i {
                 font-size: 14px;
                 margin-top: 5px;
+                margin-right: 5px;
                 float: right;
             }
         }
@@ -64,6 +67,7 @@ aside {
             padding-top: 25px !important;
             margin-left: 40px;
             margin-right: 40px;
+            border-radius: 0px !important;
         }
         button {
             width: 140px;
@@ -121,6 +125,10 @@ aside {
                 option {
                     background-color: #2a2b30 !important;
                     color: white;
+                    height: 10px;
+                    &:after{
+                        border: none !important;
+                    }
                 }
             }
             .select-genre {

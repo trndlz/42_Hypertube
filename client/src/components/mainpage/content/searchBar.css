@@ -1,11 +1,11 @@
-aside {
+.searchBar {
   z-index: 10;
   width: 100%;
-  margin-top: 100px;
+  margin-top: 15px;
   position: relative;
 }
 
-aside .sortBy {
+.searchBar .sortBy {
   margin-right: 40px;
   position: absolute;
   right: 0;
@@ -18,32 +18,33 @@ aside .sortBy {
   background-color: #17171b !important;
   color: white !important;
   border: none !important;
-  padding: 4px !important;
+  padding: 4px 4px 4px 20px !important;
 }
 
-aside .sortBy option {
+.searchBar .sortBy option {
   background-color: #2a2b30 !important;
   color: white;
 }
 
-aside .sortBy i {
+.searchBar .sortBy i {
   font-size: 14px;
   margin-top: 5px;
+  margin-right: 5px;
   margin-left: 0;
   float: right;
 }
 
-aside .sortBy:hover {
+.searchBar .sortBy:hover {
   background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
-aside #sortby {
+.searchBar #sortby {
   position: absolute;
   right: 40px;
   width: 140px;
 }
 
-aside #sortby button {
+.searchBar #sortby button {
   width: 140px;
   padding: 4px !important;
   border-radius: 0px !important;
@@ -52,30 +53,33 @@ aside #sortby button {
   font-size: 16px !important;
 }
 
-aside #sortby button:hover {
+.searchBar #sortby button:hover {
   background-color: #0e0e11 !important;
 }
 
-aside form .searchbtn {
+.searchBar form .searchbtn {
   margin-left: 40px;
   height: 40px;
+  padding-left: 20px !important;
 }
 
-aside form .searchbtn i {
+.searchBar form .searchbtn i {
   font-size: 14px;
   margin-top: 5px;
+  margin-right: 5px;
   float: right;
 }
 
-aside form .card-body {
+.searchBar form .card-body {
   background-color: #17171b !important;
   padding-bottom: 0px !important;
   padding-top: 25px !important;
   margin-left: 40px;
   margin-right: 40px;
+  border-radius: 0px !important;
 }
 
-aside form button {
+.searchBar form button {
   width: 140px;
   padding: 4px !important;
   border-radius: 0px !important;
@@ -84,11 +88,11 @@ aside form button {
   font-size: 16px !important;
 }
 
-aside form button:hover {
+.searchBar form button:hover {
   background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
-aside form #search-content {
+.searchBar form #search-content {
   display: -webkit-box !important;
   display: -ms-flexbox !important;
   display: flex !important;
@@ -103,26 +107,26 @@ aside form #search-content {
           justify-content: center;
 }
 
-aside form #search-content .rating {
+.searchBar form #search-content .rating {
   direction: rtl;
   color: #ddd;
   height: 25px;
   margin: 6px 6px 25px 6px;
 }
 
-aside form #search-content .rating input {
+.searchBar form #search-content .rating input {
   display: none;
 }
 
-aside form #search-content .rating label:hover,
-aside form #search-content .rating label:hover ~ label,
-aside form #search-content .rating input:checked + label,
-aside form #search-content .rating input:checked + label ~ label {
+.searchBar form #search-content .rating label:hover,
+.searchBar form #search-content .rating label:hover ~ label,
+.searchBar form #search-content .rating input:checked + label,
+.searchBar form #search-content .rating input:checked + label ~ label {
   cursor: pointer;
   color: #ffc107;
 }
 
-aside form #search-content input {
+.searchBar form #search-content input {
   display: block;
   width: 180px !important;
   background-color: #2a2b30 !important;
@@ -132,11 +136,11 @@ aside form #search-content input {
   margin: 0px 6px 25px 6px;
 }
 
-aside form #search-content #date {
+.searchBar form #search-content #date {
   margin: 0px 6px 25px 6px;
 }
 
-aside form #search-content .select-date {
+.searchBar form #search-content .select-date {
   cursor: pointer;
   margin: 0px 6px 0px 6px;
   border-radius: 0px !important;
@@ -147,12 +151,17 @@ aside form #search-content .select-date {
   border: none !important;
 }
 
-aside form #search-content .select-date option {
+.searchBar form #search-content .select-date option {
   background-color: #2a2b30 !important;
   color: white;
+  height: 10px;
 }
 
-aside form #search-content .select-genre {
+.searchBar form #search-content .select-date option:after {
+  border: none !important;
+}
+
+.searchBar form #search-content .select-genre {
   cursor: pointer;
   margin: 0px 6px 25px 6px;
   border-radius: 0px !important;
@@ -163,7 +172,7 @@ aside form #search-content .select-genre {
   border: none !important;
 }
 
-aside form #search-content .select-genre option {
+.searchBar form #search-content .select-genre option {
   background-color: #2a2b30 !important;
   color: white;
 }
@@ -188,4 +197,4 @@ aside form #search-content .select-genre option {
 /* Medium devices (tablets) */
 /* Large devices (desktops) */
 /* Extra large devices (large desktops) */
-/*# sourceMappingURL=sidebar.css.map */
+/*# sourceMappingURL=searchBar.css.map */

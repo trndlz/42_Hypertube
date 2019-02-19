@@ -28,7 +28,7 @@ class Video extends Component {
         SpiderMan et dautres gars Lorem ipsum Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint voluptatibus in ad nobis dolo </div>
       </div>
           <div className="videoPlayer">
-            <iframe title="video" className="myvideo" src="https://player.twitch.tv/?channel=degun" controls>
+            <iframe className="myvideo" src="https://player.twitch.tv/?channel=degun" controls>
               {/* <source src="movie.mp4" type="video/mp4"> */}
               {/* <source src="movie.ogg" type="video/ogg"> */}
             {/* Your browser does not support the video tag. */}

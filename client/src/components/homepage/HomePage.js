@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import "./homepage.css";
 import animal from "../../images/animal.svg";
 
 class HomePage extends Component {
@@ -15,208 +14,130 @@ class HomePage extends Component {
         );
     };
 
-    componentDidMount() {
-        document.querySelector("footer").style.width = "100%";
-    }
+    // componentDidMount() {
+    //     document.querySelector("footer").style.width = "100%";
+    // }
     render() {
         return (
-            <Fragment>
-                <div id="logoheaderconnection">
-                    <div>
-                        <img src={animal} alt="logo" />
-                        <h1>Hypertube</h1>
-                    </div>
+            <main className="homepage">
+                <div className="homepage__description">
+                    <ul className="homepage__description--list">
+                        <li>
+                            <i class="fas fa-film" />
+                            <span>
+                                Popular movies totally free with no adds !
+                            </span>
+                        </li>
+                        <li>
+                            <i class="fas fa-user-secret" />
+                            <span>Torrent based, please use a VPN</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-globe-europe" />
+                            <span>Best quality with subtitles</span>
+                        </li>
+                    </ul>
                 </div>
-                {/* <div id="myContainer"> */}
-                    <main>
-                        <div id="description" className="">
-                            <h1>Welcome to Hypertube !</h1>
-                            <p>See torrent video for free whith no adds ! <br/>    Simply put all your private informations, a
-                                picture of you and all your credit cards !</p>
+                <div className="login-wrapper">
+                <div className="homepage__sign-in">
+                    <form className="homepage__sign-in__form">
+                        <div className="input-container">
+                            {/* <i className="fas fa-user input-container__icon" /> */}
+                            <input
+                                type="text"
+                                className="input-container__input"
+                                placeholder="Username"
+                            />
                         </div>
-                        <div id="sign">
-                            <nav className="nav nav-tabs">
-                                <a
-                                    className="nav-item nav-link active w-50 btn-tabs"
-                                    href="#p1"
-                                    data-toggle="tab"
-                                >
-                                    Sign Up
-                                </a>
-                                <a
-                                    className="nav-item nav-link w-50 btn-tabs"
-                                    href="#p2"
-                                    data-toggle="tab"
-                                >
-                                    Sign In
-                                </a>
-                            </nav>
-                            <div className="tab-content py-2 px-2">
-                                <form className="tab-pane active" id="p1">
-                                    <div className="form-row">
-                                        <div className="form-group col-4 my-0">
-                                            <div className="input-group">
-                                                <div className="image-upload">
-                                                    <label
-                                                        htmlFor="file-input"
-                                                        className="my-0"
-                                                    >
-                                                        <img
-                                                            id="profile-picture"
-                                                            alt="profil"
-                                                            style={{
-                                                                border:
-                                                                    "1px solid #ced4da",
-                                                                width: "93px",
-                                                                height: "93px",
-                                                                cursor:
-                                                                    "pointer"
-                                                            }}
-                                                            src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
-                                                        />
-                                                    </label>
-                                                    <input
-                                                        id="file-input"
-                                                        type="file"
-                                                        style={{
-                                                            display: "none"
-                                                        }}
-                                                        onChange={e =>
-                                                            this.handleChange(e)
-                                                        }
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="form-group col-8">
-                                            <div className="input-group mb-2 pt-1">
-                                                <div className="input-group-prepend">
-                                                    <div className="input-group-text">
-                                                        <i className="fas fa-id-card" />
-                                                    </div>
-                                                </div>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="First Name"
-                                                />
-                                            </div>
-                                            <div className="input-group mb-0">
-                                                <div className="input-group-prepend">
-                                                    <div className="input-group-text">
-                                                        <i className="far fa-id-card" />
-                                                    </div>
-                                                </div>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Last Name"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="input-group mb-2">
-                                        <div className="input-group-prepend">
-                                            <div className="input-group-text">
-                                                <i className="fas fa-at" />
-                                            </div>
-                                        </div>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="Email"
-                                        />
-                                    </div>
-
-                                    <div className="input-group mb-2">
-                                        <div className="input-group-prepend">
-                                            <div className="input-group-text">
-                                                <i className="fas fa-user" />
-                                            </div>
-                                        </div>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="Username"
-                                        />
-                                    </div>
-
-                                    <div className="input-group mb-2">
-                                        <div className="input-group-prepend">
-                                            <div className="input-group-text">
-                                                <i className="fas fa-unlock" />
-                                            </div>
-                                        </div>
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            placeholder="Password"
-                                        />
-                                    </div>
-                                    <div className="input-group mb-2">
-                                        <div className="input-group-prepend">
-                                            <div className="input-group-text">
-                                                <i className="fas fa-lock" />
-                                            </div>
-                                        </div>
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            placeholder="Confirm Password"
-                                        />
-                                    </div>
-                                    <div className="input-group">
-                                        <input
-                                            className="btn-validate"
-                                            type="submit"
-                                            value="Sign Up !"
-                                        />
-                                    </div>
-                                </form>
-
-                                <form className="tab-pane" id="p2">
-                                    <div className="input-group mb-2">
-                                        <div className="input-group-prepend">
-                                            <div className="input-group-text">
-                                                <i className="fas fa-user" />
-                                            </div>
-                                        </div>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="Username"
-                                        />
-                                    </div>
-                                    <div className="input-group mb-2">
-                                        <div className="input-group-prepend">
-                                            <div className="input-group-text">
-                                                <i className="fas fa-unlock" />
-                                            </div>
-                                        </div>
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            placeholder="Password"
-                                        />
-                                    </div>
-                                    <div
-                                        id="sign-in-btn-wrapper"
-                                        className="input-group"
-                                    >
-                                        <input
-                                            id="sign-in-btn"
-                                            className="btn-validate"
-                                            type="submit"
-                                            value="Sign In !"
-                                        />
-                                    </div>
-                                </form>
-                            </div>
+                        <div className="input-container">
+                            {/* <i className="fas fa-unlock input-container__icon" /> */}
+                            <input
+                                type="text"
+                                className="input-container__input"
+                                placeholder="Password"
+                            />
                         </div>
-                    </main>
+                        <input
+                            className="btn btn--primary"
+                            type="submit"
+                            value="Sign In !"
+                        />
+                    </form>
+                </div>
+                <div className="homepage__sign-up">
+                    <form className="homepage__sign-up__form" id="p1">
+                        <div className="img-upload">
+                            <label htmlFor="file-input" className="img-label">
+                                <img
+                                    id="profile-picture"
+                                    alt="profile"
+                                    src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
+                                />
+                            </label>
+                            <input
+                                id="file-input"
+                                type="file"
+                                onChange={ this.handleChange }
+                            />
+                        </div>
+                        <div className="input-container">
+                            <i className="fas fa-id-card input-container__icon" />
+                            <input
+                                type="text"
+                                className="input-container__input"
+                                placeholder="First Name"
+                            />
+                        </div>
+                        <div className="input-container">
+                            <i className="far fa-id-card input-container__icon" />
+                            <input
+                                type="text"
+                                className="input-container__input"
+                                placeholder="Last Name"
+                            />
+                        </div>
+                        <div className="input-container">
+                            <i className="fas fa-at input-container__icon" />
+                            <input
+                                type="email"
+                                className="input-container__input"
+                                placeholder="Email"
+                            />
+                        </div>
+                        <div className="input-container">
+                            <i className="fas fa-user input-container__icon" />
+                            <input
+                                type="text"
+                                className="input-container__input"
+                                placeholder="Username"
+                            />
+                        </div>
+                        <div className="input-container">
+                            <i className="fas fa-unlock input-container__icon" />
+                            <input
+                                type="text"
+                                className="input-container__input"
+                                placeholder="Password"
+                            />
+                        </div>
+                        <div className="input-container">
+                            <i className="fas fa-lock input-container__icon" />
+                            <input
+                                type="text"
+                                className="input-container__input"
+                                placeholder="Confirm Password"
+                            />
+                        </div>
+                        <input
+                            className="btn btn--primary"
+                            type="submit"
+                            value="Sign Up !"
+                        />
+                    </form>
+                </div>
+                </div>
                 {/* </div> */}
-            </Fragment>
+            </main>
         );
     }
 }

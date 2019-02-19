@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import { Route } from "react-router-dom";
 import Gallery from "./content/Gallery";
+import Header from "../partials/Header";
 import Profile from "./content/Profile";
 import Settings from "./content/Settings";
 import Video from "./content/Video";
-import Footer from "../partials/Footer";
-import Header from "../partials/Header";
 
 class MainPage extends Component {
   render() {
@@ -13,11 +12,13 @@ class MainPage extends Component {
     return (
       <Fragment>
         <Header/>
+        
+        {/* <div style={{marginLeft: "300px"}}> */}
           <Route path="/mainpage/gallery" component={Gallery}/>
           <Route path="/mainpage/profile" component={Profile}/>
           <Route path="/mainpage/settings" component={Settings}/>
           <Route path="/mainpage/video" component={Video}/>
-        <Footer/>
+        {/* </div> */}
       </Fragment>        
     )
   }

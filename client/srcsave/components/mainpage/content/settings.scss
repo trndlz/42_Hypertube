@@ -1,0 +1,37 @@
+.settings-form {
+    margin: 15px auto auto auto;
+    width: 350px !important; 
+    .btn-validate {
+        margin: auto;
+        color: white !important;
+        background-color: #1c1d22;
+        padding: 5px 10px;
+        width: 100%;
+        border: none;
+        cursor: pointer;
+        &:hover {
+            background-color: #0e0e11 !important;
+        }
+    }
+    .input-group-text{
+        width: 40px;
+    }
+    .input-next-picture{
+        margin-left: -15px;
+        width: 245px;
+    }
+} 
+
+@media (max-width: 380px) {
+    .settings-form {
+        margin: 110px auto auto auto;
+        width: 90% !important; 
+        .input-group{
+            width: 100% !important;
+        }
+        .input-next-picture{
+            margin-left: 0;
+            width: 0;
+        }
+    } 
+}

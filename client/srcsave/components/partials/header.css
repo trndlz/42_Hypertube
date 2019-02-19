@@ -1,29 +1,25 @@
 header {
   z-index: 20;
-  position: fixed;
   display: -webkit-box !important;
   display: -ms-flexbox !important;
   display: flex !important;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  position: -webkit-sticky;
+  position: sticky;
   top: 0;
-  width: 100%;
 }
 
 header #logoheader {
-  background-color: #17171b !important;
   width: 300px;
   height: 90px;
+  background-color: #17171b;
 }
 
 header #logoheader div {
-  text-align: center;
-  margin-top: 20px;
+  margin-left: 40px;
+  margin-top: 17px;
 }
 
 header #logoheader div img {
@@ -32,6 +28,7 @@ header #logoheader div img {
 }
 
 header #logoheader div h1 {
+  color: white !important;
   display: inline-block;
   font-size: 20px;
   font-family: 'McLaren', cursive !important;
@@ -73,20 +70,15 @@ header .linksnav2 {
 @media (max-width: 500px) {
   #logoheader {
     width: 30% !important;
-    height: 90px;
   }
   #logoheader div {
-    text-align: center;
-    margin-top: 20px;
+    margin-left: 10% !important;
   }
   #logoheader div img {
-    width: 60px;
     margin-left: 20px !important;
   }
   #logoheader div h1 {
     display: none !important;
-    font-size: 20px;
-    font-family: 'McLaren', cursive !important;
   }
 }
 /*# sourceMappingURL=header.css.map */
