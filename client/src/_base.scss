@@ -4,8 +4,8 @@ $color-primary: #97f572;
 // $color-primary-focus: #77f844;
 // $color-primary-focus: #8cf562;
 $color-primary-focus: #ebf562;
-$color-primary-light: #FF3366;
-$color-primary-dark: #BA265D;
+$color-primary-light: #ff3366;
+$color-primary-dark: #ba265d;
 
 $color-secondary: red;
 
@@ -24,11 +24,6 @@ $color-ternary-9: #1c1c1c;
 
 $color-stars: #ebf562;
 // $color-ternary-2: #121212;
-// #232323
-// #1c1c1c
-// #121212
-
-
 
 $color-grey-light-1: #faf9f9;
 $color-grey-light-2: #f4f2f2;
@@ -43,18 +38,20 @@ $color-grey-dark-3: #999;
 $color-black: #000;
 $color-white: #fff;
 
-$shadow-dark: 0 2rem 6rem rgba(0,0,0,.3);
-$shadow-light: 0 2rem 5rem rgba(0,0,0,.06);
+$shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+$shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.06);
 
 $line: 1px solid $color-grey-light-1;
 
-$bp-largest: 75em;     // 1200px
-$bp-large: 68.75em;    // 1100px
-$bp-medium: 56.25em;   // 900px
-$bp-small: 46.5em;     // 600px
+$bp-largest: 75em; // 1200px
+$bp-large: 68.75em; // 1100px
+$bp-medium: 56.25em; // 900px
+$bp-small: 46.5em; // 600px
 $bp-smallest: 31.25em; // 500px
 
-.margin-bottom-small { margin-bottom: 2rem !important;}
+.margin-bottom-small {
+    margin-bottom: 2rem !important;
+}
 
 * {
     margin: 0;
@@ -73,12 +70,9 @@ html {
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-weight: 400;
     line-height: 1.6;
-    // color: $color-grey-dark-2;
-    // padding: 3rem;
-    
     min-height: 100vh;
     @media only screen and (max-width: $bp-small) {
         padding: 0;
@@ -88,11 +82,7 @@ body {
 .App {
     background-color: $color-grey-dark-2;
     margin: auto;
-    // min-height: 100vh;
-    // padding: 3rem;
-
 }
-
 
 @keyframes moveInLeft {
     0% {

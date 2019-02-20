@@ -15,7 +15,7 @@ html {
   font-size: 62.5%; }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: 400;
   line-height: 1.6;
   min-height: 100vh; }
@@ -209,7 +209,7 @@ body {
     height: 216px; }
   .film .film-infos {
     user-select: none;
-    padding: .3rem;
+    padding: 0.3rem;
     font-size: 1.3rem;
     line-height: 1.6rem;
     text-align: center;
@@ -250,20 +250,20 @@ body {
     margin-top: 2rem;
     text-align: center;
     background-color: #232323;
-    letter-spacing: .2rem; }
+    letter-spacing: 0.2rem; }
 
 .rating {
   direction: rtl;
   color: white;
   height: 2rem;
   margin-top: 1.3rem;
-  margin-bottom: .2rem;
-  margin-left: .8rem;
+  margin-bottom: 0.2rem;
+  margin-left: 0.8rem;
   display: flex;
   justify-content: center; }
   .rating i {
     font-size: 1.5rem;
-    letter-spacing: .8rem; }
+    letter-spacing: 0.8rem; }
 
 .rating input {
   display: none; }
@@ -283,7 +283,7 @@ body {
     max-height: 0;
     overflow: hidden;
     padding: 0;
-    transition: max-height .3s ease-out; } }
+    transition: max-height 0.3s ease-out; } }
 
 .label-check {
   text-align: center;
@@ -329,7 +329,7 @@ body {
     width: 10rem;
     height: 10rem; }
   .settings-form .icon-select {
-    padding-top: .5rem; }
+    padding-top: 0.5rem; }
   .settings-form .select {
     width: 200px;
     margin-bottom: 0; }
@@ -366,10 +366,10 @@ body {
     padding: 2rem; }
   .profile .last-name {
     text-transform: capitalize;
-    padding: .5rem; }
+    padding: 0.5rem; }
   .profile .first-name {
     text-transform: uppercase;
-    padding: .5rem; }
+    padding: 0.5rem; }
   .profile .language {
     text-transform: capitalize;
     padding: 2rem 2rem 0 2rem; }
@@ -413,9 +413,9 @@ body {
       transform: translateY(-0.15rem); }
     .video-description .video-info .video-rating {
       color: #ebf562;
-      margin-bottom: .5rem; }
+      margin-bottom: 0.5rem; }
     .video-description .video-info .video-time {
-      margin-bottom: .6rem; }
+      margin-bottom: 0.6rem; }
 
 .video-wrapper {
   width: 80%;
@@ -451,7 +451,7 @@ body {
       border: none;
       background-color: rgba(255, 255, 255, 0.25);
       font-family: inherit;
-      padding: .8rem;
+      padding: 0.8rem;
       height: 4rem; }
     .comment-wrapper .your-comment .send-comment-btn {
       background: #1f1a18;
@@ -489,7 +489,7 @@ body {
   .header__logo {
     display: flex;
     align-items: center;
-    letter-spacing: .2rem; }
+    letter-spacing: 0.2rem; }
     .header__logo img {
       transform: translateY(0.8rem);
       height: 6rem;
@@ -506,10 +506,10 @@ body {
 
 .footer {
   text-align: center;
-  padding: .8rem 0 .8rem 0;
+  padding: 0.8rem 0 0.8rem 0;
   background-color: #232323;
   color: white;
-  letter-spacing: .2rem; }
+  letter-spacing: 0.2rem; }
 
 h1 {
   color: #faf9f9;
@@ -553,7 +553,7 @@ h1 {
   padding: 1rem 4rem;
   display: inline-block;
   border-radius: 3px;
-  transition: all .2s;
+  transition: all 0.2s;
   position: relative;
   font-size: 1rem;
   border: none;
@@ -593,10 +593,10 @@ h1 {
   top: 0;
   left: 0;
   z-index: -1;
-  transition: all .4s; }
+  transition: all 0.4s; }
 
 .btn--animated {
-  animation: moveInBottom .5s ease-out .75s;
+  animation: moveInBottom 0.5s ease-out 0.75s;
   animation-fill-mode: backwards; }
 
 select {
@@ -623,13 +623,13 @@ select {
   height: 3rem;
   line-height: 3;
   overflow: hidden;
-  margin: .7rem auto; }
+  margin: 0.7rem auto; }
 
 select {
   width: 100%;
   height: 100%;
   margin: 0;
-  padding: 0 0 0 .5em;
+  padding: 0 0 0 0.5em;
   color: #fff;
   cursor: pointer; }
 
@@ -638,7 +638,7 @@ select::-ms-expand {
 
 /* Arrow */
 .select::after {
-  content: '\25BC';
+  content: "\25BC";
   position: absolute;
   top: 0;
   right: 0;
@@ -652,6 +652,6 @@ select::-ms-expand {
   color: white; }
 
 .select::after {
-  -webkit-transition: .25s all ease;
-  -o-transition: .25s all ease;
-  transition: .25s all ease; }
+  -webkit-transition: 0.25s all ease;
+  -o-transition: 0.25s all ease;
+  transition: 0.25s all ease; }

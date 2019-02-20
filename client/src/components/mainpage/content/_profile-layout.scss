@@ -7,7 +7,7 @@
     justify-content: center;
     flex-direction: column;
     background-color: $color-ternary-8;
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, .4);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
     padding: 2rem;
     font-size: 1.4rem;
     color: white;
@@ -23,12 +23,12 @@
 
     .last-name {
         text-transform: capitalize;
-        padding: .5rem;
+        padding: 0.5rem;
     }
 
     .first-name {
         text-transform: uppercase;
-        padding: .5rem;
+        padding: 0.5rem;
     }
 
     .language {

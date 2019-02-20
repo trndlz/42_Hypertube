@@ -65,7 +65,6 @@ class Video extends Component {
                         <button className="send-comment-btn">Send</button>
                     </div>
                     <div className="video-comments">
-                        {/* <hr/> */}
                         <div className="comment">
                             <img
                                 className="user-img"

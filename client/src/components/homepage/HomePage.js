@@ -12,7 +12,7 @@ class HomePage extends Component {
             false
         );
     };
-    
+
     render() {
         return (
             <main className="homepage">
@@ -35,104 +35,104 @@ class HomePage extends Component {
                     </ul>
                 </div>
                 <div className="login-wrapper">
-                <div className="homepage__sign-in">
-                    <form className="homepage__sign-in__form">
-                        <div className="input-container">
-                            {/* <i className="fas fa-user input-container__icon" /> */}
-                            <input
-                                type="text"
-                                className="input-container__input input-type-1"
-                                placeholder="Username"
-                            />
-                        </div>
-                        <div className="input-container">
-                            {/* <i className="fas fa-unlock input-container__icon" /> */}
-                            <input
-                                type="text"
-                                className="input-container__input input-type-1"
-                                placeholder="Password"
-                            />
-                        </div>
-                        <input
-                            className="btn btn--primary"
-                            type="submit"
-                            value="Sign In !"
-                        />
-                    </form>
-                </div>
-                <div className="homepage__sign-up">
-                    <form className="homepage__sign-up__form" id="p1">
-                        <div className="img-upload">
-                            <label htmlFor="file-input" className="img-label">
-                                <img
-                                    id="profile-picture"
-                                    alt="profile"
-                                    src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
+                    <div className="homepage__sign-in">
+                        <form className="homepage__sign-in__form">
+                            <div className="input-container">
+                                <input
+                                    type="text"
+                                    className="input-container__input input-type-1"
+                                    placeholder="Username"
                                 />
-                            </label>
+                            </div>
+                            <div className="input-container">
+                                <input
+                                    type="text"
+                                    className="input-container__input input-type-1"
+                                    placeholder="Password"
+                                />
+                            </div>
                             <input
-                                id="file-input"
-                                type="file"
-                                onChange={ this.handleChange }
+                                className="btn btn--primary"
+                                type="submit"
+                                value="Sign In !"
                             />
-                        </div>
-                        <div className="input-container">
-                            <i className="fas fa-id-card input-container__icon" />
+                        </form>
+                    </div>
+                    <div className="homepage__sign-up">
+                        <form className="homepage__sign-up__form" id="p1">
+                            <div className="img-upload">
+                                <label
+                                    htmlFor="file-input"
+                                    className="img-label"
+                                >
+                                    <img
+                                        id="profile-picture"
+                                        alt="profile"
+                                        src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
+                                    />
+                                </label>
+                                <input
+                                    id="file-input"
+                                    type="file"
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div className="input-container">
+                                <i className="fas fa-id-card input-container__icon" />
+                                <input
+                                    type="text"
+                                    className="input-container__input input-type-1"
+                                    placeholder="First Name"
+                                />
+                            </div>
+                            <div className="input-container">
+                                <i className="far fa-id-card input-container__icon" />
+                                <input
+                                    type="text"
+                                    className="input-container__input input-type-1"
+                                    placeholder="Last Name"
+                                />
+                            </div>
+                            <div className="input-container">
+                                <i className="fas fa-at input-container__icon" />
+                                <input
+                                    type="email"
+                                    className="input-container__input input-type-1"
+                                    placeholder="Email"
+                                />
+                            </div>
+                            <div className="input-container">
+                                <i className="fas fa-user input-container__icon" />
+                                <input
+                                    type="text"
+                                    className="input-container__input input-type-1"
+                                    placeholder="Username"
+                                />
+                            </div>
+                            <div className="input-container">
+                                <i className="fas fa-unlock input-container__icon" />
+                                <input
+                                    type="text"
+                                    className="input-container__input input-type-1"
+                                    placeholder="Password"
+                                />
+                            </div>
+                            <div className="input-container">
+                                <i className="fas fa-lock input-container__icon " />
+                                <input
+                                    type="text"
+                                    className="input-container__input input-type-1"
+                                    placeholder="Confirm Password"
+                                />
+                            </div>
                             <input
-                                type="text"
-                                className="input-container__input input-type-1"
-                                placeholder="First Name"
+                                className="btn btn--primary"
+                                type="submit"
+                                value="Sign Up !"
                             />
-                        </div>
-                        <div className="input-container">
-                            <i className="far fa-id-card input-container__icon" />
-                            <input
-                                type="text"
-                                className="input-container__input input-type-1"
-                                placeholder="Last Name"
-                            />
-                        </div>
-                        <div className="input-container">
-                            <i className="fas fa-at input-container__icon" />
-                            <input
-                                type="email"
-                                className="input-container__input input-type-1"
-                                placeholder="Email"
-                            />
-                        </div>
-                        <div className="input-container">
-                            <i className="fas fa-user input-container__icon" />
-                            <input
-                                type="text"
-                                className="input-container__input input-type-1"
-                                placeholder="Username"
-                            />
-                        </div>
-                        <div className="input-container">
-                            <i className="fas fa-unlock input-container__icon" />
-                            <input
-                                type="text"
-                                className="input-container__input input-type-1"
-                                placeholder="Password"
-                            />
-                        </div>
-                        <div className="input-container">
-                            <i className="fas fa-lock input-container__icon " />
-                            <input
-                                type="text"
-                                className="input-container__input input-type-1"
-                                placeholder="Confirm Password"
-                            />
-                        </div>
-                        <input
-                            className="btn btn--primary"
-                            type="submit"
-                            value="Sign Up !"
-                        />
-                    </form>
+                        </form>
+                    </div>
                 </div>
-                </div>
-                {/* </div> */}
             </main>
         );
     }

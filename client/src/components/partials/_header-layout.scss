@@ -11,9 +11,9 @@
     &__logo {
         display: flex;
         align-items: center;
-        letter-spacing: .2rem;
+        letter-spacing: 0.2rem;
         img {
-            transform: translateY(.8rem);
+            transform: translateY(0.8rem);
             height: 6rem;
             margin-right: 1rem;
         }
@@ -23,7 +23,6 @@
             }
         }
     }
-
     &__nav {
         align-self: center;
         * {
@@ -33,5 +32,4 @@
             margin-right: 3rem;
         }
     }
-   
 }

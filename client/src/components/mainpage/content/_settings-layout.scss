@@ -3,30 +3,30 @@
     margin: 3rem auto;
     padding: 3rem;
     flex: 0 0 auto;
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, .4);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
     #profile-picture-settings {
-      width: 10rem;
-      height: 10rem;
+        width: 10rem;
+        height: 10rem;
     }
     .icon-select {
-      padding-top: .5rem;
+        padding-top: 0.5rem;
     }
     .select {
-      width: 200px;
-      margin-bottom: 0;
+        width: 200px;
+        margin-bottom: 0;
     }
     select {
         background-color: $color-primary;
         color: $color-ternary-9;
         option {
-          color: $color-ternary-9;
+            color: $color-ternary-9;
         }
     }
     .select::after {
         background-color: $color-primary;
         color: $color-ternary-9;
-      }
-      .select:hover::after {
+    }
+    .select:hover::after {
         color: $color-ternary-9;
-      }
+    }
 }

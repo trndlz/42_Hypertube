@@ -1,152 +1,120 @@
 h1 {
-  color: $color-grey-light-1;
-  text-decoration: none;
-}
-
-h2 {
-
-}
-
-h3 {
-    
+    color: $color-grey-light-1;
+    text-decoration: none;
 }
 
 .link {
     &,
     &:link,
     &:visited {
-      text-decoration: none;
-      color: $color-grey-light-1;
-    }
-    
-    &:hover {
-    }
-    
-    &:active,
-    &:focus {
-
-    }
-
-    &--logo{
-        
-    }
-
-    &--nav {
-        
+        text-decoration: none;
+        color: $color-grey-light-1;
     }
 }
 
 .input-type-1 {
-  border: none;
-  height: 3rem;
-  width: 20rem;
-  // border-bottom: 1px solid black;
-  background-color: transparent;
-  // text-align: center;
-  border-bottom: 3px solid $color-primary;
-  caret-color: $color-primary-focus;
-  color: $color-ternary-7;
-  &::placeholder {
-    // text-align: center;
-    // padding-left: 30px;
+    border: none;
+    height: 3rem;
+    width: 20rem;
+    background-color: transparent;
+    border-bottom: 3px solid $color-primary;
+    caret-color: $color-primary-focus;
     color: $color-ternary-7;
-  }
-  &:focus {
-      outline: none;
-      box-shadow: 0 0.3rem 0.8rem rgba($color-black, .1);
-      border-bottom: 3px solid $color-primary-focus;
-      transform: translateY(-0.2rem);
-
-  }
-  &:invalid {
-      box-shadow: none;
-      border-bottom: 3px solid $color-secondary;
-  }
-  &:focus:invalid {
-      border-bottom: 3px solid $color-secondary;
-  }
+    &::placeholder {
+        color: $color-ternary-7;
+    }
+    &:focus {
+        outline: none;
+        box-shadow: 0 0.3rem 0.8rem rgba($color-black, 0.1);
+        border-bottom: 3px solid $color-primary-focus;
+        transform: translateY(-0.2rem);
+    }
+    &:invalid {
+        box-shadow: none;
+        border-bottom: 3px solid $color-secondary;
+    }
+    &:focus:invalid {
+        border-bottom: 3px solid $color-secondary;
+    }
 }
 
-.input-type-2{
+.input-type-2 {
     height: 3rem;
     width: 25rem;
     text-align: center;
-    &::placeholder {
-        // color: $color-ternary-7;
-    }
     &:focus {
-        outline: none;    
+        outline: none;
     }
 }
 
 .btn {
-  &,
-  &:link,
-  &:visited {
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 1rem 4rem;
-      display: inline-block;
-      border-radius: 3px;
-      transition: all .2s;
-      position: relative;
-      font-size: 1rem;
-      border: none;
-      cursor: pointer;
-  }
-  
-  &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 1rem 2rem rgba($color-black,.2);
+    &,
+    &:link,
+    &:visited {
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1rem 4rem;
+        display: inline-block;
+        border-radius: 3px;
+        transition: all 0.2s;
+        position: relative;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+    }
 
-      &::after {
-          transform: scaleX(1.4) scaleY(1.6);
-          opacity: 0;
-      }
-  }
-  
-  &:active,
-  &:focus {
-      outline: none;
-      transform: translateY(-1px);
-      box-shadow: 0 .5rem 1rem rgba($color-black,.2);
-  }
-  
-  &--white {
-      background-color: $color-white;
-      color: $color-grey-dark-1;
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
 
-      &::after {
-          background-color: $color-white;
-      }
-  }
+        &::after {
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0;
+        }
+    }
 
-  &--primary {
-      background-color: $color-primary;
-      color: $color-ternary-8;
+    &:active,
+    &:focus {
+        outline: none;
+        transform: translateY(-1px);
+        box-shadow: 0 0.5rem 1rem rgba($color-black, 0.2);
+    }
 
-      &::after {
-          background-color: $color-primary;
-      }
-  }
-  
-  &::after {
-      content: "";
-      display: inline-block;
-      height: 100%;
-      width: 100%;
-      border-radius: 10rem;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      transition: all .4s;
-  }
-  
-  &--animated {
-      animation: moveInBottom .5s ease-out .75s;
-      animation-fill-mode: backwards;
-  }
+    &--white {
+        background-color: $color-white;
+        color: $color-grey-dark-1;
+
+        &::after {
+            background-color: $color-white;
+        }
+    }
+
+    &--primary {
+        background-color: $color-primary;
+        color: $color-ternary-8;
+
+        &::after {
+            background-color: $color-primary;
+        }
+    }
+
+    &::after {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 10rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all 0.4s;
+    }
+
+    &--animated {
+        animation: moveInBottom 0.5s ease-out 0.75s;
+        animation-fill-mode: backwards;
+    }
 }
 
 //DROPDOWN CUSTOM
@@ -158,61 +126,54 @@ select {
     outline: 0;
     box-shadow: none;
     border: 0;
-    // background: #1f61a3;
     background-color: $color-ternary-2;
-    // background: rgb(218, 225, 233)e50;
     background-image: none;
     option {
-        // background: #f00; 
-        color: #fff; 
-        // box-shadow: inset 20px 20px #f00;
-        &:hover{
-            color: #000; 
-            // box-shadow: inset 20px 20px orangered;
+        color: #fff;
+        &:hover {
+            color: #000;
             box-shadow: 0 0 10px 100px rgb(84, 223, 84) inset;
             background-color: #fff2a8;
         }
     }
-  }
-  .select {
+}
+.select {
     position: relative;
     display: block;
     width: 12rem;
     height: 3rem;
     line-height: 3;
     overflow: hidden;
-    margin: .7rem auto;
-  }
-  select {
+    margin: 0.7rem auto;
+}
+select {
     width: 100%;
     height: 100%;
     margin: 0;
-    padding: 0 0 0 .5em;
+    padding: 0 0 0 0.5em;
     color: #fff;
     cursor: pointer;
-  }
-  select::-ms-expand {
+}
+select::-ms-expand {
     display: none;
-  }
-  /* Arrow */
-  .select::after {
-    content: '\25BC';
+}
+/* Arrow */
+.select::after {
+    content: "\25BC";
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     padding: 0 1em;
-    // background: #34495e;
-    // background: #0080ff;
     background-color: $color-ternary-2;
     pointer-events: none;
-  }
-  /* Transition */
-  .select:hover::after {
+}
+/* Transition */
+.select:hover::after {
     color: white;
-  }
-  .select::after {
-    -webkit-transition: .25s all ease;
-    -o-transition: .25s all ease;
-    transition: .25s all ease;
-  }
+}
+.select::after {
+    -webkit-transition: 0.25s all ease;
+    -o-transition: 0.25s all ease;
+    transition: 0.25s all ease;
+}
