@@ -20,7 +20,6 @@ h3 {
     }
     
     &:hover {
-        color: blue;
     }
     
     &:active,
@@ -37,7 +36,7 @@ h3 {
     }
 }
 
-input:not([type="submit"]) {
+.input-type-1 {
   border: none;
   height: 3rem;
   width: 20rem;
@@ -66,6 +65,18 @@ input:not([type="submit"]) {
   &:focus:invalid {
       border-bottom: 3px solid $color-secondary;
   }
+}
+
+.input-type-2{
+    height: 3rem;
+    width: 25rem;
+    text-align: center;
+    &::placeholder {
+        // color: $color-ternary-7;
+    }
+    &:focus {
+        outline: none;    
+    }
 }
 
 .btn {
@@ -137,3 +148,71 @@ input:not([type="submit"]) {
       animation-fill-mode: backwards;
   }
 }
+
+//DROPDOWN CUSTOM
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0;
+    // background: #1f61a3;
+    background-color: $color-ternary-2;
+    // background: rgb(218, 225, 233)e50;
+    background-image: none;
+    option {
+        // background: #f00; 
+        color: #fff; 
+        // box-shadow: inset 20px 20px #f00;
+        &:hover{
+            color: #000; 
+            // box-shadow: inset 20px 20px orangered;
+            box-shadow: 0 0 10px 100px rgb(84, 223, 84) inset;
+            background-color: #fff2a8;
+        }
+    }
+  }
+  .select {
+    position: relative;
+    display: block;
+    width: 12rem;
+    height: 3rem;
+    line-height: 3;
+    overflow: hidden;
+    margin: .7rem auto;
+  }
+  select {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0 0 0 .5em;
+    color: #fff;
+    cursor: pointer;
+  }
+  select::-ms-expand {
+    display: none;
+  }
+  /* Arrow */
+  .select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 1em;
+    // background: #34495e;
+    // background: #0080ff;
+    background-color: $color-ternary-2;
+    pointer-events: none;
+  }
+  /* Transition */
+  .select:hover::after {
+    color: white;
+  }
+  .select::after {
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+  }

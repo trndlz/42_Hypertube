@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from "react";
-import animal from "../../images/animal.svg";
+import React, { Component } from "react";
 
 class HomePage extends Component {
     handleChange = e => {
@@ -13,10 +12,7 @@ class HomePage extends Component {
             false
         );
     };
-
-    // componentDidMount() {
-    //     document.querySelector("footer").style.width = "100%";
-    // }
+    
     render() {
         return (
             <main className="homepage">
@@ -45,7 +41,7 @@ class HomePage extends Component {
                             {/* <i className="fas fa-user input-container__icon" /> */}
                             <input
                                 type="text"
-                                className="input-container__input"
+                                className="input-container__input input-type-1"
                                 placeholder="Username"
                             />
                         </div>
@@ -53,7 +49,7 @@ class HomePage extends Component {
                             {/* <i className="fas fa-unlock input-container__icon" /> */}
                             <input
                                 type="text"
-                                className="input-container__input"
+                                className="input-container__input input-type-1"
                                 placeholder="Password"
                             />
                         </div>
@@ -84,7 +80,7 @@ class HomePage extends Component {
                             <i className="fas fa-id-card input-container__icon" />
                             <input
                                 type="text"
-                                className="input-container__input"
+                                className="input-container__input input-type-1"
                                 placeholder="First Name"
                             />
                         </div>
@@ -92,7 +88,7 @@ class HomePage extends Component {
                             <i className="far fa-id-card input-container__icon" />
                             <input
                                 type="text"
-                                className="input-container__input"
+                                className="input-container__input input-type-1"
                                 placeholder="Last Name"
                             />
                         </div>
@@ -100,7 +96,7 @@ class HomePage extends Component {
                             <i className="fas fa-at input-container__icon" />
                             <input
                                 type="email"
-                                className="input-container__input"
+                                className="input-container__input input-type-1"
                                 placeholder="Email"
                             />
                         </div>
@@ -108,7 +104,7 @@ class HomePage extends Component {
                             <i className="fas fa-user input-container__icon" />
                             <input
                                 type="text"
-                                className="input-container__input"
+                                className="input-container__input input-type-1"
                                 placeholder="Username"
                             />
                         </div>
@@ -116,15 +112,15 @@ class HomePage extends Component {
                             <i className="fas fa-unlock input-container__icon" />
                             <input
                                 type="text"
-                                className="input-container__input"
+                                className="input-container__input input-type-1"
                                 placeholder="Password"
                             />
                         </div>
                         <div className="input-container">
-                            <i className="fas fa-lock input-container__icon" />
+                            <i className="fas fa-lock input-container__icon " />
                             <input
                                 type="text"
-                                className="input-container__input"
+                                className="input-container__input input-type-1"
                                 placeholder="Confirm Password"
                             />
                         </div>

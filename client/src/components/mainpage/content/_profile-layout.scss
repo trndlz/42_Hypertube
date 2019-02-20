@@ -1,0 +1,38 @@
+.profile {
+    width: 80%;
+    margin: 3rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: $color-ternary-8;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, .4);
+    padding: 2rem;
+    font-size: 1.4rem;
+    color: white;
+    .user-img--fat {
+        width: 12rem;
+        height: 12rem;
+    }
+    .username {
+        font-size: 1.6rem;
+        text-transform: uppercase;
+        padding: 2rem;
+    }
+
+    .last-name {
+        text-transform: capitalize;
+        padding: .5rem;
+    }
+
+    .first-name {
+        text-transform: uppercase;
+        padding: .5rem;
+    }
+
+    .language {
+        text-transform: capitalize;
+        padding: 2rem 2rem 0 2rem;
+    }
+}

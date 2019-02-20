@@ -1,79 +1,185 @@
-import React, { Component } from 'react'
-import './video.css'
+import React, { Component } from "react";
+import Footer from "../../partials/Footer";
+import imgCover from "../../../images/spiderman-img.jpg";
 
 class Video extends Component {
-  render() {
-    return (
-      <div className="container video">
-      <div id="headerContent">
-        <img id="videoImg" src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg" alt=""/>
-        <div id="videoTitle">SpiderMan</div>
-        <div id="videoRating">
-              <i id="star-5" className="fas fa-star"/>
-              <i id="star-5" className="fas fa-star"/>
-              <i id="star-5" className="fas fa-star"/>
-              <i id="star-5" className="fas fa-star"/>
-              <i id="star-5" className="fas fa-star"/>
-        </div>
-        <div id="videoDate">1992</div>
-        <div id="videoTime">1h30</div>
-        <span className="separator"></span>
-        <div id="videoDesc">
-        <h6>Description:</h6>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem tempore labore fugit? Quia ea, nostrum maxime incidunt eveniet unde quos dolores voluptatum inventore corrupti facere! Nam sequi qui quod pariatur.
-        </div>
+    render() {
+        return (
+            <div className="main-content-wrapper">
+                <div className="video-description">
+                    <img className="video-img" src={imgCover} alt="" />
+                    <div className="video-info">
+                        <h2 className="video-title">
+                            SpiderMan <span className="video-date">(1992)</span>
+                        </h2>
+                        <div className="video-rating">
+                            <i className="fas fa-star" />
+                            <i className="fas fa-star" />
+                            <i className="fas fa-star" />
+                            <i className="fas fa-star" />
+                            <i className="fas fa-star" />
+                        </div>
+                        <div className="video-time">1h30</div>
+                        <span className="separator" />
+                        <div className="video-desc">
+                            <h6>Description:</h6>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Voluptatem tempore labore fugit? Quia ea,
+                            nostrum maxime incidunt eveniet unde quos dolores
+                            voluptatum inventore corrupti facere! Nam sequi qui
+                            quod pariatur.
+                        </div>
 
-        <div id="videoActors">
-        <h6>Casting:</h6>
-        SpiderMan et dautres gars Lorem ipsum Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint voluptatibus in ad nobis dolo </div>
-      </div>
-          <div className="videoPlayer">
-            <iframe title="video" className="myvideo" src="https://player.twitch.tv/?channel=degun" controls>
-              {/* <source src="movie.mp4" type="video/mp4"> */}
-              {/* <source src="movie.ogg" type="video/ogg"> */}
-            {/* Your browser does not support the video tag. */}
-            </iframe>
-          </div>
-          <div className="yourComment">
-            <img src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg" alt="user"/>
-            <textarea name="" id="" cols="" rows="1"></textarea>
-            <button>Send</button>
-          </div>
-          <div className="videoComments">
-            <hr/>
-            <div className="comment">
-              <img src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg" alt="user"/>
-              <span className="username">Sven</span>
-              <span className="commentText">mon commentaire Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti ea, esse exercitationem cumque asperiores, quo unde id illum at deleniti repellat quis. Illum, velit illo eaque voluptatum beatae iusto officia.</span>
+                        <div className="video-actors">
+                            <h6>Casting:</h6>
+                            SpiderMan et dautres gars Lorem ipsum Lorem, ipsum
+                            dolor sit amet consectetur adipisicing elit. Sint
+                            voluptatibus in ad nobis dolo{" "}
+                        </div>
+                    </div>
+                </div>
+                <div className="video-wrapper">
+                    <div className="video-player">
+                        <iframe
+                            title="video"
+                            className="my-video"
+                            src="https://player.twitch.tv/?channel=degun"
+                            controls
+                        />
+                    </div>
+                </div>
+                <div className="comment-wrapper">
+                    <div className="your-comment">
+                        <img
+                            className="user-img"
+                            src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
+                            alt="user"
+                        />
+                        <textarea
+                            className="comment-area"
+                            name=""
+                            id=""
+                            cols=""
+                            rows="1"
+                        />
+                        <button className="send-comment-btn">Send</button>
+                    </div>
+                    <div className="video-comments">
+                        {/* <hr/> */}
+                        <div className="comment">
+                            <img
+                                className="user-img"
+                                src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
+                                alt="user"
+                            />
+                            <div className="comment-text">
+                                <span className="username">Sven</span>
+                                <span className="commentText">
+                                    mon commentaire Lorem ipsum dolor sit amet
+                                    consectetur adipisicing elit. Corrupti ea,
+                                    esse exercitationem cumque asperiores, quo
+                                    unde id illum at deleniti repellat quis.
+                                    Illum, velit illo eaque voluptatum beatae
+                                    iusto officia.
+                                </span>
+                            </div>
+                        </div>
+                        <div className="comment">
+                            <img
+                                className="user-img"
+                                src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
+                                alt="user"
+                            />
+                            <div className="comment-text">
+                                <span className="username">Sven</span>
+                                <span className="commentText">
+                                    mon commentaire Lorem ipsum dolor sit amet
+                                    consectetur adipisicing elit. Corrupti ea,
+                                    esse exercitationem cumque asperiores, quo
+                                    unde id illum at deleniti repellat quis.
+                                    Illum, velit illo eaque voluptatum beatae
+                                    iusto officia.
+                                </span>
+                            </div>
+                        </div>
+                        <div className="comment">
+                            <img
+                                className="user-img"
+                                src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
+                                alt="user"
+                            />
+                            <div className="comment-text">
+                                <span className="username">Sven</span>
+                                <span className="commentText">
+                                    mon commentaire Lorem ipsum dolor sit amet
+                                    consectetur adipisicing elit. Corrupti ea,
+                                    esse exercitationem cumque asperiores, quo
+                                    unde id illum at deleniti repellat quis.
+                                    Illum, velit illo eaque voluptatum beatae
+                                    iusto officia.
+                                </span>
+                            </div>
+                        </div>
+                        <div className="comment">
+                            <img
+                                className="user-img"
+                                src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
+                                alt="user"
+                            />
+                            <div className="comment-text">
+                                <span className="username">Sven</span>
+                                <span className="commentText">
+                                    mon commentaire Lorem ipsum dolor sit amet
+                                    consectetur adipisicing elit. Corrupti ea,
+                                    esse exercitationem cumque asperiores, quo
+                                    unde id illum at deleniti repellat quis.
+                                    Illum, velit illo eaque voluptatum beatae
+                                    iusto officia.
+                                </span>
+                            </div>
+                        </div>
+                        <div className="comment">
+                            <img
+                                className="user-img"
+                                src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
+                                alt="user"
+                            />
+                            <div className="comment-text">
+                                <span className="username">Sven</span>
+                                <span className="commentText">
+                                    mon commentaire Lorem ipsum dolor sit amet
+                                    consectetur adipisicing elit. Corrupti ea,
+                                    esse exercitationem cumque asperiores, quo
+                                    unde id illum at deleniti repellat quis.
+                                    Illum, velit illo eaque voluptatum beatae
+                                    iusto officia.
+                                </span>
+                            </div>
+                        </div>
+                        <div className="comment">
+                            <img
+                                className="user-img"
+                                src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
+                                alt="user"
+                            />
+                            <div className="comment-text">
+                                <span className="username">Sven</span>
+                                <span className="commentText">
+                                    mon commentaire Lorem ipsum dolor sit amet
+                                    consectetur adipisicing elit. Corrupti ea,
+                                    esse exercitationem cumque asperiores, quo
+                                    unde id illum at deleniti repellat quis.
+                                    Illum, velit illo eaque voluptatum beatae
+                                    iusto officia.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <Footer />
             </div>
-            <hr/>
-            <div className="comment">
-              <img src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg" alt="user"/>
-              <span className="username">Sven</span>
-              <span className="commentText">mon commentaire Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti ea, esse exercitationem cumque asperiores, quo unde id illum at deleniti repellat quis. Illum, velit illo eaque voluptatum beatae iusto officia.</span>
-            </div>
-            <hr/>
-            <div className="comment">
-              <img src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg" alt="user"/>
-              <span className="username">Sven</span>
-              <span className="commentText">mon commentaire Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti ea, esse exercitationem cumque asperiores, quo unde id illum at deleniti repellat quis. Illum, velit illo eaque voluptatum beatae iusto officia.</span>
-            </div>
-            <hr/>
-            <div className="comment">
-              <img src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg" alt="user"/>
-              <span className="username">Sven</span>
-              <span className="commentText">mon commentaire Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti ea, esse exercitationem cumque asperiores, quo unde id illum at deleniti repellat quis. Illum, velit illo eaque voluptatum beatae iusto officia.</span>
-            </div>
-            <hr/>
-            <div className="comment">
-              <img src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg" alt="user"/>
-              <span className="username">Sven</span>
-              <span className="commentText">mon commentaire Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti ea, esse exercitationem cumque asperiores, quo unde id illum at deleniti repellat quis. Illum, velit illo eaque voluptatum beatae iusto officia.</span>
-            </div>
-          </div>
-      </div>
-    )
-  }
+        );
+    }
 }
 
 export default Video;

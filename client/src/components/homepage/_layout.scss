@@ -1,5 +1,5 @@
 .homepage {
-    min-height: calc(100vh - 3rem - 3rem);
+    min-height: 100vh;
     display: flex;
     &::before {
         content: "";
@@ -48,34 +48,7 @@
             order: 1;
         }
     }
-    .login-wrapper {
-        position: relative;
-        z-index: 20;
-        background-color: $color-ternary-8;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        
-        color: $color-ternary-7;
-        .input-container {
-            display: flex;
-            align-items: center;
-            &__icon {
-                font-size: 1.5rem;
-                margin-right: 1.5rem;
-            }
-            margin-bottom: 1rem;
-            padding: 0 1rem;
-        }
-        @media only screen and (max-height: 747px) and (min-width: $bp-small) { 
-            flex-direction: row;
-        }
-        @media only screen and (max-width: $bp-small) {
-            padding: 3rem;
-        }
-    }
+    
 
     &__sign-in__form {
         width: 90%;
@@ -120,5 +93,33 @@
         #file-input {
             display: none;
         }
+    }
+}
+.login-wrapper {
+    position: relative;
+    z-index: 20;
+    background-color: $color-ternary-8;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    color: $color-ternary-7;
+    .input-container {
+        display: flex;
+        align-items: center;
+        &__icon {
+            font-size: 1.5rem;
+            margin-right: 1.5rem;
+        }
+        margin-bottom: 1rem;
+        padding: 0 1rem;
+    }
+    @media only screen and (max-height: 747px) and (min-width: $bp-small) { 
+        flex-direction: row;
+    }
+    @media only screen and (max-width: $bp-small) {
+        padding: 3rem;
     }
 }

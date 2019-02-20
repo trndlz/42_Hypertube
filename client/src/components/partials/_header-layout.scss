@@ -1,21 +1,26 @@
 .header {
-    position: fixed;
-    top: 3rem;
-    left: 3rem;
-    right: 3rem;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     padding: 2rem 3rem;
-    background-color: $color-grey-dark-2;
-    border-bottom: $line;
+    background-color: $color-ternary-8;
     z-index: 100;
     &__logo {
         display: flex;
         align-items: center;
+        letter-spacing: .2rem;
         img {
             transform: translateY(.8rem);
             height: 6rem;
             margin-right: 1rem;
+        }
+        @media only screen and (max-width: 25rem) {
+            h1 {
+                display: none;
+            }
         }
     }
 
@@ -28,4 +33,5 @@
             margin-right: 3rem;
         }
     }
+   
 }
