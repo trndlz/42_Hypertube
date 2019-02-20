@@ -95,6 +95,9 @@
     max-height: 30rem;
     padding-bottom: 1rem;
   }
+  &:checked ~ label i{
+    transform: rotate(180deg);
+  }
 }
 
 @media only screen and (min-width: $bp-small) {

@@ -299,6 +299,8 @@ body {
     display: block;
     max-height: 30rem;
     padding-bottom: 1rem; }
+  #checkbox:checked ~ label i {
+    transform: rotate(180deg); }
 
 @media only screen and (min-width: 46.5em) {
   .search-bar {

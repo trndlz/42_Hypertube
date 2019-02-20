@@ -13,8 +13,8 @@ class MainPage extends Component {
       <Fragment>
           <Header/>
           <main className="mainpage">
-            <label className="label-check" htmlFor="checkbox">Search Options <i className="fas fa-arrow-circle-down"></i></label>
             <input type="checkbox" name="test" id="checkbox" />
+            <label className="label-check" htmlFor="checkbox">Search Options <i className="fas fa-arrow-circle-down"></i></label>
             <SearchBar/>
             <Route path="/mainpage/gallery" component={Gallery}/>
             <Route path="/mainpage/profile" component={Profile}/>
