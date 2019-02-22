@@ -13,23 +13,57 @@ class HomePage extends Component {
         );
     };
 
+    handleSignUp = async e => {
+        e.preventDefault();
+        const formValues = {
+            username: document.querySelector("#signup-username").value,
+            password: document.querySelector("#signup-password").value
+        };
+        let res = await fetch("http://localhost:8145/auth/signup", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify(formValues)
+        });
+        res = await res.json();
+        console.log(res);
+    };
+
+    handleSignIn = async e => {
+        e.preventDefault();
+        const formValues = {
+            username: document.querySelector("#signin-username").value,
+            password: document.querySelector("#signin-password").value
+        };
+        let res = await fetch("http://localhost:8145/auth/signin", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify(formValues)
+        });
+        res = await res.json();
+        console.log(res);
+    };
+
     render() {
         return (
             <main className="homepage">
                 <div className="homepage__description">
                     <ul className="homepage__description--list">
                         <li>
-                            <i class="fas fa-film" />
+                            <i className="fas fa-film" />
                             <span>
                                 Popular movies totally free with no adds !
                             </span>
                         </li>
                         <li>
-                            <i class="fas fa-user-secret" />
+                            <i className="fas fa-user-secret" />
                             <span>Torrent based, please use a VPN</span>
                         </li>
                         <li>
-                            <i class="fas fa-globe-europe" />
+                            <i className="fas fa-globe-europe" />
                             <span>Best quality with subtitles</span>
                         </li>
                     </ul>
@@ -42,6 +76,7 @@ class HomePage extends Component {
                                     type="text"
                                     className="input-container__input input-type-1"
                                     placeholder="Username"
+                                    id="signin-username"
                                 />
                             </div>
                             <div className="input-container">
@@ -49,9 +84,11 @@ class HomePage extends Component {
                                     type="text"
                                     className="input-container__input input-type-1"
                                     placeholder="Password"
+                                    id="signin-password"
                                 />
                             </div>
                             <input
+                                onClick={this.handleSignIn}
                                 className="btn btn--primary"
                                 type="submit"
                                 value="Sign In !"
@@ -107,6 +144,7 @@ class HomePage extends Component {
                                     type="text"
                                     className="input-container__input input-type-1"
                                     placeholder="Username"
+                                    id="signup-username"
                                 />
                             </div>
                             <div className="input-container">
@@ -115,6 +153,7 @@ class HomePage extends Component {
                                     type="text"
                                     className="input-container__input input-type-1"
                                     placeholder="Password"
+                                    id="signup-password"
                                 />
                             </div>
                             <div className="input-container">
@@ -126,11 +165,13 @@ class HomePage extends Component {
                                 />
                             </div>
                             <input
+                                onClick={this.handleSignUp}
                                 className="btn btn--primary"
                                 type="submit"
                                 value="Sign Up !"
                             />
                         </form>
+                        <a href="http://localhost:8145/auth/facebook">Google</a>
                     </div>
                 </div>
             </main>
