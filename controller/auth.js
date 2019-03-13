@@ -43,8 +43,6 @@ const localSignInAuth = async (req, res) => {
                         });
                     }
                 );
-                const token = jwt.sign(payload, keys.jwt, { expiresIn: 3600 });
-                return res.status(200).json({ token });
             }
         }
     }

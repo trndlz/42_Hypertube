@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
+import { Redirect } from 'react-router-dom';
 
 function EmailVerified(props) {
     return (
@@ -28,7 +29,14 @@ class HomePage extends Component {
         signInPassword: '',
         emailVerified: false,
         emailToVerify: false,
-        errors: {}
+        errors: {},
+        redirect: false
+    }
+
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/mainpage/gallery'/>
+        }
     }
 
     async componentDidMount() {
@@ -131,6 +139,9 @@ class HomePage extends Component {
                 msg: res.msg
             })
         } else {
+            this.setState({
+                redirect: true
+            })
             localStorage.setItem('jwt', res.token);
         }
     };
@@ -138,6 +149,7 @@ class HomePage extends Component {
     render() {
         return (
             <main className="homepage">
+            {this.renderRedirect()}
                 {this.state.emailVerified ? <EmailVerified error={this.state.error} /> : null}
                 {this.state.emailToVerify ? <EmailToVerify /> : null}
                 <div className="homepage__description">
