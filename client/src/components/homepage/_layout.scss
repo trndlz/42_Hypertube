@@ -25,7 +25,7 @@
     &__description {
         color: $color-ternary-6;
         background-color: $color-ternary-2;
-        flex: 1;
+        width: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -46,18 +46,23 @@
         }
         @media only screen and (max-width: $bp-small) {
             order: 1;
+            width: 100%;
         }
     }
 
     &__sign-in__form {
-        width: 90%;
-        flex-wrap: wrap;
-        display: flex;
         position: absolute;
         top: 3rem;
         left: 50%;
+        width: 100%;
         transform: translateX(-50%);
-        justify-content: center;
+        &-content{
+            justify-content: center;
+            width: 90%;
+            margin: auto;
+            flex-wrap: wrap;
+            display: flex;
+        }
         .btn {
             margin: 1rem;
         }
@@ -85,6 +90,7 @@
             border-radius: 50%;
             margin-bottom: 1rem;
             cursor: pointer;
+            object-fit: cover;
         }
         .btn {
             margin-top: 1rem;
@@ -103,7 +109,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     color: $color-ternary-7;
     .input-container {
         display: flex;
@@ -114,6 +119,14 @@
         }
         margin-bottom: 1rem;
         padding: 0 1rem;
+        &__display-error {
+            height: 0;
+            color:white;
+            text-align: center;
+            opacity: 0;
+            animation: popAndHideError 5s ease-out;
+            font-size: 1rem;
+        }
     }
     @media only screen and (max-height: 747px) and (min-width: $bp-small) {
         flex-direction: row;
@@ -121,4 +134,35 @@
     @media only screen and (max-width: $bp-small) {
         padding: 3rem;
     }
+}
+
+
+.signup-OAuth {
+    display: flex;
+    justify-content: center;
+    margin-top: .8rem;
+    a {
+        margin: 0 .5rem;
+        width: 12rem;
+        text-align: center;
+    }
+}
+
+.google {
+    min-height: 3.2rem;
+    background-color: white !important;
+    background-image: url(../images/google.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center; 
+}
+
+.logo42 {
+    min-height: 3.2rem;
+    background-color: white !important;
+    background-image: url(../images/42.png);
+    height: 3rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center; 
 }

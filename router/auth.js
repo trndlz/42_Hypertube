@@ -27,32 +27,39 @@ router.get(
     facebookAuth
 );
 
+const multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + '.' + file.mimetype.match(/.*\/(.*)/)[1])
+    }
+  })
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+
+var upload = multer({
+    storage: storage,
+    limits: {
+    fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: fileFilter
+})
+
 router.post(
     "/signup",
-    cors(corsOptions),
-    passport.authenticate("signup", { session: false }),
+    upload.single("userPicture"),
     localSignUpAuth
 );
 
-router.post("/signin", cors(corsOptions), passport.authenticate("signin"), localSignInAuth);
-
-// router.post("/signin", cors(corsOptions), async (req, res, next) => {
-//     passport.authenticate("signin", async (err, user, info) => {
-//         try {
-//             if (err || !user) {
-//                 const error = new Error("An Error occured");
-//                 return next(error);
-//             }
-//             req.login(user, { session: false }, async error => {
-//                 if (error) return next(error);
-//                 const body = { _id: user._id, email: user.email };
-//                 const token = jwt.sign({ user: body }, "top_secret");
-//                 return res.status(200).json({ token });
-//             });
-//         } catch (error) {
-//             return next(error);
-//         }
-//     })(req, res, next);
-// });
+router.post("/signin", localSignInAuth);
+// router.post("/signin", cors(corsOptions), passport.authenticate("signin"), localSignInAuth);
 
 module.exports = router;

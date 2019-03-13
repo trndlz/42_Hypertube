@@ -13,5 +13,9 @@ module.exports = {
     session: {
         // cookieKey: 'thenetninjaisawesomeiguess'
     },
-    jwt: "LaSecretKeyKilFoKonMetteDansConfigKeysJS"
+    jwt: "LaSecretKeyKilFoKonMetteDansConfigKeysJS",
+    mail: {
+        user: "kole.koding@gmail.com",
+        pass: "kolekoding123"
+    }
 };

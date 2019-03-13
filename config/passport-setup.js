@@ -3,19 +3,18 @@ const JwtStrategy = require("passport-jwt").Strategy;
 const { ExtractJwt } = require("passport-jwt");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
-const LocalStrategy = require("passport-local").Strategy;
+// const LocalStrategy = require("passport-local").Strategy;
 const keys = require("./keys");
 const Model = require("../model/user");
-// const signToken = require("../controller/auth.js");
 
 passport.serializeUser((user, done) => {
     done(null, user);
 });
 
 passport.deserializeUser((id, done) => {
-    // User.findById(id).then((user) => {
-    done(null, user);
-    // });
+    User.findById(id).then((user) => {
+        done(null, user);
+    });
 });
 
 passport.use(
@@ -26,9 +25,7 @@ passport.use(
         },
         async (payload, done) => {
             try {
-                const currentUser = await Model.User.findOne({
-                    id: payload.sub
-                });
+                const currentUser = await Model.User.findById(payload._id);
                 if (currentUser) {
                     done(null, currentUser);
                 } else {
@@ -40,19 +37,6 @@ passport.use(
         }
     )
 );
-
-
-// passport.use(new JWTstrategy({
-//     secretOrKey : 'top_secret',
-//     jwtFromRequest : ExtractJWT.fromUrlQueryParameter('secret_token')
-//   }, async (token, done) => {
-//     try {
-//       //Pass the user details to the next middleware
-//       return done(null, token.user);
-//     } catch (error) {
-//       done(error);
-//     }
-//   }));
 
 passport.use(
     new FacebookStrategy(
@@ -67,10 +51,8 @@ passport.use(
                     authId: profile.id
                 });
                 if (currentUser) {
-                    console.log("user is: ", currentUser);
                     done(null, currentUser);
                 } else {
-                    console.log("ICIIIIIIIIIIIIIIIIIII", profile);
                     new Model.User({
                         authId: profile.id,
                         username: profile.displayName,
@@ -125,48 +107,43 @@ passport.use(
     )
 );
 
-passport.use(
-    "signup",
-    new LocalStrategy(
-        async (username, password, done) => {
-            try {
-                const currentUser = await Model.User.create({ username, password });
-                done(null, currentUser);
-            } catch (error) {
-                done(error);
-            }
-        }
-    )
-);
+// passport.use(
+//     "signup",
+//     new LocalStrategy(
+//         {
+//             usernameFied: "username",
 
-passport.use(
-    "signin",
-    new LocalStrategy(
-        async (username, password, done) => {
-            try {
-                console.log("setup1")
-                const currentUser = await Model.User.findOne({ username });
-                console.log("setup2", currentUser)
+//         },
+//         async (username, password, done) => {
+//             try {
+//                 // console.log(picture);
+//                 const currentUser = await Model.User.create({ username, password });
+//                 done(null, currentUser);
+//             } catch (error) {
+//                 done(error);
+//             }
+//         }
+//     )
+// );
 
-                if (!currentUser) {
-                    console.log("setup3")
-                    return done(null, false , { message: "User not found" });
-                }
-                console.log("before4")
-                const validate = await currentUser.isValidPassword(password);
-                console.log("setup4", validate)
-                if (!validate) {
-                    
-
-                    done(null, false, { message: "Wrong Password" });
-                } else {
-                    console.log("setup5")
-                    
-                    done(null, currentUser, { message: "Logged in Successfully" });
-                }
-            } catch (error) {
-                return done(error);
-            }
-        }
-    )
-);
+// passport.use(
+//     "signin",
+//     new LocalStrategy(
+//         async (username, password, done) => {
+//             try {
+//                 const currentUser = await Model.User.findOne({ username });
+//                 if (!currentUser) {
+//                     return done(null, false , { message: "User not found" });
+//                 }
+//                 const validate = await currentUser.isValidPassword(password);
+//                 if (!validate) {
+//                     done(null, false, { message: "Wrong Password" });
+//                 } else {   
+//                     done(null, currentUser, { message: "Logged in Successfully" });
+//                 }
+//             } catch (error) {
+//                 return done(error);
+//             }
+//         }
+//     )
+// );

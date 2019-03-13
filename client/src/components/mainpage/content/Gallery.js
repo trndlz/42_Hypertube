@@ -36,8 +36,7 @@ class Gallery extends Component {
                                 />
                             </div>
                             <div className="film-infos">
-                                SpiderMan et le bouffon vert de mon cul a la
-                                creme patissiere (1992)
+                                SpiderMan et le bouffon vert 2(1992)
                                 <br />
                                 <i className="fas fa-star" />
                                 <i className="fas fa-star" />

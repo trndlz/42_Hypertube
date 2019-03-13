@@ -10,7 +10,6 @@ require("./model/dbconnect");
 app.use(passport.initialize());
 app.use(cors());
 
-
 // mongoose.set('useNewUrlParser', true);
 // mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
@@ -19,7 +18,23 @@ app.use(express.json());
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
 
-const route = require('./router/auth');
+//========================================================
+// ROUTES
+//========================================================
+const authRoute = require('./router/auth');
+const torrentRoute = require('./router/torrent');
 const secureRoute = require('./router/secure-route');
-app.use('/auth', route);
-app.use('/mainpage', passport.authenticate('jwt', { session : false }), secureRoute );
+const testMongoose = require('./router/test-mongoose');
+const email = require('./router/nodemailer');
+app.use('/auth', authRoute);
+app.use('/email', email);
+app.use('/torrent', torrentRoute);
+app.use('/testmongoose', testMongoose);
+app.use('/secure', passport.authenticate('jwt', { session : false }), secureRoute );
+
+//========================================================
+// IMAGE TRANSFER
+//========================================================
+const bodyParser = require("body-parser");
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));

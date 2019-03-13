@@ -3,6 +3,17 @@ import Footer from "../../partials/Footer";
 import imgCover from "../../../images/spiderman-img.jpg";
 
 class Video extends Component {
+    async componentDidMount() {
+        const movie = await fetch('http://localhost:8145/torrent/random',
+        {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "GET",
+        });
+        console.log(movie);
+    }
     render() {
         return (
             <div className="main-content-wrapper">

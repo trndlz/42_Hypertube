@@ -66,10 +66,8 @@ h1 {
     &:hover {
         transform: translateY(-3px);
         box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
-
         &::after {
-            transform: scaleX(1.4) scaleY(1.6);
-            opacity: 0;
+            opacity: 1;
         }
     }
 
@@ -83,7 +81,6 @@ h1 {
     &--white {
         background-color: $color-white;
         color: $color-grey-dark-1;
-
         &::after {
             background-color: $color-white;
         }
@@ -92,10 +89,9 @@ h1 {
     &--primary {
         background-color: $color-primary;
         color: $color-ternary-8;
-
-        &::after {
-            background-color: $color-primary;
-        }
+        // &::after {
+        //     background-color: $color-primary;
+        // }
     }
 
     &::after {
@@ -176,4 +172,29 @@ select::-ms-expand {
     -webkit-transition: 0.25s all ease;
     -o-transition: 0.25s all ease;
     transition: 0.25s all ease;
+}
+
+.popup-notif {
+    background-color: $color-ternary-8;
+    position: absolute;
+    text-align: center;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40rem;
+    // height: 4rem;
+    z-index: -1;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    color: $color-ternary-7;
+    border: 1px solid $color-ternary-2;
+    opacity: 0;
+    color: white;
+    animation: popAndHide 3s ease-out;
+    p {
+        padding: 1rem;
+    }
 }
