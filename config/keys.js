@@ -15,5 +15,4 @@ module.exports = {
         user: "kole.koding@gmail.com",
         pass: "kolekoding123"
     }
-
 };

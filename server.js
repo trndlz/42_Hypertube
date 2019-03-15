@@ -4,12 +4,13 @@ const port = 8145;
 const passport = require('passport');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const keys = require('./config/keys')
 require('./config/passport-setup');
 
 app.use(passport.initialize());
 app.use(cors());
 
-mongoose.connect('mongodb://localhost:27017/hypertube', {useNewUrlParser: true});
+mongoose.connect(keys.mongodb.dbURI, {useNewUrlParser: true});
 // mongoose.set('useNewUrlParser', true);
 // mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
