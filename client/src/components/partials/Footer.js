@@ -1,13 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Footer extends Component {
-    render() {
-        return (
-            <footer className="footer">
-                <span className="">mleonett & svmathie & tmervin</span>
-            </footer>
-        );
-    }
+const Footer = () => {
+    return (
+        <footer className="footer">
+            <span className="">mleonett & svmathie & tmervin</span>
+        </footer>
+    );
 }
 
 export default Footer;
