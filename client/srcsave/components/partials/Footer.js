@@ -6,7 +6,7 @@ class Footer extends Component {
     return (
       <footer>
         <div className="w-100 text-center py-2">
-          <span className="">mleonett & svmathie & l'autre</span>
+          <span className="">mleonett & svmathie & tmervin</span>
         </div>
       </footer>
     )

@@ -1,7 +1,7 @@
 {
   "name": "hypertube",
   "version": "1.0.0",
-  "description": "Netlix like",
+  "description": "Netflix like",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/Bligoubloups/Hypertube.git"
   },
-  "author": "mleonett & svmathie & ptetreunautretroudku",
+  "author": "mleonett & svmathie & tmervin",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Bligoubloups/Hypertube/issues"

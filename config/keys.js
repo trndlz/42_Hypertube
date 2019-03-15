@@ -8,14 +8,12 @@ module.exports = {
         clientSecret: '65c1cb9442771d3f38bc7a512935538e'
     },
     mongodb: {
-        // dbURI: 'mongodb://iamshaunjp:test@ds151024.mlab.com:51024/oauth-test'
-    },
-    session: {
-        // cookieKey: 'thenetninjaisawesomeiguess'
+        dbURI: 'mongodb://localhost:27017/hypertube'
     },
     jwt: "LaSecretKeyKilFoKonMetteDansConfigKeysJS",
     mail: {
         user: "kole.koding@gmail.com",
         pass: "kolekoding123"
     }
+
 };

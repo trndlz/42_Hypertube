@@ -17,4 +17,8 @@ class App extends Component {
     }
 }
 
+
+// const App = () => {}
+
+
 export default App;

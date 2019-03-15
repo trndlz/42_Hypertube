@@ -5,11 +5,11 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('./config/passport-setup');
-require("./model/dbconnect");
 
 app.use(passport.initialize());
 app.use(cors());
 
+mongoose.connect('mongodb://localhost:27017/hypertube', {useNewUrlParser: true});
 // mongoose.set('useNewUrlParser', true);
 // mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
