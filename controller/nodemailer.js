@@ -2,8 +2,6 @@ const transporter = require("../config/nodemailer-setup").transporter;
 const Model = require("../model/user");
 const keys = require("../config/keys");
 
-//https://topol.io/editor/5c3b98ba79c3f/edit
-
 setNewPassword = async (req, res, next) => {
     try {
         const user = new User();

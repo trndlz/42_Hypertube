@@ -1,6 +1,4 @@
 const jwt = require('jsonwebtoken');
-// const fs = require('fs');
-// const fileType = require('file-type');
 const keys = require("../config/keys");
 const Model = require("../model/user");
 const { emailSendVerification } = require('./nodemailer')
@@ -13,12 +11,6 @@ const googleAuth = (req, res) => {
 const facebookAuth = (req, res) => {
     res.redirect("http://localhost:3000/mainpage/gallery");    
 }
-
-// const localSignInAuth = (req, res) => {
-//     const body = {_id: req.user._id, email: req.user.email };
-//     const token = jwt.sign(body, keys.jwt, { expiresIn: 3600 });
-//     return res.status(200).json({ token });
-// }
 
 const localSignInAuth = async (req, res) => {
     const currentUser = await Model.User.findOne({ username: req.body.username });

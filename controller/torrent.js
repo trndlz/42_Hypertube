@@ -2,7 +2,6 @@ const fetch = require('node-fetch');
 var FFmpeg = require('fluent-ffmpeg');
 var ffmpeg = require('ffmpeg-static');
 var torrentStream = require('torrent-stream');
-// console.log(ffmpeg.path);
 FFmpeg.setFfmpegPath(ffmpeg.path);
 
 // var http = require("https");

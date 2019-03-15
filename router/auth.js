@@ -1,17 +1,12 @@
 const router = require("express").Router();
 const passport = require("passport");
-const jwt = require("jsonwebtoken");
 const {
     googleAuth,
     facebookAuth,
     localSignInAuth,
     localSignUpAuth
 } = require("../controller/auth");
-const cors = require('cors');
-var corsOptions = {
-    origin: 'http://localhost:3000',
-    optionsSuccessStatus: 200
-}
+
 
 router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 router.get("/google/redirect", passport.authenticate("google"), googleAuth);
@@ -60,6 +55,5 @@ router.post(
 );
 
 router.post("/signin", localSignInAuth);
-// router.post("/signin", cors(corsOptions), passport.authenticate("signin"), localSignInAuth);
 
 module.exports = router;
