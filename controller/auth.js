@@ -4,12 +4,20 @@ const Model = require("../model/user");
 const { emailSendVerification } = require('./nodemailer')
 const { validateUsername, validateFirstName, validatePassword, validateLastName, validateEmail, checkUsername, checkEmail } = require('../validation/validation')
 
-const googleAuth = (req, res) => {
-    res.redirect("http://localhost:3000/mainpage/gallery");    
+const createJwtToken = (payload) => {
+    return jwt.sign(payload, keys.jwt, { expiresIn: 3600 });
 }
 
-const facebookAuth = (req, res) => {
-    res.redirect("http://localhost:3000/mainpage/gallery");    
+const googleAuth = (req, res) => {
+    //TOKEN IN URL
+    let token = createJwtToken({ _id: req.user._id });
+    res.redirect(`http://localhost:3000/mainpage/gallery?token=${token}`);
+}
+
+const the42Auth = (req, res) => {
+    //TOKEN IN URL
+    let token = createJwtToken({ _id: req.user._id });
+    res.redirect(`http://localhost:3000/mainpage/gallery?token=${token}`);
 }
 
 const localSignInAuth = async (req, res) => {
@@ -23,18 +31,12 @@ const localSignInAuth = async (req, res) => {
             if (!currentUser.verified) {
                 res.status(200).json({success: false, msg: "Please verify your email address"});
             } else {
-                const payload = { _id: currentUser._id, email: currentUser.email };
-                jwt.sign(
-                    payload,
-                    keys.jwt,
-                    { expiresIn: 3600 },
-                    (err, token) => {
-                        res.status(200).json({
-                            success: true,
-                            token: 'Bearer ' + token
-                        });
-                    }
-                );
+                const payload = { _id: currentUser._id };
+                let token = createJwtToken(payload);
+                res.status(200).json({
+                    success: true,
+                    token: token
+                });
             }
         }
     }
@@ -71,7 +73,7 @@ const localSignUpAuth = async (req, res) => {
 
 module.exports = exports = {
     googleAuth,
-    facebookAuth,
+    the42Auth,
     localSignUpAuth,
-    localSignInAuth
+    localSignInAuth,
 }

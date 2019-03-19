@@ -1,8 +1,18 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import Footer from "../../partials/Footer";
 import imgCover from "../../../images/spiderman-img.jpg";
+import queryString from 'query-string';
 
-const Gallery = () => {
+const Gallery = (props) => {
+    useEffect(() => {
+        (async () => {
+            const parsed = queryString.parse(props.location.search);
+            if (parsed.token) {
+                localStorage.setItem('jwt', parsed.token);
+                console.log(parsed.token)
+            }
+        })();
+    }, [])
     return (
         <Fragment>
             <div className="main-content-wrapper">

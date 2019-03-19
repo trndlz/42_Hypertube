@@ -1,26 +1,13 @@
 const router = require("express").Router();
 const passport = require("passport");
-const {
-    googleAuth,
-    facebookAuth,
-    localSignInAuth,
-    localSignUpAuth
-} = require("../controller/auth");
+const { googleAuth, localSignInAuth, localSignUpAuth, the42Auth } = require("../controller/auth");
 
 
-router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 router.get("/google/redirect", passport.authenticate("google"), googleAuth);
 
-router.get(
-    "/facebook",
-    passport.authenticate("facebook")
-);
-
-router.get(
-    "/facebook/redirect",
-    passport.authenticate("facebook"),
-    facebookAuth
-);
+router.get("/the42", passport.authenticate("42"));
+router.get("/the42/redirect", passport.authenticate("42"), the42Auth);
 
 const multer = require('multer');
 var storage = multer.diskStorage({
@@ -43,7 +30,7 @@ const fileFilter = (req, file, cb) => {
 var upload = multer({
     storage: storage,
     limits: {
-    fileSize: 1024 * 1024 * 5
+        fileSize: 1024 * 1024 * 5
     },
     fileFilter: fileFilter
 })
@@ -54,6 +41,10 @@ router.post(
     localSignUpAuth
 );
 
-router.post("/signin", localSignInAuth);
+router.post(
+    "/signin",
+    upload.none(),
+    localSignInAuth
+);
 
 module.exports = router;

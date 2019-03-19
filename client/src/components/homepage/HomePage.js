@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import { Redirect } from 'react-router-dom';
+import { validateEmail, validateUsername, validateFirstName, validateLastName, validatePassword, validatePicture } from '../../validation/validation'
+import useAsyncState from '../../utils/useAsyncState';
 
 function EmailVerified(props) {
     return (
@@ -28,10 +30,11 @@ const HomePage = (props) => {
     const [signInPassword, setSignInPassword] = useState('');
     const [emailVerified, setEmailVerified] = useState(false);
     const [emailToVerify, setEmailToVerify] = useState(false);
-    const [errors, setErrors] = useState({});
     const [redirect, setRedirect] = useState(false);
     const [msg, setMsg] = useState('');
     const [emailError, setEmailError] = useState('');
+    const [errors, setErrors] = useAsyncState({});
+    const [isLoading, setIsLoading] = useState(false);
 
     const renderRedirect = () => {
         if (redirect) {
@@ -39,47 +42,54 @@ const HomePage = (props) => {
         }
     }
 
-    const handleInputChange = (inputName, e) => {
-        inputName(e.target.value);
-    }
-
     const handleChange = e => {
         let reader = new FileReader();
-        reader.readAsDataURL(e.target.files[0]);
-        reader.addEventListener(
-            "load",
-            e => {
-                document.querySelector("#profile-picture").src = reader.result;
-            },
-            false
-        );
+        if (e.target.files[0]){
+            reader.readAsDataURL(e.target.files[0]);
+            reader.addEventListener(
+                "load",
+                e => {
+                    document.querySelector("#profile-picture").src = reader.result;
+                },
+                false
+            );
+        } else {
+            document.querySelector("#profile-picture").src = 'https://bikeandbrain.files.wordpress.com/2015/05/face.jpg';
+        }
     };
 
     const handleSignUp = async e => {
         e.preventDefault();
-        setErrors({});
+        const data = new FormData(e.target)
+        let invalid = {};
+        await setErrors({});
         setEmailToVerify(false);
-        let formData = new FormData();
-        let file = document.querySelector("#file-input").files[0];
-        if (!file){
-            setErrors({...errors, picture: true})
-        } else {
-            formData.append("userPicture", file);
-            formData.append("username", username);
-            formData.append("firstName", firstName);
-            formData.append("lastName", lastName);
-            formData.append("email", email);
-            formData.append("password", password);
+        if (!validateUsername(data.get("username"))) invalid.username = true;
+        if (!validateEmail(data.get("email"))) invalid.email = true;
+        if (!validateFirstName(data.get("firstName"))) invalid.firstName = true;
+        if (!validateLastName(data.get("lastName"))) invalid.lastName = true;
+        if (!validatePassword(data.get("password"))) invalid.password = true;
+        if (!validatePicture(data.get("userPicture"))) invalid.picture = true;
+        if (Object.keys(invalid).length === 0) {
+            setIsLoading(true);
             let res = await fetch("http://localhost:8145/auth/signup", {
                 method: "POST",
-                body: formData
+                body: data
             });
             res = await res.json();
             if (!res.success) {
-                setErrors({...errors, ...res.errors})      
+                setErrors({...res.errors});
             } else {
-                setEmailToVerify(true)
+                setEmailToVerify(true);
+                setFirstName('');
+                setLastName('');
+                setUsername('');
+                setEmail('');
+                setPassword('');
             }
+            setIsLoading(false);
+        } else {
+            setErrors({...invalid});
         }
     };
 
@@ -87,16 +97,10 @@ const HomePage = (props) => {
         e.preventDefault();
         setErrors({});
         setMsg('');
-        const formValues = {
-            username: signInUsername,
-            password: signInPassword
-        };
+        const data = new FormData(e.target);
         let res = await fetch("http://localhost:8145/auth/signin", {
-            headers: {
-                "Content-Type": "application/json"
-            },
             method: "POST",
-            body: JSON.stringify(formValues)
+            body: data
         });
         res = await res.json();
         if (!res.success) {
@@ -105,30 +109,30 @@ const HomePage = (props) => {
         } else {
             setRedirect(true);
             localStorage.setItem('jwt', res.token);
+            console.log(res.token)
         }
     };
 
-    const fetchEmailVerification = async () => {
-        const parsed = queryString.parse(props.location.search);
-        if (parsed.action && parsed.action === 'verifyemail' && parsed.email && parsed.token) {
-            let res = await fetch("http://localhost:8145/email/emailcheckverification", {
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify({
-                    email: parsed.email,
-                    token: parsed.token
-                })
-            });
-            setEmailVerified(true);
-            res = await res.json();            
-            setEmailError(res.error)
-        }
-    }
-
+    // Email Redirection
     useEffect(() => {
-        fetchEmailVerification();
+        (async () => {
+            const parsed = queryString.parse(props.location.search);
+            if (parsed.action && parsed.action === 'verifyemail' && parsed.email && parsed.token) {
+                let res = await fetch("http://localhost:8145/email/emailcheckverification", {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        email: parsed.email,
+                        token: parsed.token
+                    })
+                });
+                res = await res.json();
+                setEmailVerified(true);
+                setEmailError(res.error)
+            }
+        })()
     }, [])
 
     return (
@@ -156,7 +160,7 @@ const HomePage = (props) => {
             </div>
             <div className="login-wrapper">
                 <div className="homepage__sign-in">
-                    <form className="homepage__sign-in__form">
+                    <form className="homepage__sign-in__form" id="signinform" onSubmit={handleSignIn}>
                         <div className="homepage__sign-in__form-content">
                             <div className="input-container">
                                 <input
@@ -165,7 +169,8 @@ const HomePage = (props) => {
                                     placeholder="Username"
                                     id="signin-username"
                                     value={ signInUsername }
-                                    onChange={ e => handleInputChange(setSignInUsername, e) }
+                                    name="username"
+                                    onChange={ e => setSignInUsername(e.target.value) }
                                 />
                             </div>
                             <div className="input-container">
@@ -175,11 +180,11 @@ const HomePage = (props) => {
                                     placeholder="Password"
                                     id="signin-password"
                                     value={ signInPassword }
-                                    onChange={ e => handleInputChange(setSignInPassword, e) }
+                                    name="password"
+                                    onChange={ e => setSignInPassword(e.target.value) }
                                 />
                             </div>
                             <input
-                                onClick={ handleSignIn }
                                 className="btn btn--primary"
                                 type="submit"
                                 value="Sign In !"
@@ -189,14 +194,25 @@ const HomePage = (props) => {
                     </form>
                 </div>
                 <div className="homepage__sign-up">
-                    <form className="homepage__sign-up__form" id="p1">
+                {isLoading ? (
+                        <div className="cs-loader">
+                            <div className="cs-loader-inner">
+                            <label>	●</label>
+                            <label>	●</label>
+                            <label>	●</label>
+                            <label>	●</label>
+                            <label>	●</label>
+                            <label>	●</label>
+                            </div>
+                        </div>
+                    ) : (
+                    <form className="homepage__sign-up__form" id="signupform" onSubmit={handleSignUp}>
                         <div className="img-upload">
                             <label
                                 htmlFor="file-input"
                                 className="img-label"
                             >
                                 <img
-                                    name="userPicture"
                                     id="profile-picture"
                                     alt="profile"
                                     src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
@@ -207,6 +223,7 @@ const HomePage = (props) => {
                                 id="file-input"
                                 type="file"
                                 onChange={handleChange}
+                                name="userPicture"
                             />
                         </div>
                         { errors.picture ? <div className="input-container__display-error">You must pick a profile picture</div> : null }
@@ -217,7 +234,8 @@ const HomePage = (props) => {
                                 className="input-container__input input-type-1"
                                 placeholder="First Name"
                                 value={ firstName }
-                                onChange={ e => handleInputChange(setFirstName, e) }
+                                name="firstName"
+                                onChange={ e => setFirstName(e.target.value) }
                             />
                         </div>
                         { errors.firstName ? <div className="input-container__display-error">Wrong first name</div> : null }
@@ -228,7 +246,8 @@ const HomePage = (props) => {
                                 className="input-container__input input-type-1"
                                 placeholder="Last Name"
                                 value={ lastName }
-                                onChange={ e => handleInputChange(setLastName, e) }
+                                name="lastName"
+                                onChange={ e => setLastName(e.target.value) }
                             />
                         </div>
                         { errors.lastName ? <div className="input-container__display-error">Wrong last name</div> : null }
@@ -239,7 +258,8 @@ const HomePage = (props) => {
                                 className="input-container__input input-type-1"
                                 placeholder="Email"
                                 value={ email }
-                                onChange={ e => handleInputChange(setEmail, e) }
+                                name="email"
+                                onChange={ e => setEmail(e.target.value) }
                             />
                         </div>
                         { errors.email ? <div className="input-container__display-error">Wrong email</div> : null }
@@ -252,7 +272,8 @@ const HomePage = (props) => {
                                 placeholder="Username"
                                 id="signup-username"
                                 value={ username }
-                                onChange={ e => handleInputChange(setUsername, e) }
+                                name="username"
+                                onChange={ e => setUsername(e.target.value) }
                             />
                         </div>
                         { errors.username ? <div className="input-container__display-error">Wrong username</div> : null }
@@ -265,318 +286,25 @@ const HomePage = (props) => {
                                 placeholder="Password"
                                 id="signup-password"
                                 value={ password }
-                                onChange={ e => handleInputChange(setPassword, e) }
-
+                                name="password"
+                                onChange={ e => setPassword(e.target.value) }
                             />
                         </div>
                         { errors.password ? <div className="input-container__display-error">Wrong password</div> : null }
                         <input
-                            onClick={handleSignUp}
                             className="btn btn--primary"
                             type="submit"
                             value="Sign Up !"
                         />
-                    </form>
+                    </form>)}
                     <div className="signup-OAuth">
                         <a className="google btn btn--primary" href="http://localhost:8145/auth/google"> </a>
-                        <a className="logo42 btn btn--primary" href="http://localhost:8145/auth/42"> </a>
+                        <a className="logo42 btn btn--primary" href="http://localhost:8145/auth/the42"> </a>
                     </div>
                 </div>
             </div>
         </main>
     );
 }
-
-//----------------------------------------------------
-//----------------------------------------------------
-//THIS IS THE SAME BUT WITHOUT HOOKS
-//----------------------------------------------------
-//----------------------------------------------------
-
-// class HomePage extends Component {
-//     state = {
-//         username:'',
-//         lastName:'',
-//         firstName:'',
-//         email:'',
-//         password:'',
-//         signInUsername: '',
-//         signInPassword: '',
-//         emailVerified: false,
-//         emailToVerify: false,
-//         errors: {},
-//         redirect: false
-//     }
-
-//     renderRedirect = () => {
-//         if (this.state.redirect) {
-//             return <Redirect to='/mainpage/gallery'/>
-//         }
-//     }
-
-//     async componentDidMount() {
-//         const parsed = queryString.parse(this.props.location.search);
-//         if (parsed.action && parsed.action === 'verifyemail' && parsed.email && parsed.token) {
-//             let res = await fetch("http://localhost:8145/email/emailcheckverification", {
-//                 headers: {
-//                     "Content-Type": "application/json"
-//                 },
-//                 method: "POST",
-//                 body: JSON.stringify({
-//                     email: parsed.email,
-//                     token: parsed.token
-//                 })
-//             });
-//             this.setState({emailVerified: true});
-//             res = await res.json();            
-//             this.setState({
-//                 error: res.error
-//             })
-//         }
-//     }
-
-//     handleInputChange = (inputName, e) => {
-//         this.setState({ [inputName]: e.target.value });
-//     }
-
-//     handleChange = e => {
-//         let reader = new FileReader();
-//         // let file = e.target.files[0];
-//         reader.readAsDataURL(e.target.files[0]);
-//         reader.addEventListener(
-//             "load",
-//             e => {
-//                 document.querySelector("#profile-picture").src = reader.result;
-//                 // this.setState({ 
-//                 //     picture: reader.result,
-//                 //     // picture: file
-//                 // });
-//             },
-//             false
-//         );
-//     };
-
-//     handleSignUp = async e => {
-//         e.preventDefault();
-//         this.setState({
-//             errors: {},
-//             emailToVerify: false
-//         })
-//         let formData = new FormData();
-//         let file = document.querySelector("#file-input").files[0];
-//         if (!file){
-//             this.setState({errors: {picture: true}})
-//         } else {
-//             formData.append("userPicture", file);
-//             formData.append("username", this.state.username);
-//             formData.append("firstName", this.state.firstName);
-//             formData.append("lastName", this.state.lastName);
-//             formData.append("email", this.state.email);
-//             formData.append("password", this.state.password);
-//             let res = await fetch("http://localhost:8145/auth/signup", {
-//                 method: "POST",
-//                 body: formData
-//             });
-//             res = await res.json();
-//             if (!res.success) {
-//                 this.setState({
-//                     errors: {...res.errors}
-//                 })      
-//             } else {
-//                 this.setState({
-//                     emailToVerify: true
-//                 })      
-//             }
-//         }
-//     };
-
-//     handleSignIn = async (e) => {
-//         e.preventDefault();
-//         this.setState({
-//             errors: {},
-//             msg: ''
-//         })
-//         const formValues = {
-//             username: this.state.signInUsername,
-//             password: this.state.signInPassword
-//         };
-//         let res = await fetch("http://localhost:8145/auth/signin", {
-//             headers: {
-//                 "Content-Type": "application/json"
-//             },
-//             method: "POST",
-//             body: JSON.stringify(formValues)
-//         });
-//         res = await res.json();
-//         if (!res.success) {
-//             this.setState({
-//                 errors: {login: true},
-//                 msg: res.msg
-//             })
-//         } else {
-//             this.setState({
-//                 redirect: true
-//             })
-//             localStorage.setItem('jwt', res.token);
-//         }
-//     };
-
-//     render() {
-//         return (
-//             <main className="homepage">
-//             {this.renderRedirect()}
-//                 {this.state.emailVerified ? <EmailVerified error={this.state.error} /> : null}
-//                 {this.state.emailToVerify ? <EmailToVerify /> : null}
-//                 <div className="homepage__description">
-//                     <ul className="homepage__description--list">
-//                         <li>
-//                             <i className="fas fa-film" />
-//                             <span>
-//                                 Popular movies totally free with no adds !
-//                             </span>
-//                         </li>
-//                         <li>
-//                             <i className="fas fa-user-secret" />
-//                             <span>Torrent based, please use a VPN</span>
-//                         </li>
-//                         <li>
-//                             <i className="fas fa-globe-europe" />
-//                             <span>Best quality with subtitles</span>
-//                         </li>
-//                     </ul>
-//                 </div>
-//                 <div className="login-wrapper">
-//                     <div className="homepage__sign-in">
-//                         <form className="homepage__sign-in__form">
-//                             <div className="homepage__sign-in__form-content">
-//                                 <div className="input-container">
-//                                     <input
-//                                         type="text"
-//                                         className="input-container__input input-type-1"
-//                                         placeholder="Username"
-//                                         id="signin-username"
-//                                         value={ this.state.signInUsername }
-//                                         onChange={ e => this.handleInputChange("signInUsername", e) }
-//                                     />
-//                                 </div>
-//                                 <div className="input-container">
-//                                     <input
-//                                         type="text"
-//                                         className="input-container__input input-type-1"
-//                                         placeholder="Password"
-//                                         id="signin-password"
-//                                         value={ this.state.signInPassword }
-//                                         onChange={ e => this.handleInputChange("signInPassword", e) }
-//                                     />
-//                                 </div>
-//                                 <input
-//                                     onClick={ this.handleSignIn }
-//                                     className="btn btn--primary"
-//                                     type="submit"
-//                                     value="Sign In !"
-//                                 />
-//                             </div>
-//                             { this.state.errors.login ? <div className="input-container__display-error">{ this.state.msg }</div> : null }
-//                         </form>
-//                     </div>
-//                     <div className="homepage__sign-up">
-//                         <form className="homepage__sign-up__form" id="p1">
-//                             <div className="img-upload">
-//                                 <label
-//                                     htmlFor="file-input"
-//                                     className="img-label"
-//                                 >
-//                                     <img
-//                                         name="userPicture"
-//                                         id="profile-picture"
-//                                         alt="profile"
-//                                         src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
-//                                         />
-//                                 </label>
-//                                 <input
-//                                     accept="image/*"
-//                                     id="file-input"
-//                                     type="file"
-//                                     onChange={this.handleChange}
-//                                 />
-//                             </div>
-//                             { this.state.errors.picture ? <div className="input-container__display-error">You must pick a profile picture</div> : null }
-//                             <div className="input-container">
-//                                 <i className="fas fa-id-card input-container__icon" />
-//                                 <input
-//                                     type="text"
-//                                     className="input-container__input input-type-1"
-//                                     placeholder="First Name"
-//                                     value={ this.state.firstName }
-//                                     onChange={ e => this.handleInputChange("firstName", e) }
-//                                 />
-//                             </div>
-//                             { this.state.errors.firstName ? <div className="input-container__display-error">Wrong first name</div> : null }
-//                             <div className="input-container">
-//                                 <i className="far fa-id-card input-container__icon" />
-//                                 <input
-//                                     type="text"
-//                                     className="input-container__input input-type-1"
-//                                     placeholder="Last Name"
-//                                     value={ this.state.lastName }
-//                                     onChange={ e => this.handleInputChange("lastName", e) }
-//                                 />
-//                             </div>
-//                             { this.state.errors.lastName ? <div className="input-container__display-error">Wrong last name</div> : null }
-//                             <div className="input-container">
-//                                 <i className="fas fa-at input-container__icon" />
-//                                 <input
-//                                     type="email"
-//                                     className="input-container__input input-type-1"
-//                                     placeholder="Email"
-//                                     value={ this.state.email }
-//                                     onChange={ e => this.handleInputChange("email", e) }
-//                                 />
-//                             </div>
-//                             { this.state.errors.email ? <div className="input-container__display-error">Wrong email</div> : null }
-//                             { this.state.errors.duplicateEmail ? <div className="input-container__display-error">Email is already used</div> : null }
-//                             <div className="input-container">
-//                                 <i className="fas fa-user input-container__icon" />
-//                                 <input
-//                                     type="text"
-//                                     className="input-container__input input-type-1"
-//                                     placeholder="Username"
-//                                     id="signup-username"
-//                                     value={ this.state.username }
-//                                     onChange={ e => this.handleInputChange("username", e) }
-//                                 />
-//                             </div>
-//                             { this.state.errors.username ? <div className="input-container__display-error">Wrong username</div> : null }
-//                             { this.state.errors.duplicateUsername ? <div className="input-container__display-error">Username is already used</div> : null }
-//                             <div className="input-container">
-//                                 <i className="fas fa-unlock input-container__icon" />
-//                                 <input
-//                                     type="text"
-//                                     className="input-container__input input-type-1"
-//                                     placeholder="Password"
-//                                     id="signup-password"
-//                                     value={ this.state.password }
-//                                     onChange={ e => this.handleInputChange("password", e) }
-
-//                                 />
-//                             </div>
-//                             { this.state.errors.password ? <div className="input-container__display-error">Wrong password</div> : null }
-//                             <input
-//                                 onClick={this.handleSignUp}
-//                                 className="btn btn--primary"
-//                                 type="submit"
-//                                 value="Sign Up !"
-//                             />
-//                         </form>
-//                         <div className="signup-OAuth">
-//                             <a className="google btn btn--primary" href="http://localhost:8145/auth/google"> </a>
-//                             <a className="logo42 btn btn--primary" href="http://localhost:8145/auth/42"> </a>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </main>
-//         );
-//     }
-// }
 
 export default HomePage;
