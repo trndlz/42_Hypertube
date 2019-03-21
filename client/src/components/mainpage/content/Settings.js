@@ -2,6 +2,22 @@ import React from "react";
 import Footer from "../../partials/Footer";
 
 const Settings = () => {
+    const handleChange = e => {
+        let reader = new FileReader();
+        if (e.target.files[0]){
+            reader.readAsDataURL(e.target.files[0]);
+            reader.addEventListener(
+                "load",
+                e => {
+                    document.querySelector("#profile-picture-settings").src = reader.result;
+                },
+                false
+            );
+        } else {
+            document.querySelector("#profile-picture-settings").src = 'https://bikeandbrain.files.wordpress.com/2015/05/face.jpg';
+        }
+    };
+
     return (
         <div className="main-content-wrapper">
             <div className="settings-form login-wrapper">
@@ -21,7 +37,7 @@ const Settings = () => {
                             <input
                                 id="file-input"
                                 type="file"
-                                onChange={this.handleChange}
+                                onChange={handleChange}
                             />
                         </div>
                         <div className="input-container">

@@ -11,13 +11,13 @@ const createJwtToken = (payload) => {
 const googleAuth = (req, res) => {
     //TOKEN IN URL
     let token = createJwtToken({ _id: req.user._id });
-    res.redirect(`http://localhost:3000/mainpage/gallery?token=${token}`);
+    res.redirect(`http://localhost:3000/?token=${token}`); //!
 }
 
 const the42Auth = (req, res) => {
     //TOKEN IN URL
     let token = createJwtToken({ _id: req.user._id });
-    res.redirect(`http://localhost:3000/mainpage/gallery?token=${token}`);
+    res.redirect(`http://localhost:3000/?token=${token}`); //!
 }
 
 const localSignInAuth = async (req, res) => {

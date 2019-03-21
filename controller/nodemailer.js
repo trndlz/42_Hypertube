@@ -90,13 +90,12 @@ emailSendVerification = async (req, res, next) => {
             <title>Document</title>
         </head>
         <body>
-        gewgiujhwiogjweoigjiwejgoijewgig
-        <a href="http://localhost:3000/?action=verifyemail&email=${req.body.email}&token=${user.token}">Clic</a>
+        <a href="http://localhost:3000/?action=verifyemail&email=${req.body.email}&token=${user.token}">Please click on this link to verify your account. </a>
         </body>
         </html>
         `;
         let mailOptions = {
-            from: `"Matcha Contact" ${keys.mail.user}`,
+            from: `"Hypertube Contact" ${keys.mail.user}`,
             to: req.body.email,
             subject: "Email Verification",
             html: output

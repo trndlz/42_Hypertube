@@ -3,6 +3,7 @@ import queryString from 'query-string';
 import { Redirect } from 'react-router-dom';
 import { validateEmail, validateUsername, validateFirstName, validateLastName, validatePassword, validatePicture } from '../../validation/validation'
 import useAsyncState from '../../utils/useAsyncState';
+import { auth } from '../../utils/auth';
 
 function EmailVerified(props) {
     return (
@@ -30,15 +31,14 @@ const HomePage = (props) => {
     const [signInPassword, setSignInPassword] = useState('');
     const [emailVerified, setEmailVerified] = useState(false);
     const [emailToVerify, setEmailToVerify] = useState(false);
-    const [redirect, setRedirect] = useState(false);
     const [msg, setMsg] = useState('');
     const [emailError, setEmailError] = useState('');
     const [errors, setErrors] = useAsyncState({});
     const [isLoading, setIsLoading] = useState(false);
-
+    
     const renderRedirect = () => {
-        if (redirect) {
-            return <Redirect to='/mainpage/gallery'/>
+        if (props.location.pathname.length > 1) {
+            return <Redirect to='/'/>
         }
     }
 
@@ -107,12 +107,12 @@ const HomePage = (props) => {
             setErrors({...errors, login: true})
             setMsg(res.msg)
         } else {
-            setRedirect(true);
             localStorage.setItem('jwt', res.token);
-            console.log(res.token)
+            await auth.authenticate();
+            props.setRerender(!props.rerender)
         }
     };
-
+    
     // Email Redirection
     useEffect(() => {
         (async () => {
@@ -133,6 +133,18 @@ const HomePage = (props) => {
                 setEmailError(res.error)
             }
         })()
+    }, [])
+
+    // Sign with Google or 42
+    useEffect(() => {
+        (async () => {
+            const parsed = queryString.parse(props.location.search);
+            if (parsed.token) {
+                localStorage.setItem('jwt', parsed.token);
+                await auth.authenticate();
+                props.setRerender(!props.rerender)
+            }
+        })();
     }, [])
 
     return (

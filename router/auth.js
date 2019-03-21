@@ -1,7 +1,13 @@
 const router = require("express").Router();
 const passport = require("passport");
 const { googleAuth, localSignInAuth, localSignUpAuth, the42Auth } = require("../controller/auth");
+const checkAuth = require('./check-auth')
 
+router.get('/isauthenticated', checkAuth, (req, res, next) => {
+    res.status(200).json({
+        isAuthenticated: true
+    });
+})
 
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 router.get("/google/redirect", passport.authenticate("google"), googleAuth);

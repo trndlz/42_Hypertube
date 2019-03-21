@@ -1,41 +1,34 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
+import { Link } from 'react-router-dom'
 import Footer from "../../partials/Footer";
 import imgCover from "../../../images/spiderman-img.jpg";
-import queryString from 'query-string';
 
 const Gallery = (props) => {
-    useEffect(() => {
-        (async () => {
-            const parsed = queryString.parse(props.location.search);
-            if (parsed.token) {
-                localStorage.setItem('jwt', parsed.token);
-                console.log(parsed.token)
-            }
-        })();
-    }, [])
     return (
         <Fragment>
             <div className="main-content-wrapper">
                 <div className="padding-wrapper">
-                    <div className="film">
-                        <div className="film-min seen">
-                            <img
-                                src={imgCover}
-                                alt=""
-                                style={{ width: "100%" }}
-                            />
+                    <Link to="/video">
+                        <div className="film">
+                            <div className="film-min seen">
+                                <img
+                                    src={imgCover}
+                                    alt=""
+                                    style={{ width: "100%" }}
+                                />
+                            </div>
+                            <div className="film-infos">
+                                SpiderMan et le bouffon vert{" "}
+                                <span className="film-infos-date">(1992)</span>
+                                <br />
+                                <i className="fas fa-star" />
+                                <i className="fas fa-star" />
+                                <i className="fas fa-star" />
+                                <i className="fas fa-star" />
+                                <i className="fas fa-star" />
+                            </div>
                         </div>
-                        <div className="film-infos">
-                            SpiderMan et le bouffon vert{" "}
-                            <span className="film-infos-date">(1992)</span>
-                            <br />
-                            <i className="fas fa-star" />
-                            <i className="fas fa-star" />
-                            <i className="fas fa-star" />
-                            <i className="fas fa-star" />
-                            <i className="fas fa-star" />
-                        </div>
-                    </div>
+                    </Link>
                     <div className="film">
                         <div className="film-min unseen">
                             <img
