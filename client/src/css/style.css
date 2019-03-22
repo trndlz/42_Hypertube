@@ -187,6 +187,9 @@ body {
       opacity: 0;
       animation: popAndHideError 5s ease-out;
       font-size: 1rem; }
+    .login-wrapper .input-container__passforgot {
+      text-align: center;
+      margin-top: -.5rem; }
   @media only screen and (max-height: 747px) and (min-width: 46.5em) {
     .login-wrapper {
       flex-direction: row; } }
@@ -640,6 +643,16 @@ h1 {
   background-color: #97f572;
   color: #232323; }
 
+.btn--secondary {
+  background-color: #97f572;
+  color: #232323;
+  padding: .4rem 2rem;
+  background-color: #fff; }
+  .btn--secondary:hover {
+    transform: none; }
+  .btn--secondary:active, .btn--secondary:focus {
+    transform: none; }
+
 .btn::after {
   content: "";
   display: inline-block;
@@ -737,7 +750,7 @@ select::-ms-expand {
 
 .cs-loader {
   position: relative;
-  height: 100px;
+  height: 5rem;
   width: 100%; }
 
 .cs-loader-inner {
@@ -745,8 +758,8 @@ select::-ms-expand {
   top: 50%;
   position: absolute;
   color: #FFF;
-  padding: 0 93px;
-  text-align: center; }
+  text-align: center;
+  width: 100%; }
 
 .cs-loader-inner label {
   font-size: 20px;

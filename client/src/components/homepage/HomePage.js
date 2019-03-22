@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import queryString from 'query-string';
 import { Redirect } from 'react-router-dom';
 import { validateEmail, validateUsername, validateFirstName, validateLastName, validatePassword, validatePicture } from '../../validation/validation'
@@ -21,6 +21,14 @@ function EmailToVerify() {
     );
 }
 
+function PasswordReset() {
+    return (
+        <div className="popup-notif">
+            <p>Your password has been successfully changed</p>
+        </div>
+    );
+}
+
 const HomePage = (props) => {
     const [username, setUsername] = useState('');
     const [lastName, setLastName] = useState('');
@@ -29,12 +37,17 @@ const HomePage = (props) => {
     const [password, setPassword] = useState('');
     const [signInUsername, setSignInUsername] = useState('');
     const [signInPassword, setSignInPassword] = useState('');
+    const [forgotEmail, setForgotEmail] = useState('');
+    const [forgotPassword, setForgotPassword] = useState('');
+    const [forgotToken, setForgotToken] = useState('');
+    const [passwordForgotten, setpasswordForgotten] = useState(0);
     const [emailVerified, setEmailVerified] = useState(false);
     const [emailToVerify, setEmailToVerify] = useState(false);
+    const [passwordReset, setPasswordReset] = useState(false);
     const [msg, setMsg] = useState('');
     const [emailError, setEmailError] = useState('');
     const [errors, setErrors] = useAsyncState({});
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(0);
     
     const renderRedirect = () => {
         if (props.location.pathname.length > 1) {
@@ -71,7 +84,7 @@ const HomePage = (props) => {
         if (!validatePassword(data.get("password"))) invalid.password = true;
         if (!validatePicture(data.get("userPicture"))) invalid.picture = true;
         if (Object.keys(invalid).length === 0) {
-            setIsLoading(true);
+            setIsLoading(1);
             let res = await fetch("http://localhost:8145/auth/signup", {
                 method: "POST",
                 body: data
@@ -87,7 +100,7 @@ const HomePage = (props) => {
                 setEmail('');
                 setPassword('');
             }
-            setIsLoading(false);
+            setIsLoading(0);
         } else {
             setErrors({...invalid});
         }
@@ -142,16 +155,80 @@ const HomePage = (props) => {
             if (parsed.token) {
                 localStorage.setItem('jwt', parsed.token);
                 await auth.authenticate();
-                props.setRerender(!props.rerender)
+                props.setRerender(!props.rerender);
             }
         })();
     }, [])
+
+    const handlePasswordForgotten = (e) => {
+        if (e) e.preventDefault();
+        let button = document.querySelector("#passforgot");
+        if (passwordForgotten === 1 ){
+            setpasswordForgotten(0); 
+            button.innerHTML = "Password Forgotten";
+        } else {
+            setpasswordForgotten(1);
+            button.innerHTML = "Go back";
+        }
+    }
+
+    const handlePasswordForgottenMail = async (e) => {
+        e.preventDefault();
+        setErrors({});
+        setMsg('');
+        setIsLoading(2);
+        let res = await fetch("http://localhost:8145/email/passwordforgotten", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                email: forgotEmail,
+            })
+        });
+        res = await res.json();
+        if (!res.error){
+            setpasswordForgotten(2);
+        } else {
+            setErrors({...errors, login: true})
+            setMsg(res.msg)
+        }
+        setIsLoading(0);
+    }
+
+    const handlePasswordForgottenVerify = async (e) => {
+        e.preventDefault();
+        setErrors({});
+        setMsg('');
+        let res = await fetch("http://localhost:8145/email/setnewpassword", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                email: forgotEmail,
+                password: forgotPassword,
+                token: forgotToken,
+            })
+        });
+        res = await res.json();
+        if (!res.error){
+            setpasswordForgotten(0);
+            setPasswordReset(true);
+            let button = document.querySelector("#passforgot");
+            button.innerHTML = "Password Forgotten";
+        } else {
+            setErrors({...errors, login: true})
+            setMsg(res.msg)
+        }
+    }
 
     return (
         <main className="homepage">
         {renderRedirect()}
             {emailVerified ? <EmailVerified emailError={emailError} /> : null}
             {emailToVerify ? <EmailToVerify /> : null}
+            {passwordReset ? <PasswordReset /> : null}
             <div className="homepage__description">
                 <ul className="homepage__description--list">
                     <li>
@@ -171,52 +248,123 @@ const HomePage = (props) => {
                 </ul>
             </div>
             <div className="login-wrapper">
-                <div className="homepage__sign-in">
-                    <form className="homepage__sign-in__form" id="signinform" onSubmit={handleSignIn}>
+                <div>
+                    <form className="homepage__sign-in__form" id="signinform" onSubmit={passwordForgotten === 0 ? handleSignIn : passwordForgotten === 1 ? handlePasswordForgottenMail : handlePasswordForgottenVerify}>
                         <div className="homepage__sign-in__form-content">
-                            <div className="input-container">
+                        {passwordForgotten === 0 ?
+                            <Fragment>
+                                <div className="input-container">
+                                    <input
+                                        type="text"
+                                        className="input-container__input input-type-1"
+                                        placeholder="Username"
+                                        id="signin-username"
+                                        value={ signInUsername }
+                                        name="username"
+                                        onChange={ e => setSignInUsername(e.target.value) }
+                                    />
+                                </div>
+                                <div className="input-container">
+                                    <input
+                                        type="text"
+                                        className="input-container__input input-type-1"
+                                        placeholder="Password"
+                                        id="signin-password"
+                                        value={ signInPassword }
+                                        name="password"
+                                        onChange={ e => setSignInPassword(e.target.value) }
+                                    />
+                                </div>
                                 <input
-                                    type="text"
-                                    className="input-container__input input-type-1"
-                                    placeholder="Username"
-                                    id="signin-username"
-                                    value={ signInUsername }
-                                    name="username"
-                                    onChange={ e => setSignInUsername(e.target.value) }
+                                    className="btn btn--primary"
+                                    type="submit"
+                                    value="Sign In !"
                                 />
-                            </div>
-                            <div className="input-container">
+                            </Fragment>
+                            : passwordForgotten === 1 ?
+                            <Fragment>
+                                { isLoading === 2 ?
+                                    <div className="cs-loader">
+                                        <div className="cs-loader-inner">
+                                        <label>●</label>
+                                        <label>●</label>
+                                        <label>●</label>
+                                        <label>●</label>
+                                        <label>●</label>
+                                        <label>●</label>
+                                        </div>
+                                    </div>
+                                    :
+                                <Fragment>
+                                    <div className="input-container">
+                                        <input
+                                            type="text"
+                                            className="input-container__input input-type-1"
+                                            placeholder="Email"
+                                            id="forgot-email"
+                                            value={ forgotEmail }
+                                            name="email"
+                                            onChange={ e => setForgotEmail(e.target.value) }
+                                        />
+                                    </div>
+                                    <input
+                                        className="btn btn--primary"
+                                        type="submit"
+                                        value="Send Mail !"
+                                    />
+                                </Fragment>
+                                }
+                            </Fragment>
+                            :
+                            <Fragment>
+                                <div className="input-container">
+                                    <input
+                                        type="text"
+                                        className="input-container__input input-type-1"
+                                        placeholder="Token"
+                                        id="forgot-token"
+                                        value={ forgotToken }
+                                        name="token"
+                                        onChange={ e => setForgotToken(e.target.value) }
+                                    />
+                                </div>
+                                <div className="input-container">
+                                    <input
+                                        type="text"
+                                        className="input-container__input input-type-1"
+                                        placeholder="Password"
+                                        id="forgot-password"
+                                        value={ forgotPassword }
+                                        name="password"
+                                        onChange={ e => setForgotPassword(e.target.value) }
+                                    />
+                                </div>
                                 <input
-                                    type="text"
-                                    className="input-container__input input-type-1"
-                                    placeholder="Password"
-                                    id="signin-password"
-                                    value={ signInPassword }
-                                    name="password"
-                                    onChange={ e => setSignInPassword(e.target.value) }
+                                    className="btn btn--primary"
+                                    type="submit"
+                                    value="Verify !"
                                 />
-                            </div>
-                            <input
-                                className="btn btn--primary"
-                                type="submit"
-                                value="Sign In !"
-                            />
+                            </Fragment>
+                        }
                         </div>
                         { errors.login ? <div className="input-container__display-error">{ msg }</div> : null }
+                        <div className="input-container__passforgot">
+                            <button className="btn btn--secondary" id="passforgot" onClick={handlePasswordForgotten}>Password forgotten</button>
+                        </div>
                     </form>
                 </div>
-                <div className="homepage__sign-up">
-                {isLoading ? (
-                        <div className="cs-loader">
-                            <div className="cs-loader-inner">
-                            <label>	●</label>
-                            <label>	●</label>
-                            <label>	●</label>
-                            <label>	●</label>
-                            <label>	●</label>
-                            <label>	●</label>
-                            </div>
+                <div>
+                    { isLoading === 1 ? (
+                    <div className="cs-loader">
+                        <div className="cs-loader-inner">
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
                         </div>
+                    </div>
                     ) : (
                     <form className="homepage__sign-up__form" id="signupform" onSubmit={handleSignUp}>
                         <div className="img-upload">

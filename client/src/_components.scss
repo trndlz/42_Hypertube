@@ -89,9 +89,20 @@ h1 {
     &--primary {
         background-color: $color-primary;
         color: $color-ternary-8;
-        // &::after {
-        //     background-color: $color-primary;
-        // }
+    }
+
+    &--secondary {
+        background-color: $color-primary;
+        color: $color-ternary-8;
+        padding: .4rem 2rem;
+        background-color: #fff;
+        &:hover {
+            transform: none;
+        }
+        &:active,
+        &:focus {
+            transform: none;
+        }
     }
 
     &::after {
@@ -202,7 +213,7 @@ select::-ms-expand {
   
   .cs-loader {
     position: relative;
-    height: 100px;
+    height: 5rem;
     width: 100%;
   }
   
@@ -211,8 +222,9 @@ select::-ms-expand {
     top: 50%;
     position: absolute;
     color: #FFF;
-    padding: 0 93px;
+    // padding: 0 93px;
     text-align: center;
+    width: 100%;
   }
   
   .cs-loader-inner label {

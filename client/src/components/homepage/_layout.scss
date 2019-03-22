@@ -127,6 +127,10 @@
             animation: popAndHideError 5s ease-out;
             font-size: 1rem;
         }
+        &__passforgot{
+            text-align: center;
+            margin-top: -.5rem;
+        }
     }
     @media only screen and (max-height: 747px) and (min-width: $bp-small) {
         flex-direction: row;
