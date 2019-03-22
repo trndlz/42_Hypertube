@@ -12,10 +12,10 @@ const auth = {
         this.isAuthenticated = res.isAuthenticated;
     },
     async signout(cb) {
-        this.isAuthenticated = false
+        this.isAuthenticated = false;
         localStorage.removeItem("jwt");
-        setTimeout(cb, 100)
+        setTimeout(cb, 100);
     }
-}
+};
 
-export { auth }
+export { auth };

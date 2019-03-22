@@ -1,23 +1,26 @@
+//========================================================
+// IMPORTS
+//========================================================
 const express = require("express");
 const app = express();
-const port = 8145;
 const passport = require('passport');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const keys = require('./config/keys')
 require('./config/passport-setup');
 
-app.use(passport.initialize());
-app.use(cors());
-
+//========================================================
+// MONGO
+//========================================================
 mongoose.connect(keys.mongodb.dbURI, {useNewUrlParser: true});
-// mongoose.set('useNewUrlParser', true);
-// mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
+//========================================================
+// MIDDLEWARES
+//========================================================
 app.use(express.json());
-
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+app.use(passport.initialize());
+app.use(cors());
 
 //========================================================
 // ROUTES
@@ -31,11 +34,10 @@ app.use('/auth', authRoute);
 app.use('/email', email);
 app.use('/torrent', torrentRoute);
 app.use('/testmongoose', testMongoose);
-app.use('/secure', passport.authenticate('jwt', { session : false }), secureRoute );
+app.use('/secure', secureRoute );
 
 //========================================================
-// IMAGE TRANSFER
+// APP
 //========================================================
-// const bodyParser = require("body-parser");
-// app.use(bodyParser.json({ limit: "50mb" }));
-// app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+const port = 8145;
+app.listen(port, () => console.log(`Server is running on port ${port}`));

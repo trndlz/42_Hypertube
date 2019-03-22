@@ -25,7 +25,7 @@ const userSchema = new Schema({
     password: String,
     language: {
         type: String,
-        default: 'en'
+        default: "en"
     },
     moviesSeen: [movieSchema],
     comments: [commentSchema],
@@ -39,11 +39,17 @@ const userSchema = new Schema({
 });
 
 userSchema.pre("save", async function(next) {
-    if (this.isModified('password')) {
+    if (this.isModified("password")) {
         const hash = await bcrypt.hash(this.password, 10);
         this.password = hash;
     }
-    this.token = Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2);
+    this.token =
+        Math.random()
+            .toString(36)
+            .substr(2) +
+        Math.random()
+            .toString(36)
+            .substr(2);
     next();
 });
 

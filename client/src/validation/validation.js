@@ -3,7 +3,6 @@ const validateEmail = email => {
     return re.test(String(email));
 };
 
-
 const validateUsername = username => {
     const re = /^[0-9A-Za-z_\-.]{3,12}$/;
     return re.test(String(username));
@@ -26,7 +25,7 @@ const validatePassword = password => {
 
 const validatePicture = picture => {
     return !!picture.size;
-}
+};
 
 module.exports = exports = {
     validateUsername: validateUsername,

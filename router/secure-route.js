@@ -1,14 +1,9 @@
 const router = require("express").Router();
-const checkAuth = require("./check-auth")
+const checkAuth = require("./check-auth");
+const { postSettings, getSettings } = require("../controller/settings");
+const { upload } = require("../config/multer");
 
-//API
-router.get("/secure", checkAuth, (req, res, next) => {
-  res.json({
-        message: "You made it to the secure route",
-        id: req.user.id,
-        username: req.user.username,
-        email: req.user.email,
-    });
-});
+router.get("/settings", checkAuth, getSettings);
+router.post("/settings", checkAuth, upload.single("userPicture"), postSettings);
 
 module.exports = router;

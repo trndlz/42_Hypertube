@@ -4,24 +4,21 @@ const keys = require("../config/keys");
 
 setNewPassword = async (req, res, next) => {
     try {
-        const user = new User();
-        let params = {
-            email: req.body.email,
-            password: req.body.password
-        };
-        let result = await user.getToken(params);
-        if (result[0] && result[0].u_token === req.body.token) {
-            user.setNewPassword(params);
+        const user = await Model.User.findOne({ email: req.body.email });
+        if (user && user.token === req.body.token) {
+            user.password = req.body.password;
+            user.save();
             res.status(200).json({
-                msg: "Password updated successfully"
+                msg: "Password updated successfully",
+                error: false
             });
         } else {
             res.status(200).json({
-                msg: "Token Invalid"
+                msg: "Invalid Token",
+                error: true
             });
         }
     } catch (err) {
-        console.log(err);
         res.status(200).json({
             msg: `Error while posting new Password: ${err}`
         });
@@ -30,24 +27,28 @@ setNewPassword = async (req, res, next) => {
 
 passwordForgotten = async (req, res, next) => {
     try {
-        const user = new User();
-        let params = {
-            email: req.body.email
-        };
-        let result = await user.getToken(params);
-        if (result[0]) {
-            const output = `${result[0].u_token}`
+        const user = await Model.User.findOne({ email: req.body.email });
+        if (user) {
+            const output = user.token;
             let mailOptions = {
-                from: `"Matcha Contact" ${keys.mail.user}`,
-                to: params.email,
+                from: `"HyperTube Contact" ${keys.mail.user}`,
+                to: user.email,
                 subject: "Password Forgotten",
                 html: output
             };
             await transporter.sendMail(mailOptions);
+            res.status(200).json({
+                msg: "Email Password Forgotten Sent",
+                error: false
+            });
+        } else {
+            res.status(200).json({
+                msg: "Email doesn't exist",
+                error: true
+            });
         }
         res.status(200).send();
     } catch (err) {
-        console.log(err);
         res.status(200).json({
             msg: `Error while posting forgottenEmail: ${err}`
         });
@@ -56,7 +57,7 @@ passwordForgotten = async (req, res, next) => {
 
 emailCheckVerification = async (req, res, next) => {
     try {
-        const user = await Model.User.findOne({email: req.body.email});
+        const user = await Model.User.findOne({ email: req.body.email });
         if (user.token === req.body.token) {
             user.verified = true;
             user.save();
@@ -79,7 +80,7 @@ emailCheckVerification = async (req, res, next) => {
 
 emailSendVerification = async (req, res, next) => {
     try {
-        const user = await Model.User.findOne({email: req.body.email});
+        const user = await Model.User.findOne({ email: req.body.email });
         const output = `
         <!DOCTYPE html>
         <html lang="en">
@@ -90,7 +91,12 @@ emailSendVerification = async (req, res, next) => {
             <title>Document</title>
         </head>
         <body>
-        <a href="http://localhost:3000/?action=verifyemail&email=${req.body.email}&token=${user.token}">Please click on this link to verify your account. </a>
+        <h1>Welcome to Hypertube ${user.username}</h1>
+        <a href="http://localhost:3000/?action=verifyemail&email=${
+            req.body.email
+        }&token=${
+            user.token
+        }">Please click on this link to verify your account.</a>
         </body>
         </html>
         `;
@@ -116,5 +122,5 @@ module.exports = exports = {
     passwordForgotten: passwordForgotten,
     setNewPassword: setNewPassword,
     emailSendVerification: emailSendVerification,
-    emailCheckVerification: emailCheckVerification,
+    emailCheckVerification: emailCheckVerification
 };

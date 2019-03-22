@@ -6,6 +6,6 @@ const Footer = () => {
             <span className="">mleonett & svmathie & tmervin</span>
         </footer>
     );
-}
+};
 
 export default Footer;

@@ -56,7 +56,7 @@
         left: 50%;
         width: 100%;
         transform: translateX(-50%);
-        &-content{
+        &-content {
             justify-content: center;
             width: 90%;
             margin: auto;
@@ -121,15 +121,15 @@
         padding: 0 1rem;
         &__display-error {
             height: 0;
-            color:white;
+            color: white;
             text-align: center;
             opacity: 0;
             animation: popAndHideError 5s ease-out;
             font-size: 1rem;
         }
-        &__passforgot{
+        &__passforgot {
             text-align: center;
-            margin-top: -.5rem;
+            margin-top: -0.5rem;
         }
     }
     @media only screen and (max-height: 747px) and (min-width: $bp-small) {
@@ -140,13 +140,12 @@
     }
 }
 
-
 .signup-OAuth {
     display: flex;
     justify-content: center;
-    margin-top: .8rem;
+    margin-top: 0.8rem;
     a {
-        margin: 0 .5rem;
+        margin: 0 0.5rem;
         width: 12rem;
         text-align: center;
     }
@@ -158,7 +157,7 @@
     background-image: url(../images/google.png);
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: center; 
+    background-position: center;
 }
 
 .logo42 {
@@ -168,5 +167,5 @@
     height: 3rem;
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: center; 
+    background-position: center;
 }

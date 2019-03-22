@@ -6,7 +6,7 @@ const validateEmail = email => {
 };
 
 const checkEmail = async email => {
-    const user = await Model.User.findOne( { email })
+    const user = await Model.User.findOne({ email });
     return user ? false : true;
 };
 
@@ -18,7 +18,7 @@ const validateUsername = username => {
 const checkUsername = async username => {
     const user = await Model.User.findOne({ username });
     return user ? false : true;
-}
+};
 
 const validateFirstName = name => {
     const re = /^[A-Za-z-]{3,20}$/;

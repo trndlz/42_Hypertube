@@ -7,13 +7,13 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
     return (
         <Route
             {...rest}
-            render = {(props) => {
+            render={props => {
                 if (auth.isAuthenticated) {
-                    return <Component { ...props }/>;
+                    return <Component {...props} />;
                 } else {
-                    return <HomePage { ...props } {...rest} />;
+                    return <HomePage {...props} {...rest} />;
                 }
             }}
         />
     );
-};
+}
