@@ -3,7 +3,6 @@ const {
     setNewPassword,
     passwordForgotten,
     emailCheckVerification,
-    emailSendVerification
 } = require("../controller/nodemailer");
 
 router.post("/setnewpassword", setNewPassword);

@@ -27,14 +27,16 @@ app.use(cors());
 //========================================================
 const authRoute = require('./router/auth');
 const torrentRoute = require('./router/torrent');
-const secureRoute = require('./router/secure-route');
+const settingsRoute = require('./router/settings');
+const profileRoute = require('./router/profile');
 const testMongoose = require('./router/test-mongoose');
 const email = require('./router/nodemailer');
 app.use('/auth', authRoute);
 app.use('/email', email);
 app.use('/torrent', torrentRoute);
 app.use('/testmongoose', testMongoose);
-app.use('/secure', secureRoute );
+app.use('/settings', settingsRoute );
+app.use('/profile', profileRoute );
 
 //========================================================
 // APP

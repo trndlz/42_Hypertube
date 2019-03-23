@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom"
+import jwt from 'jsonwebtoken';
 import Footer from "../../partials/Footer";
+import useAsyncState from "../../../utils/useAsyncState";
 import {
     validateEmail,
     validateUsername,
@@ -7,7 +10,6 @@ import {
     validateLastName,
     validatePassword,
 } from "../../../validation/validation";
-import useAsyncState from "../../../utils/useAsyncState";
 
 const Settings = () => {
     const [username, setUsername] = useState("");
@@ -47,7 +49,7 @@ const Settings = () => {
             controller = new AbortController();
             const signal = controller.signal;
             try {
-                let res = await fetch("http://localhost:8145/secure/settings", {
+                let res = await fetch("http://localhost:8145/settings", {
                     method: "GET",
                     headers: {
                         Authorization: "Bearer " + token
@@ -82,14 +84,14 @@ const Settings = () => {
         if (!validateEmail(data.get("email"))) invalid.email = true;
         if (!validateFirstName(data.get("firstName"))) invalid.firstName = true;
         if (!validateLastName(data.get("lastName"))) invalid.lastName = true;
-        if (
+        if (jwt.decode(localStorage.getItem('jwt')).connectionType === 'local' &&
             !validatePassword(data.get("password")) &&
             data.get("password") !== ""
         )
             invalid.password = true;
         if (Object.keys(invalid).length === 0) {
             const token = localStorage.getItem("jwt");
-            let res = await fetch("http://localhost:8145/secure/settings", {
+            let res = await fetch("http://localhost:8145/settings", {
                 method: "POST",
                 headers: {
                     Authorization: "Bearer " + token
@@ -107,6 +109,7 @@ const Settings = () => {
     };
     return (
         <div className="main-content-wrapper">
+        {console.log("settings render")}
             <div className="settings-form login-wrapper">
                 {isLoading === 1 ? (
                     <div className="cs-loader" style={{ height: "422px" }}>
@@ -235,6 +238,7 @@ const Settings = () => {
                                 </select>
                             </div>
                         </div>
+                        { jwt.decode(localStorage.getItem('jwt')).connectionType === 'local' ?
                         <div className="input-container">
                             <i className="fas fa-unlock input-container__icon" />
                             <input
@@ -246,6 +250,7 @@ const Settings = () => {
                                 name="password"
                             />
                         </div>
+                        : null}
                         {errors.password ? (
                             <div className="input-container__display-error">
                                 Wrong password

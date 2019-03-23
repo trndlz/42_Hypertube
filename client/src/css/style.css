@@ -189,7 +189,7 @@ body {
       font-size: 1rem; }
     .login-wrapper .input-container__passforgot {
       text-align: center;
-      margin-top: -.5rem; }
+      margin-top: -0.5rem; }
   @media only screen and (max-height: 747px) and (min-width: 46.5em) {
     .login-wrapper {
       flex-direction: row; } }
@@ -200,9 +200,9 @@ body {
 .signup-OAuth {
   display: flex;
   justify-content: center;
-  margin-top: .8rem; }
+  margin-top: 0.8rem; }
   .signup-OAuth a {
-    margin: 0 .5rem;
+    margin: 0 0.5rem;
     width: 12rem;
     text-align: center; }
 
@@ -646,7 +646,7 @@ h1 {
 .btn--secondary {
   background-color: #97f572;
   color: #232323;
-  padding: .4rem 2rem;
+  padding: 0.4rem 2rem;
   background-color: #fff; }
   .btn--secondary:hover {
     transform: none; }
@@ -757,7 +757,7 @@ select::-ms-expand {
   transform: translateY(-50%);
   top: 50%;
   position: absolute;
-  color: #FFF;
+  color: #fff;
   text-align: center;
   width: 100%; }
 

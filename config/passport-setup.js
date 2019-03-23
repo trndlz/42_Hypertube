@@ -1,6 +1,4 @@
 const passport = require("passport");
-const JwtStrategy = require("passport-jwt").Strategy;
-const { ExtractJwt } = require("passport-jwt");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FortyTwoStrategy = require("passport-42").Strategy;
 const keys = require("./keys");
@@ -17,27 +15,6 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(
-    new JwtStrategy(
-        {
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: keys.jwt
-        },
-        async (payload, done) => {
-            try {
-                const currentUser = await Model.User.findById(payload._id);
-                if (currentUser) {
-                    done(null, currentUser);
-                } else {
-                    done(null, false);
-                }
-            } catch (err) {
-                done(err);
-            }
-        }
-    )
-);
-
-passport.use(
     new GoogleStrategy(
         {
             clientID: keys.google.clientID,
@@ -47,17 +24,18 @@ passport.use(
         async (accessToken, refreshToken, profile, done) => {
             try {
                 const currentUser = await Model.User.findOne({
-                    authId: profile.id
+                    authId: profile.id,
+                    connectionType: "google"
                 });
                 if (currentUser) {
                     done(null, currentUser);
                 } else {
                     new Model.User({
                         authId: profile.id,
-                        username: profile.displayName,
+                        username: profile.displayName.replace(/\s/g,''),
                         picture: profile._json.image.url,
-                        firstName: profile.name.givenName,
-                        lastName: profile.name.familyName,
+                        firstName: profile.name.givenName.replace(/\s/g,''),
+                        lastName: profile.name.familyName.replace(/\s/g,''),
                         connectionType: "google",
                         verified: true,
                         email: profile.emails[0].value
@@ -84,17 +62,18 @@ passport.use(
         async (accessToken, refreshToken, profile, done) => {
             try {
                 const currentUser = await Model.User.findOne({
-                    authId: profile.id
+                    authId: profile.id,
+                    connectionType: "the42"
                 });
                 if (currentUser) {
                     done(null, currentUser);
                 } else {
                     new Model.User({
                         authId: profile.id,
-                        username: profile.username,
+                        username: profile.username.replace(/\s+/g,''),
                         picture: profile.photos[0].value,
-                        firstName: profile.name.givenName,
-                        lastName: profile.name.familyName,
+                        firstName: profile.name.givenName.replace(/\s/g,''),
+                        lastName: profile.name.familyName.replace(/\s/g,''),
                         connectionType: "the42",
                         verified: true,
                         email: profile.emails[0].value

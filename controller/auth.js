@@ -17,12 +17,12 @@ const createJwtToken = payload => {
 };
 
 const googleAuth = (req, res) => {
-    let token = createJwtToken({ _id: req.user._id });
+    let token = createJwtToken({ _id: req.user._id, connectionType: req.user.connectionType });
     res.redirect(`http://localhost:3000/?token=${token}`);
 };
 
 const the42Auth = (req, res) => {
-    let token = createJwtToken({ _id: req.user._id });
+    let token = createJwtToken({ _id: req.user._id, connectionType: req.user.connectionType });
     res.redirect(`http://localhost:3000/?token=${token}`);
 };
 
@@ -36,7 +36,12 @@ const localSignInAuth = async (req, res) => {
             msg: "Wrong username or password"
         });
     } else {
-        if (!(await currentUser.isValidPassword(req.body.password))) {
+        if (currentUser.connectionType !== "local") {
+            res.status(200).json({
+                success: false,
+                msg: "This user is registered with OAuth"
+            });
+        } else if (!(await currentUser.isValidPassword(req.body.password))) {
             res.status(200).json({
                 success: false,
                 msg: "Wrong username or password"
@@ -48,7 +53,7 @@ const localSignInAuth = async (req, res) => {
                     msg: "Please verify your email address"
                 });
             } else {
-                const payload = { _id: currentUser._id };
+                const payload = { _id: currentUser._id, connectionType: currentUser.connectionType };
                 let token = createJwtToken(payload);
                 res.status(200).json({
                     success: true,
@@ -73,19 +78,20 @@ const localSignUpAuth = async (req, res) => {
     if (Object.keys(errors).length > 0) {
         res.json({ success: false, errors });
     } else {
-        new Model.User({
+        let currentUser = new Model.User({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             username: req.body.username,
             email: req.body.email,
-            picture: req.file.path,
+            picturePath: req.file.path,
             password: req.body.password,
             connectionType: "local"
         })
-            .save()
-            .then(() => {
-                emailSendVerification(req, res);
-            });
+        currentUser.picture = `http://localhost:8145/auth/getlocalpicture/${currentUser._id}`
+        currentUser.save()
+        .then(() => {
+            emailSendVerification(req, res);
+        });
     }
 };
 

@@ -24,7 +24,7 @@ router.get("/getlocalpicture/:id", async (req, res, next) => {
     const currentUser = await Model.User.findOne({
         _id: req.params.id
     });
-    res.sendFile(path.resolve(currentUser.picture));
+    res.sendFile(path.resolve(currentUser.picturePath));
 });
 
 router.get("/isauthenticated", checkAuth, (req, res, next) => {

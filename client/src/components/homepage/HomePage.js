@@ -121,16 +121,16 @@ const HomePage = props => {
 
     const handleSignIn = async e => {
         e.preventDefault();
-        setErrors({});
-        setMsg("");
         const data = new FormData(e.target);
+        await setErrors({});
+        setMsg("");
         let res = await fetch("http://localhost:8145/auth/signin", {
             method: "POST",
             body: data
         });
         res = await res.json();
         if (!res.success) {
-            setErrors({ ...errors, login: true });
+            setErrors({ login: true });
             setMsg(res.msg);
         } else {
             localStorage.setItem("jwt", res.token);
@@ -389,7 +389,7 @@ const HomePage = props => {
                                     <input
                                         className="btn btn--primary"
                                         type="submit"
-                                        value="Verify !"
+                                        value="Sign In !"
                                     />
                                 </Fragment>
                             )}

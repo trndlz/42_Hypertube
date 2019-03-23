@@ -22,6 +22,7 @@ const userSchema = new Schema({
     username: String,
     email: String,
     picture: String,
+    picturePath: String,
     password: String,
     language: {
         type: String,

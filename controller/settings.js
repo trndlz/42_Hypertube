@@ -13,12 +13,8 @@ const getSettings = async (req, res, next) => {
     const currentUser = await Model.User.findOne({
         _id: req.userData._id
     });
-    let picture =
-        currentUser.connectionType === "local"
-            ? `http://localhost:8145/auth/getlocalpicture/${currentUser._id}`
-            : currentUser.picture;
     res.json({
-        picture: picture,
+        picture: currentUser.picture,
         firstName: currentUser.firstName,
         lastName: currentUser.lastName,
         email: currentUser.email,
@@ -46,7 +42,7 @@ const postSettings = async (req, res, next) => {
         errors.duplicateEmail = true;
     if (!validateFirstName(req.body.firstName)) errors.firstName = true;
     if (!validateLastName(req.body.lastName)) errors.lastName = true;
-    if (!validatePassword(req.body.password) && req.body.password !== "")
+    if (currentUser.connectionType === 'local' && !validatePassword(req.body.password) && req.body.password !== "")
         errors.password = true;
     if (!req.file && req.body.pictureChanged === "true") {
         errors.picture = true;
@@ -59,9 +55,9 @@ const postSettings = async (req, res, next) => {
         currentUser.username = req.body.username;
         currentUser.email = req.body.email;
         currentUser.language = req.body.language;
-        currentUser.picture = req.file ? req.file.path : currentUser.picture;
-        currentUser.password =
-            req.body.password !== "" ? req.body.password : currentUser.password;
+        currentUser.picturePath = req.file ? req.file.path : currentUser.picturePath;
+        currentUser.picture = req.file ? `http://localhost:8145/auth/getlocalpicture/${currentUser._id}` : currentUser.picture;
+        currentUser.password = currentUser.connectionType === 'local' && req.body.password !== "" ? req.body.password : currentUser.password;
         currentUser.save();
         res.json({
             msg: "Settings Modified Successfully",
