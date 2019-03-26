@@ -21,5 +21,8 @@ module.exports = {
             "427e2349bd04648c7af78d6d2ab260e2f3574c9e35dd077925f5987b96202bc4",
         clientSecret:
             "826b8faced6f7b1c37e9c8dae6c297b18bab0a390d75d573cd3fe7f1e66f3709"
+    },
+    omdb: {
+        key: "9548629a" //b9b51059
     }
 };

@@ -17,8 +17,8 @@ const Profile = props => {
     };
     useEffect(() => {
         let controller;
-        const id = props.location.pathname.split("/")[2];
         (async () => {
+            const id = props.location.pathname.split("/")[2];
             const token = localStorage.getItem("jwt");
             controller = new AbortController();
             const signal = controller.signal;
@@ -29,7 +29,7 @@ const Profile = props => {
                     headers: {
                         Authorization: "Bearer " + token
                     },
-                    signal: signal
+                    signal
                 });
                 res = await res.json();
                 if (res.success) {

@@ -144,6 +144,9 @@ select {
         }
     }
 }
+.yellow-star {
+   color: $color-primary-focus;
+}
 .select {
     position: relative;
     display: block;

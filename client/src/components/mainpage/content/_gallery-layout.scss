@@ -14,8 +14,8 @@
 }
 
 .film {
-    width: (691px / 4);
-    height: (864px / 4);
+    width: (500px / 3);
+    height: (750px / 3);
     margin: 2rem;
     overflow: hidden;
     position: relative;
@@ -53,7 +53,7 @@
         bottom: 0;
         width: 100%;
         color: white;
-        background-color: rgba(0, 0, 0, 0.4);
+        background-color: rgba(0, 0, 0, 0.8);
         z-index: 1000;
         i {
             font-size: 1rem;

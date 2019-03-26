@@ -30,13 +30,15 @@ const torrentRoute = require('./router/torrent');
 const settingsRoute = require('./router/settings');
 const profileRoute = require('./router/profile');
 const testMongoose = require('./router/test-mongoose');
-const email = require('./router/nodemailer');
+const emailRoute = require('./router/nodemailer');
+const videoRoute = require('./router/video');
 app.use('/auth', authRoute);
-app.use('/email', email);
+app.use('/email', emailRoute);
 app.use('/torrent', torrentRoute);
 app.use('/testmongoose', testMongoose);
-app.use('/settings', settingsRoute );
-app.use('/profile', profileRoute );
+app.use('/settings', settingsRoute);
+app.use('/profile', profileRoute);
+app.use('/video', videoRoute);
 
 //========================================================
 // APP

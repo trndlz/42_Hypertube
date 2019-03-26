@@ -17,6 +17,13 @@ sortby year
 one movies per page
 page 2
 
+get movie by imdb:
+https://yts.am/api/v2/list_movies.json?query_term=tt6476140
+
+
+
+
+
 
 popcorntime:
 https://tv-v2.api-fetch.website/movies/2?sort=year

@@ -43,7 +43,6 @@
             transform: translateY(-0.15rem);
         }
         .video-rating {
-            color: $color-stars;
             margin-bottom: 0.5rem;
         }
         .video-time {
@@ -51,6 +50,7 @@
         }
 
         .video-desc {
+            margin-bottom: 0.6rem;
         }
 
         .video-actors {

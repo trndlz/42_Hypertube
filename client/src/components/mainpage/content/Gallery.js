@@ -1,36 +1,81 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
 import Footer from "../../partials/Footer";
-import imgCover from "../../../images/spiderman-img.jpg";
 
 const Gallery = (props) => {
+    const [data, setData] = useState({});
+    const [isLoading, setIsLoading] = useState(1);
+    useEffect(() => {
+        let controller;
+        (async () => {
+            const token = localStorage.getItem("jwt");
+            controller = new AbortController();
+            const signal = controller.signal;
+            let page = 1;
+            try {
+                let res = await fetch(`http://localhost:8145/video/${page}`,{
+                    headers: {
+                        Authorization: "Bearer " + token
+                    },
+                    signal
+                });
+                res = await res.json();
+                setData(res.data);
+                setIsLoading(0)
+            } catch (err) {}
+        })();
+        return () => {
+            controller.abort();
+        };
+    }, [])
+
     return (
         <Fragment>
             <div className="main-content-wrapper">
+            {isLoading ?
+                <div className="cs-loader" style={{height: "100vh"}}>
+                    <div className="cs-loader-inner">
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                    </div>
+                </div>
+                :
                 <div className="padding-wrapper">
-                    <Link to="/video">
-                        <div className="film">
-                            <div className="film-min seen">
-                                <img
-                                    src={imgCover}
-                                    alt=""
-                                    style={{ width: "100%" }}
-                                />
+                { Object.keys(data).length !== 0 ? data.data.movies.map((film, index) => {
+                    let stars = [];
+                    for (let i=0; i < 5; i++) {
+                        if (i <= Math.trunc(film.rating / 2)) {
+                            stars.push(<i className="fas fa-star yellow-star" key={i} />);
+                        } else {
+                            stars.push(<i className="fas fa-star" key={i} />);
+                        }
+                    }
+                    return (
+                        <Link to={`/video/${film.imdb_code}`} key={index}>
+                            <div className="film">
+                                <div className="film-min unseen">
+                                    <img
+                                        src={film.large_cover_image}
+                                        alt=""
+                                        style={{ width: "100%" }}
+                                    />
+                                </div>
+                                <div className="film-infos">
+                                    {film.title}{" "}
+                                    <span className="film-infos-date">({film.year})</span>
+                                    <br />
+                                    {[...stars]}
+                                </div>
                             </div>
-                            <div className="film-infos">
-                                SpiderMan et le bouffon vert{" "}
-                                <span className="film-infos-date">(1992)</span>
-                                <br />
-                                <i className="fas fa-star" />
-                                <i className="fas fa-star" />
-                                <i className="fas fa-star" />
-                                <i className="fas fa-star" />
-                                <i className="fas fa-star" />
-                            </div>
-                        </div>
-                    </Link>
-                    <div className="film">
-                        <div className="film-min unseen">
+                        </Link>
+                    )
+                    }) : null } 
+                    {/* <div className="film">
+                        <div className="film-min seen">
                             <img
                                 src={imgCover}
                                 alt=""
@@ -46,108 +91,9 @@ const Gallery = (props) => {
                             <i className="fas fa-star" />
                             <i className="fas fa-star" />
                         </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min ">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min ">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min ">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min ">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min ">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min ">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min ">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min ">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min ">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
-                    <div className="film">
-                        <div className="film-min">
-                            <h3>SpiderMan</h3>
-                        </div>
-                    </div>
+                    </div> */}
                 </div>
+                }
                 <Footer />
             </div>
         </Fragment>

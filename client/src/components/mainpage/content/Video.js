@@ -1,51 +1,98 @@
-import React from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import Footer from "../../partials/Footer";
-import imgCover from "../../../images/spiderman-img.jpg";
 
-const Video = () => {
+const Video = (props) => {
+    const [data, setData] = useState({});
+    const [stars, setStars] = useState([]);
+    const [isLoading, setIsLoading] = useState(1);
+
+    useEffect(() => {
+        let controller;
+        (async () => {
+            const token = localStorage.getItem("jwt");
+            const imdb = props.location.pathname.split("/")[2];
+            controller = new AbortController();
+            const signal = controller.signal;
+            try {
+                let res = await fetch(`http://localhost:8145/video/movie/${imdb}`,{
+                    headers: {
+                        Authorization: "Bearer " + token
+                    },
+                    signal
+                });
+                res = await res.json();
+                setData(res.data);
+                setIsLoading(0);
+            } catch (err) {}
+        })();
+        return () => {
+            controller.abort();
+        };
+    }, []);
+
+    useEffect(() => {
+        let starsArray = [];
+        for (let i=0; i < 5; i++) {
+            if (i <= Math.trunc(data.rating / 2)) {
+                starsArray.push(<i className="fas fa-star yellow-star" key={i} />);
+            } else {
+                starsArray.push(<i className="fas fa-star" key={i} />);
+            }
+        }
+        setStars(starsArray); 
+    }, [data]);
+
+    const minToHour = min => {
+        let hour = Math.trunc(min / 60);
+        min = min % 60;
+        return `${hour}h ${min}min`
+    }
+    
     return (
         <div className="main-content-wrapper">
+            {isLoading ?
+            <div className="cs-loader" style={{height: "100vh"}}>
+                <div className="cs-loader-inner">
+                    <label>●</label>
+                    <label>●</label>
+                    <label>●</label>
+                    <label>●</label>
+                    <label>●</label>
+                    <label>●</label>
+                </div>
+            </div>
+            :
+            <Fragment>
             <div className="video-description">
-                <img className="video-img" src={imgCover} alt="" />
+                <img className="video-img" src={data.large_cover_image} alt="" />
                 <div className="video-info">
                     <h2 className="video-title">
-                        SpiderMan <span className="video-date">(1992)</span>
+                        {data.title} <span className="video-date">({data.year})</span>
                     </h2>
                     <div className="video-rating">
-                        <i className="fas fa-star" />
-                        <i className="fas fa-star" />
-                        <i className="fas fa-star" />
-                        <i className="fas fa-star" />
-                        <i className="fas fa-star" />
+                        {[...stars]}
                     </div>
-                    <div className="video-time">1h30</div>
+                    <div className="video-time">{minToHour(data.runtime)}</div>
                     <span className="separator" />
                     <div className="video-desc">
-                        <h6>Description:</h6>
-                        Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit. Voluptatem tempore labore fugit? Quia ea,
-                        nostrum maxime incidunt eveniet unde quos dolores
-                        voluptatum inventore corrupti facere! Nam sequi qui
-                        quod pariatur.
+                        {data.summary}
                     </div>
-
                     <div className="video-actors">
-                        <h6>Casting:</h6>
-                        SpiderMan et dautres gars Lorem ipsum Lorem, ipsum
-                        dolor sit amet consectetur adipisicing elit. Sint
-                        voluptatibus in ad nobis dolo{" "}
+                        Director:{" "}{data.omdb ? data.omdb.Director : null}
+                        <br/>
+                        Actors:{" "}{data.omdb ? data.omdb.Actors : null}
                     </div>
                 </div>
             </div>
             <div className="video-wrapper">
-                <div className="video-player">
+                {/* <div className="video-player">
                     <iframe
                         title="video"
                         className="my-video"
                         src="https://player.twitch.tv/?channel=degun"
                         controls
                     />
-                </div>
+                </div> */}
             </div>
             <div className="comment-wrapper">
                 <div className="your-comment">
@@ -174,6 +221,8 @@ const Video = () => {
                     </div>
                 </div>
             </div>
+            </Fragment>
+            }
             <Footer />
         </div>
     );

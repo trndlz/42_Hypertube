@@ -34,7 +34,7 @@ const MainPage = props => {
                 <Route exact path="/" component={Gallery} />
                 <Route exact path="/profile/:id" component={Profile} />
                 <Route exact path="/settings" component={Settings} />
-                <Route path="/video" component={Video} />
+                <Route exact path="/video/:imdb" component={Video} />
             </main>
             </Fragment>
             }

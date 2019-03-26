@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom"
 import jwt from 'jsonwebtoken';
 import Footer from "../../partials/Footer";
 import useAsyncState from "../../../utils/useAsyncState";
@@ -54,7 +53,7 @@ const Settings = () => {
                     headers: {
                         Authorization: "Bearer " + token
                     },
-                    signal: signal
+                    signal
                 });
                 res = await res.json();
                 setFirstName(res.firstName);
@@ -91,7 +90,7 @@ const Settings = () => {
             invalid.password = true;
         if (Object.keys(invalid).length === 0) {
             const token = localStorage.getItem("jwt");
-            let res = await fetch("http://localhost:8145/settings", {
+            let res = await fetch("http://localhost:8145/settings", { //! THIS IS NOT ABORTED
                 method: "POST",
                 headers: {
                     Authorization: "Bearer " + token
@@ -109,10 +108,9 @@ const Settings = () => {
     };
     return (
         <div className="main-content-wrapper">
-        {console.log("settings render")}
             <div className="settings-form login-wrapper">
                 {isLoading === 1 ? (
-                    <div className="cs-loader" style={{ height: "422px" }}>
+                    <div className="cs-loader" style={{ height: "382px" }}>
                         <div className="cs-loader-inner">
                             <label>●</label>
                             <label>●</label>
