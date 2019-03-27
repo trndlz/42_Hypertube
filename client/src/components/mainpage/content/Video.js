@@ -23,6 +23,7 @@ const Video = (props) => {
                 res = await res.json();
                 setData(res.data);
                 setIsLoading(0);
+                console.log(res)
             } catch (err) {}
         })();
         return () => {
@@ -40,13 +41,12 @@ const Video = (props) => {
             }
         }
         setStars(starsArray); 
-        console.log(data);
     }, [data]);
 
     const minToHour = min => {
         let hour = Math.trunc(min / 60);
         min = min % 60;
-        return `${hour}h ${min}min`
+        return hour && min ? `${hour}h ${min}min` : 'N/A';
     }
     
     return (
