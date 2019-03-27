@@ -1,25 +1,35 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Link } from 'react-router-dom'
+import React, { Fragment, useEffect, useState, useContext } from "react";
+import { Link } from 'react-router-dom';
+import { SearchContext } from "../MainPage";
 import Footer from "../../partials/Footer";
 
 const Gallery = (props) => {
     const [data, setData] = useState({});
     const [isLoading, setIsLoading] = useState(1);
+    const { search } = useContext(SearchContext);
+
     useEffect(() => {
         let controller;
         (async () => {
             const token = localStorage.getItem("jwt");
             controller = new AbortController();
             const signal = controller.signal;
-            let page = 1;
+            let page = 1; //! FAIRE LES PAGES
             try {
-                let res = await fetch(`http://localhost:8145/video/${page}`,{
+                if (search.dateTo < search.dateFrom) {
+                    [search.dateTo, search.dateFrom] = [search.dateFrom, search.dateTo];
+                }
+                let res = await fetch(`http://localhost:8145/video?page=${page}&searchInput=${search.searchInput}&stars=${search.stars}&dateFrom=${search.dateFrom}&dateTo=${search.dateTo}&category=${search.category}&sortBy=${search.sortBy}`,{      
+                // console.log(search); 
+                // let res = await fetch(`http://localhost:8145/video?page=${page}&searchInput=${search.searchInput}&stars=${search.stars}&category=${search.category}&sortBy=${search.sortBy}`,{
                     headers: {
                         Authorization: "Bearer " + token
                     },
+                    search,
                     signal
                 });
                 res = await res.json();
+                console.log(res)
                 setData(res.data);
                 setIsLoading(0)
             } catch (err) {}
@@ -27,7 +37,7 @@ const Gallery = (props) => {
         return () => {
             controller.abort();
         };
-    }, [])
+    }, [search])
 
     return (
         <Fragment>
@@ -45,7 +55,7 @@ const Gallery = (props) => {
                 </div>
                 :
                 <div className="padding-wrapper">
-                { Object.keys(data).length !== 0 ? data.data.movies.map((film, index) => {
+                { Object.keys(data).length !== 0 && data.data && data.data.movies ? data.data.movies.map((film, index) => {
                     let stars = [];
                     for (let i=0; i < 5; i++) {
                         if (i <= Math.trunc(film.rating / 2)) {

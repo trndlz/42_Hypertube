@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import Gallery from "./content/Gallery";
 import Profile from "./content/Profile";
@@ -7,7 +7,11 @@ import Video from "./content/Video";
 import Header from "../partials/Header";
 import SearchBar from "./content/SearchBar";
 
+export const SearchContext = React.createContext();
+
 const MainPage = props => {
+    let [search, setSearch] = useState({});
+
     const renderRedirect = () => {
         if (
             !localStorage.getItem("jwt") || (
@@ -19,6 +23,7 @@ const MainPage = props => {
             return true;
         } else {return false}
     };
+    
     return (
         <Fragment>
             {renderRedirect() ? 
@@ -30,8 +35,10 @@ const MainPage = props => {
                 <label className="label-check" htmlFor="checkbox">
                     Search Options <i className="fas fa-arrow-circle-down" />
                 </label>
-                <SearchBar />
-                <Route exact path="/" component={Gallery} />
+                <SearchContext.Provider value={{ search, setSearch }}>
+                    <SearchBar />
+                    <Route exact path="/" component={Gallery}/>
+                </SearchContext.Provider>
                 <Route exact path="/profile/:id" component={Profile} />
                 <Route exact path="/settings" component={Settings} />
                 <Route exact path="/video/:imdb" component={Video} />

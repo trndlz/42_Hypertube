@@ -1,6 +1,34 @@
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
+import { SearchContext } from '../MainPage'
 
 const SearchBar = () => {
+    const { setSearch } = useContext(SearchContext);
+    const [searchInput, setSearchInput] = useState("");
+    const [stars, setStars] = useState("1");
+    const [category, setCategory] = useState("All Categories");
+    const [sortBy, setSortBy] = useState("year Asc");
+    const [dateFrom, setDateFrom] = useState("2000");
+    const [dateTo, setDateTo] = useState("2019");
+    
+    const getYears = () => {
+        let table = [];
+        for (let i = 2019; i >= 1895; i--) {
+            table.push(<option value={i} key={i}>{i}</option>);
+        }
+        return table;
+    }
+
+    useEffect(() => {
+        setSearch({
+            searchInput,
+            stars,
+            category,
+            dateFrom,
+            dateTo,
+            sortBy
+        })
+    }, [searchInput, stars, category, sortBy, dateTo, dateFrom])
+
     return (
         <div className="search-bar" id="test">
             <form>
@@ -8,6 +36,9 @@ const SearchBar = () => {
                     className="search-input input-type-2"
                     type="text"
                     placeholder="Search"
+                    onChange={e => { setSearchInput(e.target.value) }}
+                    onKeyPress={e => {if (e.which === 13) e.preventDefault()}}
+                    value={searchInput}
                 />
                 <h5 className="search-title">Filter By</h5>
                 <div className="rating">
@@ -16,6 +47,7 @@ const SearchBar = () => {
                         type="radio"
                         name="rating"
                         value="5"
+                        onChange={e => setStars(e.target.value)}
                     />
                     <label htmlFor="rating-5">
                         <i id="star-5" className="fas fa-star" />
@@ -25,6 +57,7 @@ const SearchBar = () => {
                         type="radio"
                         name="rating"
                         value="4"
+                        onChange={e => setStars(e.target.value)}
                     />
                     <label htmlFor="rating-4">
                         <i id="star-5" className="fas fa-star" />
@@ -34,6 +67,7 @@ const SearchBar = () => {
                         type="radio"
                         name="rating"
                         value="3"
+                        onChange={e => setStars(e.target.value)}
                     />
                     <label htmlFor="rating-3">
                         <i id="star-5" className="fas fa-star" />
@@ -43,6 +77,7 @@ const SearchBar = () => {
                         type="radio"
                         name="rating"
                         value="2"
+                        onChange={e => setStars(e.target.value)}
                     />
                     <label htmlFor="rating-2">
                         <i id="star-5" className="fas fa-star" />
@@ -52,6 +87,7 @@ const SearchBar = () => {
                         type="radio"
                         name="rating"
                         value="1"
+                        onChange={e => setStars(e.target.value)}
                     />
                     <label htmlFor="rating-1">
                         <i id="star-5" className="fas fa-star" />
@@ -59,60 +95,31 @@ const SearchBar = () => {
                 </div>
                 <div className="dates">
                     <div className="select">
-                        <select defaultValue="2000">
-                            <option value="2019">2019</option>
-                            <option value="2018">2018</option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                            <option value="2014">2014</option>
-                            <option value="2013">2013</option>
-                            <option value="2012">2012</option>
-                            <option value="2011">2011</option>
-                            <option value="2010">2010</option>
-                            <option value="2009">2009</option>
-                            <option value="2008">2008</option>
-                            <option value="2007">2007</option>
-                            <option value="2006">2006</option>
-                            <option value="2005">2005</option>
-                            <option value="2004">2004</option>
-                            <option value="2003">2003</option>
-                            <option value="2002">2002</option>
-                            <option value="2001">2001</option>
-                            <option value="2000">2000</option>
+                        <select
+                            defaultValue="2000"
+                            onChange={e => setDateFrom(e.target.value)}
+                        >
+                        {getYears()}
                         </select>
                     </div>
                     <div className="select">
-                        <select>
-                            <option value="2019">2019</option>
-                            <option value="2018">2018</option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                            <option value="2014">2014</option>
-                            <option value="2013">2013</option>
-                            <option value="2012">2012</option>
-                            <option value="2011">2011</option>
-                            <option value="2010">2010</option>
-                            <option value="2009">2009</option>
-                            <option value="2008">2008</option>
-                            <option value="2007">2007</option>
-                            <option value="2006">2006</option>
-                            <option value="2005">2005</option>
-                            <option value="2004">2004</option>
-                            <option value="2003">2003</option>
-                            <option value="2002">2002</option>
-                            <option value="2001">2001</option>
-                            <option value="2000">2000</option>
+                        <select
+                            defaultValue="2019"
+                            onChange={e => setDateTo(e.target.value)}
+                        >
+                        {getYears()}
                         </select>
                     </div>
                 </div>
                 <div className="select" style={{ marginBottom: "0" }}>
-                    <select defaultValue="2000">
+                    <select
+                        defaultValue="All Categories"
+                        onChange={e => setCategory(e.target.value)}
+                    >
                         <option value="All Categories">
                             All Categories
                         </option>
-                        <option value="Popular">Popular</option>
+                        {/* <option value="Popular">Popular</option> */}
                         <option value="Action">Action</option>
                         <option value="Adventure">Adventure</option>
                         <option value="Animation">Animation</option>
@@ -120,17 +127,22 @@ const SearchBar = () => {
                         <option value="Crime">Crime</option>
                         <option value="Documentary">Documentary</option>
                         <option value="Drama">Drama</option>
-                        <option value="Family">Damily</option>
+                        <option value="Family">Family</option>
                         <option value="Fantasy">Fantasy</option>
                     </select>
                 </div>
                 <h5 className="search-title">Sort By</h5>
                 <div className="select" style={{ marginTop: "1.5rem" }}>
-                    <select defaultValue="2000" id="sort-by">
-                        <option value="Name">Name</option>
-                        <option value="Genre">Genre</option>
-                        <option value="Stars">Stars</option>
-                        <option value="Date">Date</option>
+                    <select 
+                        defaultValue="year Asc" id="sort-by"
+                        onChange={e => setSortBy(e.target.value)}
+                    >
+                        <option value="year Asc">Date (Newer)</option>
+                        <option value="year Desc">Date (Older)</option>
+                        <option value="title Asc">Name (A-Z)</option>
+                        <option value="title Desc">Name (Z-A)</option>
+                        <option value="rating Asc">Stars (Best)</option>
+                        <option value="rating Desc">Stars (Worst)</option>
                     </select>
                 </div>
             </form>

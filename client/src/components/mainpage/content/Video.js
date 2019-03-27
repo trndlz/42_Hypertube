@@ -14,7 +14,7 @@ const Video = (props) => {
             controller = new AbortController();
             const signal = controller.signal;
             try {
-                let res = await fetch(`http://localhost:8145/video/movie/${imdb}`,{
+                let res = await fetch(`http://localhost:8145/video/${imdb}`,{
                     headers: {
                         Authorization: "Bearer " + token
                     },
@@ -40,6 +40,7 @@ const Video = (props) => {
             }
         }
         setStars(starsArray); 
+        console.log(data);
     }, [data]);
 
     const minToHour = min => {
@@ -85,14 +86,14 @@ const Video = (props) => {
                 </div>
             </div>
             <div className="video-wrapper">
-                {/* <div className="video-player">
+                <div className="video-player">
                     <iframe
                         title="video"
                         className="my-video"
                         src="https://player.twitch.tv/?channel=degun"
                         controls
                     />
-                </div> */}
+                </div>
             </div>
             <div className="comment-wrapper">
                 <div className="your-comment">
