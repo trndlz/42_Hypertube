@@ -7,27 +7,25 @@ const SearchBar = () => {
     const [stars, setStars] = useState("1");
     const [category, setCategory] = useState("All Categories");
     const [sortBy, setSortBy] = useState("year Asc");
-    const [dateFrom, setDateFrom] = useState("2000");
-    const [dateTo, setDateTo] = useState("2019");
+    // const [dateFrom, setDateFrom] = useState("2000");
+    // const [dateTo, setDateTo] = useState("2019");
     
-    const getYears = () => {
-        let table = [];
-        for (let i = 2019; i >= 1895; i--) {
-            table.push(<option value={i} key={i}>{i}</option>);
-        }
-        return table;
-    }
+    // const getYears = () => {
+    //     let table = [];
+    //     for (let i = 2019; i >= 1895; i--) {
+    //         table.push(<option value={i} key={i}>{i}</option>);
+    //     }
+    //     return table;
+    // }
 
     useEffect(() => {
         setSearch({
             searchInput,
             stars,
             category,
-            dateFrom,
-            dateTo,
             sortBy
         })
-    }, [searchInput, stars, category, sortBy, dateTo, dateFrom])
+    }, [searchInput, stars, category, sortBy])
 
     return (
         <div className="search-bar" id="test">
@@ -52,13 +50,6 @@ const SearchBar = () => {
                     <label htmlFor="rating-5">
                         <i id="star-5" className="fas fa-star" />
                     </label>
-                    <input
-                        id="rating-4"
-                        type="radio"
-                        name="rating"
-                        value="4"
-                        onChange={e => setStars(e.target.value)}
-                    />
                     <label htmlFor="rating-4">
                         <i id="star-5" className="fas fa-star" />
                     </label>
@@ -93,7 +84,7 @@ const SearchBar = () => {
                         <i id="star-5" className="fas fa-star" />
                     </label>
                 </div>
-                <div className="dates">
+                {/* <div className="dates">
                     <div className="select">
                         <select
                             defaultValue="2000"
@@ -110,7 +101,7 @@ const SearchBar = () => {
                         {getYears()}
                         </select>
                     </div>
-                </div>
+                </div> */}
                 <div className="select" style={{ marginBottom: "0" }}>
                     <select
                         defaultValue="All Categories"

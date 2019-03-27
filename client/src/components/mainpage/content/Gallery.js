@@ -30,7 +30,7 @@ const Gallery = (props) => {
                 });
                 res = await res.json();
                 console.log(res)
-                setData(res.data);
+                setData(res);
                 setIsLoading(0)
             } catch (err) {}
         })();
@@ -55,7 +55,7 @@ const Gallery = (props) => {
                 </div>
                 :
                 <div className="padding-wrapper">
-                { Object.keys(data).length !== 0 && data.data && data.data.movies ? data.data.movies.map((film, index) => {
+                { data.length !== 0 ? data.map((film, index) => {
                     let stars = [];
                     for (let i=0; i < 5; i++) {
                         if (i <= Math.trunc(film.rating / 2)) {
