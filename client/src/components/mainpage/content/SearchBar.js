@@ -48,10 +48,17 @@ const SearchBar = () => {
                         onChange={e => setStars(e.target.value)}
                     />
                     <label htmlFor="rating-5">
-                        <i id="star-5" className="fas fa-star" />
+                        <i className="fas fa-star" />
                     </label>
+                    <input
+                        id="rating-4"
+                        type="radio"
+                        name="rating"
+                        value="4"
+                        onChange={e => setStars(e.target.value)}
+                    />
                     <label htmlFor="rating-4">
-                        <i id="star-5" className="fas fa-star" />
+                        <i className="fas fa-star" />
                     </label>
                     <input
                         id="rating-3"
@@ -61,7 +68,7 @@ const SearchBar = () => {
                         onChange={e => setStars(e.target.value)}
                     />
                     <label htmlFor="rating-3">
-                        <i id="star-5" className="fas fa-star" />
+                        <i className="fas fa-star" />
                     </label>
                     <input
                         id="rating-2"
@@ -71,7 +78,7 @@ const SearchBar = () => {
                         onChange={e => setStars(e.target.value)}
                     />
                     <label htmlFor="rating-2">
-                        <i id="star-5" className="fas fa-star" />
+                        <i className="fas fa-star" />
                     </label>
                     <input
                         id="rating-1"
@@ -81,7 +88,7 @@ const SearchBar = () => {
                         onChange={e => setStars(e.target.value)}
                     />
                     <label htmlFor="rating-1">
-                        <i id="star-5" className="fas fa-star" />
+                        <i className="fas fa-star" />
                     </label>
                 </div>
                 {/* <div className="dates">
