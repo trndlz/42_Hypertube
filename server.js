@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const keys = require('./config/keys')
 require('./config/passport-setup');
+require('pretty-error').start();
 
 //========================================================
 // MONGO

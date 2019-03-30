@@ -23,7 +23,6 @@ const Video = (props) => {
                 res = await res.json();
                 setData(res.data);
                 setIsLoading(0);
-                console.log(res)
             } catch (err) {}
         })();
         return () => {

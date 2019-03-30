@@ -37,24 +37,16 @@ const rearangeData = (arr) => {
 }
 
 const fetchMovies = (request) => {
-  return new Promise(async (resolve, reject) => {
-    fetch(request).then(res => resolve(res.json())).catch(err => reject(err))
-  });
+    return new Promise(async (resolve, reject) => {
+        fetch(request)
+        .then(res => {
+            resolve(res.json())
+        })
+        .catch(err => reject(err))
+    });
 }
 
 const getVideoByPage = async (req, res, next) => {
-  // console.log(req.query);
-  //YST.AM/api
-  //page: '1',                    page=INT
-  //searchInput: '',              query_term=MOVIENAME
-  //stars: '1',                   minimum_rating=[0-9]
-  //category: 'undefined',        genre=lenomdugenre
-  //sortBy: 'Date'                sort_by= title, year, rating
-
-  //POPCORN TIME
-  //sortBy                        sort= year, rating, title
-  //DESC ASC                      order=1 , -1
-
   let category = req.query.category === "All Categories" ? "" : `&genre=${req.query.category}`;
   let order = ["year Asc", "title Desc", "rating Asc"].includes(req.query.sortBy) ? "desc" : "asc";
   let sortBy = req.query.sortBy.split(' ')[0];
@@ -83,23 +75,18 @@ const getVideoByImdb = async (req, res, next) => {
   let requestPopcorn = `https://tv-v2.api-fetch.website/movie/${req.params.imdb}`;
   let requestYts = `https://yts.am/api/v2/list_movies.json?query_term=${req.params.imdb}`;
   let requestOmdb = `http://www.omdbapi.com/?i=${req.params.imdb}&apikey=${keys.omdb.key}`;
+  requestPopcorn = fetchMovies(requestPopcorn).catch(err => {console.log(err)})
   console.log(requestPopcorn)
-  data = [fetchMovies(requestYts), fetchMovies(requestPopcorn), fetchMovies(requestOmdb)];
-  data = await Promise.all(data);
-  rearangeData([data[1]])
-  data[0].data.movies[0].omdb = data[2];
-  data[1].omdb = data[2];
-  data = mergeArrays(data[0].data.movies, [data[1]])
-  data = removeDuplicates(data);
-  res.json({data: data[0]});
-  // let data = await fetch(`https://yts.am/api/v2/list_movies.json?query_term=${req.params.imdb}`);
-  // data = await data.json();
-  // let omdb = await fetch(`http://www.omdbapi.com/?i=${req.params.imdb}&apikey=${keys.omdb.key}`);
-  // omdb = await omdb.json();
-  // data.data.movies[0].omdb = omdb;
-  // res.json({
-  //   data: data.data.movies[0]
-  // });
+  data={requestPopcorn}
+  // data = [fetchMovies(requestYts), requestPopcorn, fetchMovies(requestOmdb)];
+  // data = await Promise.all(data);
+  // if (Object.keys(data[1]).length)
+  //   rearangeData([data[1]])
+  // data[0].data.movies[0].omdb = data[2];
+  // data[1].omdb = data[2];
+  // data = mergeArrays(data[0].data.movies, [data[1]])
+  // data = removeDuplicates(data);
+  // res.json({data: data[0]});
 }
 
 module.exports = exports = {
