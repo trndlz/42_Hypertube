@@ -3,15 +3,6 @@ import { Link } from 'react-router-dom';
 import { SearchContext } from "../MainPage";
 import Footer from "../../partials/Footer";
 import InfiniteScroll from 'react-infinite-scroller';
-import animal from "../../../images/animal.svg"
-
-const imageExists = async (image_url) => {
-    let res = await fetch(image_url, {
-        mode: 'no-cors'
-    })
-    console.log(res)
-    return res.status !== 404;
-}
 
 const Gallery = () => {
     const [isLoading, setIsLoading] = useState(1);
@@ -19,20 +10,23 @@ const Gallery = () => {
     const { search } = useContext(SearchContext);
     const [hasMore, setHasMore] = useState(true);
     const [moviesArr, setMoviesArr] = useState([]);
-    const [controller] = useState(new AbortController());
+    // let cont = new AbortController();
+    // cont.test = "a" + search.searchInput;
+    const [controller, setController] = useState(new AbortController());
 
     const fetchMovies = async (page) => {
         const token = localStorage.getItem("jwt");
         try {
+            // console.log(controller);
             let res = await fetch(`http://localhost:8145/video?page=${newPage}&searchInput=${search.searchInput}&stars=${search.stars}&dateFrom=${search.dateFrom}&dateTo=${search.dateTo}&category=${search.category}&sortBy=${search.sortBy}`,{      
                 headers: {
                     Authorization: "Bearer " + token
                 },
                 signal: controller.signal,
             });
+            
             res = await res.json();
             let arr = [];
-            
             if (res.length !== 0) {
                 res.map((film, index) => {
                     let stars = [];
@@ -48,7 +42,6 @@ const Gallery = () => {
                             <div className="film-min unseen">
                                 <img
                                     src={film.large_cover_image}
-                                    onError={(e)=>{e.target.onerror = null; e.target.src=animal}}
                                     alt=""
                                     style={{ width: "100%" }}
                                 />
@@ -63,29 +56,34 @@ const Gallery = () => {
                     </Link>)
                     return '';
                 })
-                setMoviesArr([...moviesArr, ...arr])
+                    setMoviesArr([...moviesArr, ...arr]);
             } else {
-                setHasMore(false);
+                    setHasMore(false);
             }
-            setNewPage(newPage + 1);
-            setIsLoading(0)
+                setNewPage(newPage + 1);
+                setIsLoading(0);
         } catch (err) {}
     }
-
+    
     useEffect(() => {
         if (Object.keys(search).length) {
             setNewPage(1);
-            setMoviesArr([])
-            setIsLoading(0)
+            setMoviesArr([]);
+            setIsLoading(0);
             setHasMore(true);
         }
+        controller.abort();
+        // let cont = ;
+        // cont.test = "b" + search.searchInput;
+        setController(new AbortController());
     }, [search])
-
+    
+    
     useEffect(() => {
         return () => {
             controller.abort();
         };
-    }, [])
+    }, [controller])
 
     return (
         <Fragment>

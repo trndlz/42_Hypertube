@@ -1,12 +1,11 @@
 const fetch = require('node-fetch');
 const keys = require('../config/keys');
-const path = require("path");
 
 const removeDuplicates = (arr) => {
   arr = arr.map((movie, index) => {
     if (arr.findIndex(movieIndex => {
-        return movieIndex.imdb_code === movie.imdb_code;
-      }) === index) {
+      return movieIndex.imdb_code === movie.imdb_code;
+    }) === index) {
       return movie;
     }
   });
@@ -33,36 +32,19 @@ const rearangeData = (arr) => {
     delete movie.images;
     movie.rating = movie.rating.percentage === 0 ? 5 : movie.rating.percentage / 10;
     delete movie.rating.percentage;
-    movie.summary = movie.synopsis;
-    delete movie.synopsis;
     return movie;
   })
 }
 
 const fetchMovies = (request) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let res = await fetch(request);
-      res = await res.json();
-      resolve(res)
-    } catch (err) {
-      reject(err);
-    }
-  });
-}
-const replace404Picture = async (data) => {
-  let moviesImgUrl = [];
-  if (data) {
-    data.forEach(movie => {
-      moviesImgUrl.push(fetch(movie.large_cover_image));
-    })
-    const imgData = await Promise.all(moviesImgUrl.map(p => p.catch(e => e)));
-    imgData.forEach((img, index) => {
-      if (img.status === 404) {
-        data[index].large_cover_image = 'http://localhost:8145/video/logo'
-      }
+    return new Promise(async (resolve, reject) => {
+        fetch(request)
+        .then(res => {
+            console.log(res.url, res)
+            resolve(res.json())
+        })
+        .catch(err => reject(err))
     });
-  }
 }
 
 const getVideoByPage = async (req, res, next) => {
@@ -78,18 +60,15 @@ const getVideoByPage = async (req, res, next) => {
     requestPopcorn = `https://tv-v2.api-fetch.website/movies/${req.query.page}?sort=${sortBy}&order=${order === 'desc' ? 1 : -1 }&keywords=${searchInput}`;
     data = [fetchMovies(requestYts), fetchMovies(requestPopcorn)];
     data = await Promise.all(data);
-    rearangeData(data[1]);
-    data = mergeArrays(data[0].data.movies, data[1]);
+    rearangeData(data[1])
+    data = mergeArrays(data[0].data.movies, data[1])
     data = removeDuplicates(data);
-    await replace404Picture(data);
     res.json(data);
   } else {
     requestYts = `https://yts.am/api/v2/list_movies.json?sort_by=${sortBy}&limit=50&page=${req.query.page}&minimum_rating=${2 * req.query.stars - 2}${category}&order_by=${order}`;
-    data = [fetchMovies(requestYts)];
+    data = [fetchMovies(requestYts)]
     data = await Promise.all(data);
-    data = data[0].data.movies;
-    await replace404Picture(data);
-    res.json(data);
+    res.json(data[0].data.movies);
   }
 }
 
@@ -97,40 +76,21 @@ const getVideoByImdb = async (req, res, next) => {
   let requestPopcorn = `https://tv-v2.api-fetch.website/movie/${req.params.imdb}`;
   let requestYts = `https://yts.am/api/v2/list_movies.json?query_term=${req.params.imdb}`;
   let requestOmdb = `http://www.omdbapi.com/?i=${req.params.imdb}&apikey=${keys.omdb.key}`;
-  let data = [fetch(requestYts), fetch(requestPopcorn), fetch(requestOmdb)];
-  data = await Promise.all(data.map(p => p.catch(e => e)));
-  data = data.map(movie => {
-    try {
-      return movie.json();
-    } catch (err) {
-      return null;
-    }
-  });
-  data = await Promise.all(data.map(p => p.catch(e => e)));
-  const omdb = data[2];
-  if (!data[0].data.movie_count) {
-    rearangeData([data[1]]);
-    data = [data[1]];
-  } else if (data[1].type === "invalid-json") {
-    data = data[0].data.movies;
-  } else {
-    data = mergeArrays(data[0].data.movies, [data[1]]);
-    rearangeData([data[1]]);
-    data = removeDuplicates(data);
-  }
-  data[0].omdb = omdb;
-  await replace404Picture(data);
-  res.json({
-    data: data[0]
-  });
-}
-
-const getLogo = (req, res, next) => {
-  res.sendFile(path.resolve("img/animal.svg"));
+  // requestPopcorn = fetchMovies(requestPopcorn).catch(err => {console.log(err)})
+  // console.log(requestPopcorn)
+  // data={requestPopcorn}
+  data = [fetchMovies(requestYts), fetchMovies(requestPopcorn), fetchMovies(requestOmdb)];
+  data = await Promise.all(data);
+  // if (Object.keys(data[1]).length)
+  //   rearangeData([data[1]])
+  data[0].data.movies[0].omdb = data[2];
+  data[1].omdb = data[2];
+  data = mergeArrays(data[0].data.movies, [data[1]])
+  data = removeDuplicates(data);
+  res.json({data: data[0]});
 }
 
 module.exports = exports = {
   getVideoByPage,
   getVideoByImdb,
-  getLogo
 };
