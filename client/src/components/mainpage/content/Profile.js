@@ -32,6 +32,13 @@ const Profile = props => {
                     signal
                 });
                 res = await res.json();
+                let comments = await fetch(`http://localhost:8145/comments/user/${id}`,{
+                    headers: {
+                        Authorization: "Bearer " + token
+                    },
+                    // signal
+                });
+                comments = await comments.json();
                 if (res.success) {
                     setIsSuccess(true);
                     setFirstName(res.firstName);
@@ -42,7 +49,7 @@ const Profile = props => {
                     let pic = document.querySelector(
                         "#profile-picture-profile"
                     );
-                    if (pic) pic.src = res.picture;
+                    if (pic) pic.src = res.picture + "/" + new Date().getTime();
                 } else {
                     setIsLoading(0);
                 }

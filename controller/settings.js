@@ -8,6 +8,7 @@ const {
     checkEmail
 } = require("../validation/validation");
 const Model = require("../model/user");
+const { createJwtToken } = require("./auth");
 
 const getSettings = async (req, res, next) => {
     const currentUser = await Model.User.findOne({
@@ -59,8 +60,15 @@ const postSettings = async (req, res, next) => {
         currentUser.picture = req.file ? `http://localhost:8145/auth/getlocalpicture/${currentUser._id}` : currentUser.picture;
         currentUser.password = currentUser.connectionType === 'local' && req.body.password !== "" ? req.body.password : currentUser.password;
         currentUser.save();
+        const token = createJwtToken({
+            username: currentUser.username,
+            _id: currentUser._id,
+            picture: currentUser.picture,
+            connectionType: currentUser.connectionType
+        });
         res.json({
             msg: "Settings Modified Successfully",
+            token: token,
             success: true
         });
     }

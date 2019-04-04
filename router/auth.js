@@ -20,7 +20,7 @@ router.get("/the42/redirect", passport.authenticate("42"), the42Auth);
 router.post("/signup", upload.single("userPicture"), localSignUpAuth);
 router.post("/signin", upload.none(), localSignInAuth);
 
-router.get("/getlocalpicture/:id", async (req, res, next) => {
+router.get("/getlocalpicture/:id/:time", async (req, res, next) => {
     const currentUser = await Model.User.findOne({
         _id: req.params.id
     });

@@ -17,12 +17,12 @@ const createJwtToken = payload => {
 };
 
 const googleAuth = (req, res) => {
-    let token = createJwtToken({ _id: req.user._id, connectionType: req.user.connectionType });
+    let token = createJwtToken({ _id: req.user._id, connectionType: req.user.connectionType, username: req.user.username, picture: req.user.picture });
     res.redirect(`http://localhost:3000/?token=${token}`);
 };
 
 const the42Auth = (req, res) => {
-    let token = createJwtToken({ _id: req.user._id, connectionType: req.user.connectionType });
+    let token = createJwtToken({ _id: req.user._id, connectionType: req.user.connectionType, username: req.user.username, picture: req.user.picture });
     res.redirect(`http://localhost:3000/?token=${token}`);
 };
 
@@ -53,7 +53,7 @@ const localSignInAuth = async (req, res) => {
                     msg: "Please verify your email address"
                 });
             } else {
-                const payload = { _id: currentUser._id, connectionType: currentUser.connectionType };
+                const payload = { _id: currentUser._id, connectionType: currentUser.connectionType, username: currentUser.username, picture: currentUser.picture };
                 let token = createJwtToken(payload);
                 res.status(200).json({
                     success: true,
@@ -99,5 +99,6 @@ module.exports = exports = {
     googleAuth,
     the42Auth,
     localSignUpAuth,
-    localSignInAuth
+    localSignInAuth,
+    createJwtToken
 };

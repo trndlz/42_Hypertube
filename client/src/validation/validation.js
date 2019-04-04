@@ -4,7 +4,7 @@ const validateEmail = email => {
 };
 
 const validateUsername = username => {
-    const re = /^[0-9A-Za-z_\-.]{3,12}$/;
+    const re = /^[0-9A-Za-z_\-.]{3,20}$/;
     return re.test(String(username));
 };
 

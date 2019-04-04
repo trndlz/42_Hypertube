@@ -4,16 +4,21 @@ const bcrypt = require("bcrypt");
 
 const commentSchema = new Schema({
     comment: String,
-    date: String
+    date: String,
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    movieId: { type: mongoose.Schema.Types.ObjectId, ref: "Movie", required: true }
 });
 
 const movieSchema = new Schema({
+    imdbId: String,
+    path: String,
+    isSaved: Boolean,
     title: String,
-    date: String,
-    stars: String,
-    desc: String,
-    team: String,
-    comments: [commentSchema]
+    // date: String,
+    // stars: String,
+    // desc: String,
+    // team: String,
+    // comments: [commentSchema]
 });
 
 const userSchema = new Schema({
@@ -29,7 +34,7 @@ const userSchema = new Schema({
         default: "en"
     },
     moviesSeen: [movieSchema],
-    comments: [commentSchema],
+    // comments: [commentSchema],
     authId: String,
     connectionType: String,
     token: String,

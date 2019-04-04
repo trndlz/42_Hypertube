@@ -11,7 +11,7 @@ const checkEmail = async email => {
 };
 
 const validateUsername = username => {
-    const re = /^[0-9A-Za-z_\-.]{3,12}$/;
+    const re = /^[0-9A-Za-z_\-.]{3,20}$/;
     return re.test(String(username));
 };
 
@@ -35,6 +35,12 @@ const validatePassword = password => {
     return re.test(String(password));
 };
 
+const validateComment = comment => {
+    if (comment.length > 1000 || comment.length === 0)
+        return false;
+    return true;
+}
+
 module.exports = exports = {
     validateUsername: validateUsername,
     checkUsername: checkUsername,
@@ -42,5 +48,6 @@ module.exports = exports = {
     validatePassword: validatePassword,
     validateLastName: validateLastName,
     validateEmail: validateEmail,
-    checkEmail: checkEmail
+    checkEmail: checkEmail,
+    validateComment: validateComment
 };

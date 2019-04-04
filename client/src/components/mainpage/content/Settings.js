@@ -20,6 +20,7 @@ const Settings = () => {
     const [errors, setErrors] = useAsyncState({});
     const [pictureChanged, setPictureChanged] = useState(false);
     const [isLoading, setIsLoading] = useState(1);
+    // const [pictureUrl, setPictureUrl] = useState("");
 
     const handleChange = e => {
         let reader = new FileReader();
@@ -63,7 +64,13 @@ const Settings = () => {
                 setLanguage(res.language);
                 setIsLoading(0);
                 let pic = document.querySelector("#profile-picture-settings");
-                if (pic) pic.src = res.picture;
+                if (pic) {
+                    console.log('yes')
+                    pic.src = res.picture + "/" + new Date().getTime();
+                    // setPictureUrl(res.picture)
+                    console.log(pic.src)
+                }
+                // console.log(res.picture)
             } catch (err) {}
         })();
         return () => {
@@ -99,7 +106,9 @@ const Settings = () => {
             });
             res = await res.json();
             setPictureChanged(false);
-            if (!res.success) {
+            if (res.success){
+                localStorage.setItem("jwt", res.token);
+            } else {
                 setErrors({ ...res.errors });
             }
         } else {
@@ -131,6 +140,7 @@ const Settings = () => {
                                     id="profile-picture-settings"
                                     alt="profile"
                                     src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
+                                    // key={pictureUrl}
                                 />
                             </label>
                             <input
