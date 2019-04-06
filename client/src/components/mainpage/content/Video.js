@@ -150,7 +150,7 @@ const Video = (props) => {
                 <div className="your-comment">
                     <img
                         className="user-img"
-                        src={jwt.decode(localStorage.getItem('jwt')) ? jwt.decode(localStorage.getItem('jwt')).picture + "/" + new Date().getTime() : "https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"}
+                        src={jwt.decode(localStorage.getItem('jwt')) ? /^http:\/\/localhost.*/.exec(jwt.decode(localStorage.getItem('jwt')).picture) ? jwt.decode(localStorage.getItem('jwt')).picture + "/" + new Date().getTime() : jwt.decode(localStorage.getItem('jwt')).picture : "https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"}
                         alt="user"
                     />
                     <textarea
@@ -172,7 +172,7 @@ const Video = (props) => {
                         <Link to={`/profile/${comment.userId}`}>
                             <img
                                 className="user-img"
-                                src={comment.userPicture + "/" + new Date().getTime()}
+                                src={/^http:\/\/localhost.*/.exec(comment.userPicture) ? comment.userPicture + "/" + new Date().getTime() : comment.userPicture}
                                 alt="user"
                             />
                         </Link>

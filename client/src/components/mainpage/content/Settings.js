@@ -66,7 +66,7 @@ const Settings = () => {
                 let pic = document.querySelector("#profile-picture-settings");
                 if (pic) {
                     console.log('yes')
-                    pic.src = res.picture + "/" + new Date().getTime();
+                    pic.src = /^http:\/\/localhost.*/.exec(res.picture) ? res.picture + "/" + new Date().getTime() : res.picture;
                     // setPictureUrl(res.picture)
                     console.log(pic.src)
                 }
