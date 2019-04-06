@@ -31,20 +31,29 @@ const Video = (props) => {
         res = await res.json();
         if (res.success) {
             let jwtContent = jwt.decode(localStorage.getItem('jwt'));
-            console.log(jwtContent);
-            
             if (jwtContent) {
                 res.comment.username = jwtContent.username;
                 res.comment.userPicture = jwtContent.picture;
             }
+            const textArea = document.querySelector('#textArea');
+            textArea.style.height = 'auto';
             setComments([res.comment, ...comments]);
             setCommentText('');
         }
     }
 
+    const handleOnInput = () => {
+        const textArea = document.querySelector('#textArea');
+        textArea.style.height = 'auto';
+        textArea.style.height = (textArea.scrollHeight) + 'px';
+    }
+
     useEffect(() => {
         let controller;
         (async () => {
+            const textArea = document.querySelector('#textArea');
+            if (textArea)
+                textArea.style.height = textArea.scrollHeight + 'px;overflow-y:hidden;';
             const token = localStorage.getItem("jwt");
             const imdb = props.location.pathname.split("/")[2];
             controller = new AbortController();
@@ -64,7 +73,6 @@ const Video = (props) => {
                     // signal
                 });
                 commentsRes = await commentsRes.json();
-                console.log(commentsRes)
                 setData(res.data);
                 setComments(commentsRes.comments.reverse());
                 setIsLoading(0);
@@ -92,7 +100,6 @@ const Video = (props) => {
         min = min % 60;
         return hour && min ? `${hour}h ${min}min` : 'N/A';
     }
-    
     return (
         <div className="main-content-wrapper">
             {isLoading ?
@@ -149,11 +156,12 @@ const Video = (props) => {
                     <textarea
                         className="comment-area"
                         name=""
-                        id=""
+                        id="textArea"
                         cols=""
                         rows="1"
                         value={commentText}
                         onChange={e => setCommentText(e.target.value)}
+                        onInput={handleOnInput}
                     />
                     <button className="send-comment-btn" onClick={postComment}>Send</button>
                 </div>

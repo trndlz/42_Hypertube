@@ -296,7 +296,7 @@ body {
   .search-bar .dates {
     display: flex; }
   .search-bar .search-input {
-    margin: auto;
+    margin: 1rem auto 0 auto;
     font-size: 1.5rem;
     background-color: #67b9ac;
     color: white;
@@ -621,7 +621,7 @@ h1 {
 
 .input-type-2 {
   height: 3rem;
-  width: 25rem;
+  width: 21rem;
   text-align: center; }
   .input-type-2:focus {
     outline: none; }
