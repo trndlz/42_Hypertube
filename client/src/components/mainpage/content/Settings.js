@@ -20,7 +20,6 @@ const Settings = () => {
     const [errors, setErrors] = useAsyncState({});
     const [pictureChanged, setPictureChanged] = useState(false);
     const [isLoading, setIsLoading] = useState(1);
-    // const [pictureUrl, setPictureUrl] = useState("");
 
     const handleChange = e => {
         let reader = new FileReader();
@@ -65,12 +64,8 @@ const Settings = () => {
                 setIsLoading(0);
                 let pic = document.querySelector("#profile-picture-settings");
                 if (pic) {
-                    console.log('yes')
                     pic.src = /^http:\/\/localhost.*/.exec(res.picture) ? res.picture + "/" + new Date().getTime() : res.picture;
-                    // setPictureUrl(res.picture)
-                    console.log(pic.src)
                 }
-                // console.log(res.picture)
             } catch (err) {}
         })();
         return () => {
@@ -140,7 +135,6 @@ const Settings = () => {
                                     id="profile-picture-settings"
                                     alt="profile"
                                     src="https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"
-                                    // key={pictureUrl}
                                 />
                             </label>
                             <input

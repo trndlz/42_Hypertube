@@ -62,7 +62,6 @@ const Profile = props => {
 
     return (
         <div className="main-content-wrapper">
-            {console.log(isSuccess)}
             <div className="profile">
                 {isLoading === 1 ? (
                     <div className="cs-loader" style={{ height: "249px" }}>

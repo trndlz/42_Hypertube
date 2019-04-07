@@ -1,10 +1,10 @@
 #COMMENTS
     verify comment in front
-    maybe make enter work in textarea
-    make textarea bigger when enter
 
 #PROFILE
     Show comments in profile page
 
 #OPTI
     make conroller signal abort on everything
+
+What is getLogo() ? And server : img/animal.svg ?

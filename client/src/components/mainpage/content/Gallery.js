@@ -17,7 +17,6 @@ const Gallery = () => {
     const fetchMovies = async (page) => {
         const token = localStorage.getItem("jwt");
         try {
-            // console.log(controller);
             let res = await fetch(`http://localhost:8145/video?page=${newPage}&searchInput=${search.searchInput}&stars=${search.stars}&dateFrom=${search.dateFrom}&dateTo=${search.dateTo}&category=${search.category}&sortBy=${search.sortBy}`,{      
                 headers: {
                     Authorization: "Bearer " + token
@@ -73,8 +72,6 @@ const Gallery = () => {
             setHasMore(true);
         }
         controller.abort();
-        // let cont = ;
-        // cont.test = "b" + search.searchInput;
         setController(new AbortController());
     }, [search])
     

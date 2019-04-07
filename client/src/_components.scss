@@ -196,7 +196,6 @@ select::-ms-expand {
     left: 50%;
     transform: translateX(-50%);
     width: 40rem;
-    // height: 4rem;
     z-index: -1;
     border-radius: 3px;
     display: flex;
@@ -224,7 +223,6 @@ select::-ms-expand {
     top: 50%;
     position: absolute;
     color: #fff;
-    // padding: 0 93px;
     text-align: center;
     width: 100%;
 }

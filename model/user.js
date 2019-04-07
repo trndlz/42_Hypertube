@@ -14,11 +14,6 @@ const movieSchema = new Schema({
     path: String,
     isSaved: Boolean,
     title: String,
-    // date: String,
-    // stars: String,
-    // desc: String,
-    // team: String,
-    // comments: [commentSchema]
 });
 
 const userSchema = new Schema({
@@ -33,8 +28,7 @@ const userSchema = new Schema({
         type: String,
         default: "en"
     },
-    moviesSeen: [movieSchema],
-    // comments: [commentSchema],
+    moviesSeen: [movieSchema],//?
     authId: String,
     connectionType: String,
     token: String,
@@ -49,13 +43,7 @@ userSchema.pre("save", async function(next) {
         const hash = await bcrypt.hash(this.password, 10);
         this.password = hash;
     }
-    this.token =
-        Math.random()
-            .toString(36)
-            .substr(2) +
-        Math.random()
-            .toString(36)
-            .substr(2);
+    this.token = Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2);
     next();
 });
 
