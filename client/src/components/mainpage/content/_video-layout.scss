@@ -5,7 +5,7 @@
     align-items: center;
     width: 80%;
     background-color: rgba(0, 0, 0, 0.7);
-    background-color: $color-ternary-9;
+    background-color: $color-secondary;
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
     color: white;
     flex: 0 0 auto;
@@ -104,8 +104,8 @@
             height: 4rem;
         }
         .send-comment-btn {
-            background: $color-ternary-6;
-            color: $color-ternary-2;
+            background: $color-secondary;
+            color: $color-primary;
             cursor: pointer;
             border: none;
             padding: 0 3rem;
@@ -124,7 +124,7 @@
         padding: 1rem;
         .comment-text {
             width: 100%;
-            color: $color-ternary-6;
+            color: $color-secondary;
             span {
                 font-size: 1.2rem;
             }
@@ -137,7 +137,7 @@
                 .username {
                     font-size: 1.4rem;
                     a {
-                        color: darken($color-ternary-1, 10%);
+                        color: darken($color-primary, 20%);
                         font-weight: bold;
                         text-decoration: none;
                     }

@@ -20,12 +20,9 @@
   "homepage": "https://github.com/Bligoubloups/Hypertube#readme",
   "dependencies": {
     "bcrypt": "^3.0.4",
-    "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "fast-sort": "^1.5.6",
     "ffmpeg-static": "^2.4.0",
-    "file-type": "^10.8.0",
     "fluent-ffmpeg": "^2.1.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.4.14",
@@ -36,8 +33,6 @@
     "passport-42": "^1.2.5",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^1.0.0",
-    "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0",
     "pretty-error": "^2.1.1",
     "torrent-stream": "^1.1.0"
   }

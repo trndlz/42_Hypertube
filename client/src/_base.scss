@@ -1,44 +1,22 @@
-$color-primary: #97f572;
-$color-primary: #97f572;
-$color-primary-focus: #ebf562;
-$color-primary-focus: #e02929;
-$color-primary-light: #ff3366;
-$color-primary-dark: #ba265d;
+$color-primary: #67b9ac;
+$color-secondary: #1c1c1c;
+$color-ternary: #232323;
 
-$color-secondary: red;
+// $color-primary: #c96868;
+// $color-secondary: #232323;
+// $color-ternary: #232323;
 
-$color-ternary-1: #339989;
-$color-ternary-2: #67b9ac;
-$color-ternary-3: #48706a;
-$color-ternary-4: #c0e0de;
-$color-ternary-5: #a9bcd0;
-$color-ternary-6: #1f1a18;
-$color-ternary-7: #b9ffb7;
-$color-ternary-8: #30534e;
-$color-ternary-9: #30534e;
-
-$color-ternary-8: #232323;
-$color-ternary-9: #1c1c1c;
-
-$color-stars: #ebf562;
 $color-stars: #e02929;
-
-$color-grey-light-1: #faf9f9;
-$color-grey-light-2: #f4f2f2;
-$color-grey-light-3: #f0eeee;
-$color-grey-light-4: #ccc;
-
-$color-grey-dark-1: #333;
-$color-grey-dark-2: #777;
-$color-grey-dark-3: #999;
 
 $color-black: #000;
 $color-white: #fff;
+$color-invalid: red;
 
-$shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
-$shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.06);
+// $color-ternary-1: #339989;
 
-$line: 1px solid $color-grey-light-1;
+$color-input: #97f572;
+$color-input-focus: #ebf562;
+$color-input-text: #b9ffb7;
 
 $bp-largest: 75em; // 1200px
 $bp-large: 68.75em; // 1100px
@@ -77,7 +55,6 @@ body {
 }
 
 .App {
-    background-color: $color-grey-dark-2;
     margin: auto;
 }
 

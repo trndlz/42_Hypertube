@@ -16,17 +16,17 @@
         margin-bottom: 0;
     }
     select {
-        background-color: $color-primary;
-        color: $color-ternary-9;
+        background-color: $color-input;
+        color: $color-secondary;
         option {
-            color: $color-ternary-9;
+            color: $color-secondary;
         }
     }
     .select::after {
-        background-color: $color-primary;
-        color: $color-ternary-9;
+        background-color: $color-input;
+        color: $color-secondary;
     }
     .select:hover::after {
-        color: $color-ternary-9;
+        color: $color-secondary;
     }
 }

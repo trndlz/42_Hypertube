@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Footer from "../../partials/Footer";
-import { SearchContext } from "../MainPage";
 
 const Profile = props => {
     const [username, setUsername] = useState("");
@@ -40,7 +39,7 @@ const Profile = props => {
                     },
                     // signal
                 });
-                comments = await comments.json();
+                await comments.json();
                 if (res.success) {
                     setIsSuccess(true);
                     setFirstName(res.firstName);

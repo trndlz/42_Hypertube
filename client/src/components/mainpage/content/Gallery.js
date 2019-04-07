@@ -16,6 +16,7 @@ const Gallery = () => {
     const [controller, setController] = useState(new AbortController());
 
     const fetchMovies = async (page) => {
+        console.log("called", page)
         const token = localStorage.getItem("jwt");
         try {
             let res = await fetch(`http://localhost:8145/video?page=${newPage}&searchInput=${search.searchInput}&stars=${search.stars}&dateFrom=${search.dateFrom}&dateTo=${search.dateTo}&category=${search.category}&sortBy=${search.sortBy}`,{      
@@ -27,7 +28,6 @@ const Gallery = () => {
             
             res = await res.json();
             let arr = [];
-            console.log(res.length)
             if (res.length !== 0) {
                 res.map((film, index) => {
                     let stars = [];
@@ -84,10 +84,9 @@ const Gallery = () => {
             controller.abort();
         };
     }, [controller])
-
     return (
         <Fragment>
-            {console.log(hasMore)}
+            {console.log("Render")}
             <SearchBar />
             <div className="main-content-wrapper">
             {!isLoading ?
@@ -97,7 +96,7 @@ const Gallery = () => {
                     hasMore={hasMore}
                     loader={<div className="cs-loader" style={{height: newPage === 1 ? "100vh" : "5rem"}} key={0}>
                                 <div className="cs-loader-inner">
-                                    <label>ICI</label>
+                                    <label>●</label>
                                     <label>●</label>
                                     <label>●</label>
                                     <label>●</label>

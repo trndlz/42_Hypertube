@@ -4,6 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 import MainPage from "./components/mainpage/MainPage";
 import ProtectedRoute from "./utils/protectedRoute";
 import { auth } from "./utils/auth";
+// import LogRocket from 'logrocket';
+// LogRocket.init('qzue8a/hypertube');
 
 const App = () => {
     let [isLoading, setIsLoading] = useState(true);

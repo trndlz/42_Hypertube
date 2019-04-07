@@ -1,5 +1,4 @@
 h1 {
-    color: $color-grey-light-1;
     text-decoration: none;
 }
 
@@ -8,7 +7,7 @@ h1 {
     &:link,
     &:visited {
         text-decoration: none;
-        color: $color-grey-light-1;
+        color: white;
     }
 }
 
@@ -17,24 +16,24 @@ h1 {
     height: 3rem;
     width: 20rem;
     background-color: transparent;
-    border-bottom: 3px solid $color-primary;
-    caret-color: $color-primary-focus;
-    color: $color-ternary-7;
+    border-bottom: 3px solid $color-input;
+    caret-color: $color-input-focus;
+    color: $color-input-text;
     &::placeholder {
-        color: $color-ternary-7;
+        color: $color-input-text;
     }
     &:focus {
         outline: none;
         box-shadow: 0 0.3rem 0.8rem rgba($color-black, 0.1);
-        border-bottom: 3px solid $color-primary-focus;
+        border-bottom: 3px solid $color-input-focus;
         transform: translateY(-0.2rem);
     }
     &:invalid {
         box-shadow: none;
-        border-bottom: 3px solid $color-secondary;
+        border-bottom: 3px solid $color-invalid;
     }
     &:focus:invalid {
-        border-bottom: 3px solid $color-secondary;
+        border-bottom: 3px solid $color-invalid;
     }
 }
 
@@ -78,22 +77,14 @@ h1 {
         box-shadow: 0 0.5rem 1rem rgba($color-black, 0.2);
     }
 
-    &--white {
-        background-color: $color-white;
-        color: $color-grey-dark-1;
-        &::after {
-            background-color: $color-white;
-        }
-    }
-
     &--primary {
-        background-color: $color-primary;
-        color: $color-ternary-8;
+        background-color: $color-input;
+        color: $color-ternary;
     }
 
     &--secondary {
-        background-color: $color-primary;
-        color: $color-ternary-8;
+        background-color: $color-input;
+        color: $color-ternary;
         padding: 0.4rem 2rem;
         background-color: #fff;
         &:hover {
@@ -124,29 +115,12 @@ h1 {
     }
 }
 
-//DROPDOWN CUSTOM
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    appearance: none;
-    outline: 0;
-    box-shadow: none;
-    border: 0;
-    background-color: $color-ternary-2;
-    background-image: none;
-    option {
-        color: #fff;
-        &:hover {
-            color: #000;
-            box-shadow: 0 0 10px 100px rgb(84, 223, 84) inset;
-            background-color: #fff2a8;
-        }
-    }
-}
 .yellow-star {
-   color: $color-primary-focus;
+    color: $color-stars;
 }
+
+//DROPDOWN CUSTOM
+
 .select {
     position: relative;
     display: block;
@@ -163,6 +137,8 @@ select {
     padding: 0 0 0 0.5em;
     color: #fff;
     cursor: pointer;
+    border: 0;
+    background-color: $color-primary;
 }
 select::-ms-expand {
     display: none;
@@ -175,7 +151,7 @@ select::-ms-expand {
     right: 0;
     bottom: 0;
     padding: 0 1em;
-    background-color: $color-ternary-2;
+    background-color: $color-primary;
     pointer-events: none;
 }
 /* Transition */
@@ -189,7 +165,7 @@ select::-ms-expand {
 }
 
 .popup-notif {
-    background-color: $color-ternary-8;
+    background-color: $color-ternary;
     position: absolute;
     text-align: center;
     top: 30px;
@@ -202,8 +178,8 @@ select::-ms-expand {
     justify-content: center;
     align-items: center;
     font-size: 1.4rem;
-    color: $color-ternary-7;
-    border: 1px solid $color-ternary-2;
+    color: $color-input-text;
+    border: 1px solid $color-primary;
     opacity: 0;
     color: white;
     animation: popAndHide 3s ease-out;

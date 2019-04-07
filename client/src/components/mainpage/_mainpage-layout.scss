@@ -1,6 +1,6 @@
 .mainpage {
     display: flex;
-    height: calc(100vh - 10rem);
+    height: calc(100vh - 8rem);
     @media only screen and (max-width: $bp-small) {
         flex-direction: column;
     }
