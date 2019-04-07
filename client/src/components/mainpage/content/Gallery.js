@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { SearchContext } from "../MainPage";
 import Footer from "../../partials/Footer";
 import InfiniteScroll from 'react-infinite-scroller';
+import SearchBar from "./SearchBar";
 
 const Gallery = () => {
     const [isLoading, setIsLoading] = useState(1);
@@ -26,6 +27,7 @@ const Gallery = () => {
             
             res = await res.json();
             let arr = [];
+            console.log(res.length)
             if (res.length !== 0) {
                 res.map((film, index) => {
                     let stars = [];
@@ -39,6 +41,7 @@ const Gallery = () => {
                     arr.push(<Link to={`/video/${film.imdb_code}`} key={index + ' ' + page}>
                         <div className="film">
                             <div className="film-min unseen">
+                            {console.log(film.large_cover_image)}
                                 <img
                                     src={film.large_cover_image}
                                     alt=""
@@ -84,6 +87,8 @@ const Gallery = () => {
 
     return (
         <Fragment>
+            {console.log(hasMore)}
+            <SearchBar />
             <div className="main-content-wrapper">
             {!isLoading ?
                 <InfiniteScroll
@@ -92,7 +97,7 @@ const Gallery = () => {
                     hasMore={hasMore}
                     loader={<div className="cs-loader" style={{height: newPage === 1 ? "100vh" : "5rem"}} key={0}>
                                 <div className="cs-loader-inner">
-                                    <label>●</label>
+                                    <label>ICI</label>
                                     <label>●</label>
                                     <label>●</label>
                                     <label>●</label>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import jwt from 'jsonwebtoken';
 import Footer from "../../partials/Footer";
 import useAsyncState from "../../../utils/useAsyncState";
@@ -20,6 +20,7 @@ const Settings = () => {
     const [errors, setErrors] = useAsyncState({});
     const [pictureChanged, setPictureChanged] = useState(false);
     const [isLoading, setIsLoading] = useState(1);
+
 
     const handleChange = e => {
         let reader = new FileReader();
@@ -64,7 +65,7 @@ const Settings = () => {
                 setIsLoading(0);
                 let pic = document.querySelector("#profile-picture-settings");
                 if (pic) {
-                    pic.src = /^http:\/\/localhost.*/.exec(res.picture) ? res.picture + "/" + new Date().getTime() : res.picture;
+                    pic.src = /^http:\/\/localhost.*/.exec(res.picture) ? res.picture + "/" + Date.now() : res.picture;
                 }
             } catch (err) {}
         })();

@@ -9,6 +9,7 @@ const Video = (props) => {
     const [data, setData] = useState({});
     const [stars, setStars] = useState([]);
     const [isLoading, setIsLoading] = useState(1);
+    const [date] = useState(Date.now());
 
     const postComment = async e => {
         e.preventDefault();
@@ -51,9 +52,9 @@ const Video = (props) => {
     useEffect(() => {
         let controller;
         (async () => {
-            const textArea = document.querySelector('#textArea');
-            if (textArea)
-                textArea.style.height = textArea.scrollHeight + 'px;overflow-y:hidden;';
+            // const textArea = document.querySelector('#textArea');
+            // if (textArea)
+            //     textArea.style.height = textArea.scrollHeight + 'px;overflow-y:hidden;';
             const token = localStorage.getItem("jwt");
             const imdb = props.location.pathname.split("/")[2];
             controller = new AbortController();
@@ -116,6 +117,7 @@ const Video = (props) => {
             :
             <Fragment>
             <div className="video-description">
+            {console.log(data.large_cover_image)}
                 <img className="video-img" src={data.large_cover_image} alt="" />
                 <div className="video-info">
                     <h2 className="video-title">
@@ -150,7 +152,7 @@ const Video = (props) => {
                 <div className="your-comment">
                     <img
                         className="user-img"
-                        src={jwt.decode(localStorage.getItem('jwt')) ? /^http:\/\/localhost.*/.exec(jwt.decode(localStorage.getItem('jwt')).picture) ? jwt.decode(localStorage.getItem('jwt')).picture + "/" + new Date().getTime() : jwt.decode(localStorage.getItem('jwt')).picture : "https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"}
+                        src={jwt.decode(localStorage.getItem('jwt')) ? /^http:\/\/localhost.*/.exec(jwt.decode(localStorage.getItem('jwt')).picture) ? jwt.decode(localStorage.getItem('jwt')).picture + "/" + date : jwt.decode(localStorage.getItem('jwt')).picture : "https://bikeandbrain.files.wordpress.com/2015/05/face.jpg"}
                         alt="user"
                     />
                     <textarea
@@ -172,7 +174,7 @@ const Video = (props) => {
                         <Link to={`/profile/${comment.userId}`}>
                             <img
                                 className="user-img"
-                                src={/^http:\/\/localhost.*/.exec(comment.userPicture) ? comment.userPicture + "/" + new Date().getTime() : comment.userPicture}
+                                src={/^http:\/\/localhost.*/.exec(comment.userPicture) ? comment.userPicture + "/" + date : comment.userPicture}
                                 alt="user"
                             />
                         </Link>

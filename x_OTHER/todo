@@ -7,4 +7,6 @@
 #OPTI
     make conroller signal abort on everything
 
-What is getLogo() ? And server : img/animal.svg ?
+#BUG Search : "s" , the 3 first movies doesnt have pictures
+    il faut fetch yts dans replace404 quand url pas image
+    bug taille textarea comment firefox

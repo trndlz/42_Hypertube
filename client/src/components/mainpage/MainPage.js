@@ -5,7 +5,6 @@ import Profile from "./content/Profile";
 import Settings from "./content/Settings";
 import Video from "./content/Video";
 import Header from "../partials/Header";
-import SearchBar from "./content/SearchBar";
 
 export const SearchContext = React.createContext();
 
@@ -36,12 +35,11 @@ const MainPage = props => {
                     Search Options <i className="fas fa-arrow-circle-down" />
                 </label>
                 <SearchContext.Provider value={{ search, setSearch }}>
-                    <SearchBar />
                     <Route exact path="/" component={Gallery}/>
+                    <Route exact path="/profile/:id" component={Profile} />
+                    <Route exact path="/settings" component={Settings} />
+                    <Route exact path="/video/:imdb" component={Video} />
                 </SearchContext.Provider>
-                <Route exact path="/profile/:id" component={Profile} />
-                <Route exact path="/settings" component={Settings} />
-                <Route exact path="/video/:imdb" component={Video} />
             </main>
             </Fragment>
             }
