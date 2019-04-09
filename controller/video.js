@@ -54,11 +54,18 @@ const fetchMovies = (request) => {
 const replace404Picture = async (data) => {
 	let moviesImgUrl = [];
 	if (data) {
-		data.forEach(movie => {
-			moviesImgUrl.push(fetch(movie.large_cover_image));
-		})
+		for (let i = 0; i < data.length; i++) {
+				if (data[i].large_cover_image && data[i].large_cover_image !== "images/posterholder.png") {
+					moviesImgUrl.push(fetch(data[i].large_cover_image));
+				} else {
+					let res = await fetch(`https://yts.am/api/v2/list_movies.json?query_term=${data[i].imdb_code}`);
+					res = await res.json();
+					data[i].large_cover_image = res.data.movies[0].large_cover_image
+					data[i].year = res.data.movies[0].year
+				} 
+		}
 		const imgData = await Promise.all(moviesImgUrl.map(p => p.catch(e => e)));
-		imgData.forEach((img, index) => {
+		imgData.forEach((img, index) => {				
 			if (img.status === 404) {
 				data[index].large_cover_image = 'http://localhost:8145/video/logo'
 			}

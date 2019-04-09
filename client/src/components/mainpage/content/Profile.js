@@ -33,26 +33,30 @@ const Profile = props => {
                     signal
                 });
                 res = await res.json();
-                let comments = await fetch(`http://localhost:8145/comments/user/${id}`,{
-                    headers: {
-                        Authorization: "Bearer " + token
-                    },
-                    // signal
-                });
-                await comments.json();
-                if (res.success) {
-                    setIsSuccess(true);
-                    setFirstName(res.firstName);
-                    setLastName(res.lastName);
-                    setUsername(res.username);
-                    setLanguage(res.language);
-                    setIsLoading(0);
-                    let pic = document.querySelector(
-                        "#profile-picture-profile"
-                    );
-                    if (pic) pic.src = res.picture + "/" + new Date().getTime();
+                if (res.isAuthenticated !== false) {
+                    let comments = await fetch(`http://localhost:8145/comments/user/${id}`,{
+                        headers: {
+                            Authorization: "Bearer " + token
+                        },
+                        // signal
+                    });
+                    await comments.json();
+                    if (res.success) {
+                        setIsSuccess(true);
+                        setFirstName(res.firstName);
+                        setLastName(res.lastName);
+                        setUsername(res.username);
+                        setLanguage(res.language);
+                        setIsLoading(0);
+                        let pic = document.querySelector(
+                            "#profile-picture-profile"
+                        );
+                        if (pic) pic.src = res.picture + "/" + new Date().getTime();
+                    } else {
+                        setIsLoading(0);
+                    }
                 } else {
-                    setIsLoading(0);
+                    window.location.reload();
                 }
             } catch (err) {}
         })();

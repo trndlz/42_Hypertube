@@ -1,12 +1,5 @@
-#COMMENTS
-    verify comment in front
-
 #PROFILE
     Show comments in profile page
 
 #OPTI
     make conroller signal abort on everything
-
-#BUG Search : "s" , the 3 first movies doesnt have pictures
-    il faut fetch yts dans replace404 quand url pas image
-    bug taille textarea comment firefox

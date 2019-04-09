@@ -16,7 +16,6 @@ const Gallery = () => {
     const [controller, setController] = useState(new AbortController());
 
     const fetchMovies = async (page) => {
-        console.log("called", page)
         const token = localStorage.getItem("jwt");
         try {
             let res = await fetch(`http://localhost:8145/video?page=${newPage}&searchInput=${search.searchInput}&stars=${search.stars}&dateFrom=${search.dateFrom}&dateTo=${search.dateTo}&category=${search.category}&sortBy=${search.sortBy}`,{      
@@ -25,45 +24,47 @@ const Gallery = () => {
                 },
                 signal: controller.signal,
             });
-            
             res = await res.json();
-            let arr = [];
-            if (res.length !== 0) {
-                res.map((film, index) => {
-                    let stars = [];
-                    for (let i=0; i < 5; i++) {
-                        if (i <= Math.trunc(film.rating / 2)) {
-                            stars.push(<i className="fas fa-star yellow-star" key={i} />);
-                        } else {
-                            stars.push(<i className="fas fa-star" key={i} />);
+            if (res.isAuthenticated !== false) {
+                let arr = [];
+                if (res.length !== 0) {
+                    res.map((film, index) => {
+                        let stars = [];
+                        for (let i=0; i < 5; i++) {
+                            if (i <= Math.trunc(film.rating / 2)) {
+                                stars.push(<i className="fas fa-star yellow-star" key={i} />);
+                            } else {
+                                stars.push(<i className="fas fa-star" key={i} />);
+                            }
                         }
-                    }
-                    arr.push(<Link to={`/video/${film.imdb_code}`} key={index + ' ' + page}>
-                        <div className="film">
-                            <div className="film-min unseen">
-                            {console.log(film.large_cover_image)}
-                                <img
-                                    src={film.large_cover_image}
-                                    alt=""
-                                    style={{ width: "100%" }}
-                                />
+                        arr.push(<Link to={`/video/${film.imdb_code}`} key={index + ' ' + page}>
+                            <div className="film">
+                                <div className="film-min unseen">
+                                    <img
+                                        src={film.large_cover_image}
+                                        alt=""
+                                        style={{ width: "100%" }}
+                                    />
+                                </div>
+                                <div className="film-infos">
+                                    {film.title}{" "}
+                                    <span className="film-infos-date">({film.year})</span>
+                                    <br />
+                                    {[...stars]}
+                                </div>
                             </div>
-                            <div className="film-infos">
-                                {film.title}{" "}
-                                <span className="film-infos-date">({film.year})</span>
-                                <br />
-                                {[...stars]}
-                            </div>
-                        </div>
-                    </Link>)
-                    return '';
-                })
-                    setMoviesArr([...moviesArr, ...arr]);
+                        </Link>)
+                        return '';
+                    })
+                        setMoviesArr([...moviesArr, ...arr]);
+                } else {
+                        setHasMore(false);
+                }
+                    setNewPage(newPage + 1);
+                    setIsLoading(0);
             } else {
-                    setHasMore(false);
+                window.location.reload();
             }
-                setNewPage(newPage + 1);
-                setIsLoading(0);
         } catch (err) {}
     }
     
@@ -84,9 +85,9 @@ const Gallery = () => {
             controller.abort();
         };
     }, [controller])
+
     return (
         <Fragment>
-            {console.log("Render")}
             <SearchBar />
             <div className="main-content-wrapper">
             {!isLoading ?
@@ -94,7 +95,8 @@ const Gallery = () => {
                     pageStart={0}
                     loadMore={fetchMovies}
                     hasMore={hasMore}
-                    loader={<div className="cs-loader" style={{height: newPage === 1 ? "100vh" : "5rem"}} key={0}>
+                    loader={<div className="cs-loader" style={{height: newPage !== 1 ? "5rem" : null}} key={0}>
+                {/* //    loader={<div className="cs-loader" key={0}> */}
                                 <div className="cs-loader-inner">
                                     <label>●</label>
                                     <label>●</label>

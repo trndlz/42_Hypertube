@@ -5,6 +5,7 @@ import Profile from "./content/Profile";
 import Settings from "./content/Settings";
 import Video from "./content/Video";
 import Header from "../partials/Header";
+import ProtectedRoute from "../../utils/protectedRoute";
 
 export const SearchContext = React.createContext();
 
@@ -35,10 +36,10 @@ const MainPage = props => {
                     Search Options <i className="fas fa-arrow-circle-down" />
                 </label>
                 <SearchContext.Provider value={{ search, setSearch }}>
-                    <Route exact path="/" component={Gallery}/>
-                    <Route exact path="/profile/:id" component={Profile} />
-                    <Route exact path="/settings" component={Settings} />
-                    <Route exact path="/video/:imdb" component={Video} />
+                    <ProtectedRoute exact path="/" component={Gallery}/>
+                    <ProtectedRoute exact path="/profile/:id" component={Profile} />
+                    <ProtectedRoute exact path="/settings" component={Settings} />
+                    <ProtectedRoute exact path="/video/:imdb" component={Video} />
                 </SearchContext.Provider>
             </main>
             </Fragment>

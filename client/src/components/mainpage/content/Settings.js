@@ -57,15 +57,19 @@ const Settings = () => {
                     signal
                 });
                 res = await res.json();
-                setFirstName(res.firstName);
-                setLastName(res.lastName);
-                setUsername(res.username);
-                setEmail(res.email);
-                setLanguage(res.language);
-                setIsLoading(0);
-                let pic = document.querySelector("#profile-picture-settings");
-                if (pic) {
-                    pic.src = /^http:\/\/localhost.*/.exec(res.picture) ? res.picture + "/" + Date.now() : res.picture;
+                if (res.isAuthenticated !== false) {
+                    setFirstName(res.firstName);
+                    setLastName(res.lastName);
+                    setUsername(res.username);
+                    setEmail(res.email);
+                    setLanguage(res.language);
+                    setIsLoading(0);
+                    let pic = document.querySelector("#profile-picture-settings");
+                    if (pic) {
+                        pic.src = /^http:\/\/localhost.*/.exec(res.picture) ? res.picture + "/" + Date.now() : res.picture;
+                    }
+                } else {
+                    window.location.reload();
                 }
             } catch (err) {}
         })();

@@ -27,11 +27,20 @@ const validatePicture = picture => {
     return !!picture.size;
 };
 
-module.exports = exports = {
-    validateUsername: validateUsername,
-    validateFirstName: validateFirstName,
-    validatePassword: validatePassword,
-    validateLastName: validateLastName,
-    validateEmail: validateEmail,
-    validatePicture: validatePicture
-};
+const validateComment = comment => {
+    if (comment.length > 1000 || comment.length === 0)
+        return false;
+    return true;
+}
+
+export {validateUsername, validateFirstName, validatePassword, validateLastName, validateEmail, validatePicture, validateComment}
+
+// module.exports = exports = {
+//     validateUsername: validateUsername,
+//     validateFirstName: validateFirstName,
+//     validatePassword: validatePassword,
+//     validateLastName: validateLastName,
+//     validateEmail: validateEmail,
+//     validatePicture: validatePicture,
+//     validateComment: validateComment
+// };

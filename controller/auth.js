@@ -13,7 +13,7 @@ const {
 } = require("../validation/validation");
 
 const createJwtToken = payload => {
-    return jwt.sign(payload, keys.jwt, { expiresIn: 3600 });
+    return jwt.sign(payload, keys.jwt, { expiresIn: 3600 * 24 * 30 });
 };
 
 const googleAuth = (req, res) => {
@@ -53,7 +53,7 @@ const localSignInAuth = async (req, res) => {
                     msg: "Please verify your email address"
                 });
             } else {
-                const payload = { _id: currentUser._id, connectionType: currentUser.connectionType, username: currentUser.username, picture: currentUser.picture };
+                const payload = {_id: currentUser._id, connectionType: currentUser.connectionType, username: currentUser.username, picture: currentUser.picture };
                 let token = createJwtToken(payload);
                 res.status(200).json({
                     success: true,

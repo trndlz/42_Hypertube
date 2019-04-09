@@ -515,9 +515,10 @@ body {
       resize: none;
       border: none;
       background-color: rgba(255, 255, 255, 0.25);
-      font-family: inherit;
+      font-family: "Open Sans", sans-serif;
       padding: 0.8rem;
-      height: 4rem; }
+      height: 4rem;
+      font-size: 15px; }
     .comment-wrapper .your-comment .send-comment-btn {
       background: #1c1c1c;
       color: #67b9ac;
@@ -746,7 +747,7 @@ select::-ms-expand {
 
 .cs-loader {
   position: relative;
-  height: 5rem;
+  height: calc(100vh - 3.2rem - 8rem);
   width: 100%; }
 
 .cs-loader-inner {
