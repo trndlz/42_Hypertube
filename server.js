@@ -9,6 +9,7 @@ const cors = require('cors');
 const keys = require('./config/keys')
 require('./config/passport-setup');
 require('pretty-error').start();
+const morgan = require('morgan')
 
 //========================================================
 // MONGO
@@ -22,6 +23,7 @@ mongoose.set('useCreateIndex', true);
 app.use(express.json());
 app.use(passport.initialize());
 app.use(cors());
+app.use(morgan('combined'));
 
 //========================================================
 // ROUTES
