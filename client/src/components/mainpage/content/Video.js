@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Footer from "../../partials/Footer";
 import jwt from 'jsonwebtoken';
 import { validateComment } from "../../../validation/validation";
+import Loader from "./Loader";
 
 // const MemoComment = React.memo(props => {
 //     let comment = props.comment;
@@ -148,16 +149,7 @@ const Video = (props) => {
     return (
         <div className="main-content-wrapper">
             {isLoading ?
-                <div className="cs-loader" style={{ height: "100vh" }}>
-                    <div className="cs-loader-inner">
-                        <label>●</label>
-                        <label>●</label>
-                        <label>●</label>
-                        <label>●</label>
-                        <label>●</label>
-                        <label>●</label>
-                    </div>
-                </div>
+                <Loader/>
                 :
                 <Fragment>
                     <div className="video-description">

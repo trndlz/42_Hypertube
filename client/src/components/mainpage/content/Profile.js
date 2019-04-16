@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Footer from "../../partials/Footer";
+import Loader from "./Loader";
 
 const Profile = props => {
     const [username, setUsername] = useState("");
@@ -68,18 +69,7 @@ const Profile = props => {
     return (
         <div className="main-content-wrapper">
             <div className="profile">
-                {isLoading === 1 ? (
-                    <div className="cs-loader" style={{ height: "249px" }}>
-                        <div className="cs-loader-inner">
-                            <label>●</label>
-                            <label>●</label>
-                            <label>●</label>
-                            <label>●</label>
-                            <label>●</label>
-                            <label>●</label>
-                        </div>
-                    </div>
-                ) : !isSuccess ? (
+                {isLoading === 1 ? <Loader/> : !isSuccess ? (
                     <div>USER NOT FOUND</div>
                 ) : (
                     <Fragment>
