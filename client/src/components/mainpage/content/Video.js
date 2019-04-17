@@ -144,7 +144,9 @@ const Video = (props) => {
         let hour = Math.trunc(min / 60);
         min = min % 60;
         return hour && min ? `${hour}h ${min}min` : 'N/A';
-    }
+	}
+	
+	const imdb = props.location.pathname.split("/")[2];
 
     return (
         <div className="main-content-wrapper">
@@ -175,7 +177,7 @@ const Video = (props) => {
                     </div>
                     <div className="video-wrapper">
 						<video id="videoPlayer" controls>
-							<source src="http://localhost:8145/torrent/random" type="video/mp4" />
+							<source src={`http://localhost:8145/torrent/${imdb}`} type="video/mp4" />
 						</video>
                     </div>
                     <div className="comment-wrapper">
