@@ -23,7 +23,7 @@ mongoose.set('useCreateIndex', true);
 app.use(express.json());
 app.use(passport.initialize());
 app.use(cors());
-app.use(morgan('combined'));
+app.use(morgan('dev'));
 
 //========================================================
 // ROUTES
