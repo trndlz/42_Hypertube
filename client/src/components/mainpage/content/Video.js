@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Footer from "../../partials/Footer";
 import jwt from 'jsonwebtoken';
 import { validateComment } from "../../../validation/validation";
+import Loader from "./Loader";
 
 // const MemoComment = React.memo(props => {
 //     let comment = props.comment;
@@ -143,21 +144,14 @@ const Video = (props) => {
         let hour = Math.trunc(min / 60);
         min = min % 60;
         return hour && min ? `${hour}h ${min}min` : 'N/A';
-    }
+	}
+	
+	const imdb = props.location.pathname.split("/")[2];
 
     return (
         <div className="main-content-wrapper">
             {isLoading ?
-                <div className="cs-loader" style={{ height: "100vh" }}>
-                    <div className="cs-loader-inner">
-                        <label>●</label>
-                        <label>●</label>
-                        <label>●</label>
-                        <label>●</label>
-                        <label>●</label>
-                        <label>●</label>
-                    </div>
-                </div>
+                <Loader/>
                 :
                 <Fragment>
                     <div className="video-description">
@@ -182,14 +176,9 @@ const Video = (props) => {
                         </div>
                     </div>
                     <div className="video-wrapper">
-                        <div className="video-player">
-                            <iframe
-                                title="video"
-                                className="my-video"
-                                src="https://player.twitch.tv/?channel=degun"
-                                controls
-                            />
-                        </div>
+						<video id="videoPlayer" controls>
+							<source src={`http://localhost:8145/torrent/${imdb}`} type="video/mp4" />
+						</video>
                     </div>
                     <div className="comment-wrapper">
                         <div className="your-comment">

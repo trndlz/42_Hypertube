@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const getRandomTorrent = require("../controller/torrent").getRandomTorrent;
+const streamTorrentByImdb = require("../controller/torrent").streamTorrentByImdb;
 
-router.get("/random", getRandomTorrent);
+router.get("/:imdbId", streamTorrentByImdb);
 
 module.exports = router;
