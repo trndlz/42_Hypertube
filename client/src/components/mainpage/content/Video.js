@@ -174,14 +174,9 @@ const Video = (props) => {
                         </div>
                     </div>
                     <div className="video-wrapper">
-                        <div className="video-player">
-                            <iframe
-                                title="video"
-                                className="my-video"
-                                src="https://player.twitch.tv/?channel=degun"
-                                controls
-                            />
-                        </div>
+						<video id="videoPlayer" controls>
+							<source src="http://localhost:8145/torrent/random" type="video/mp4" />
+						</video>
                     </div>
                     <div className="comment-wrapper">
                         <div className="your-comment">
