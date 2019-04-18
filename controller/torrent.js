@@ -6,6 +6,15 @@ var torrentStream = require("torrent-stream");
 FFmpeg.setFfmpegPath(ffmpeg.path);
 const fs = require('fs');
 
+function formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
 const streamTorrentByImdb = async (req, res) => {
 
 	const imdbId = req.params.imdbId;
@@ -19,24 +28,21 @@ const streamTorrentByImdb = async (req, res) => {
 	}
 
 	let b = [];
-	Object.keys(movieJson.torrents[language]).map(q => {
+	Object.keys(movieJson.torrents[defaultLanguage]).map(q => {
 		b.push(parseInt(q.match(/\d+/)[0]));
 	});
 	const quality = `${highestQuality ? Math.max(...b) : Math.min(...b)}p`;
-	const magnet = movieJson.torrents[language][quality].url;
+	const magnet = movieJson.torrents[defaultLanguage][quality].url;
 	const engine = torrentStream(magnet);
 	const range = req.headers.range;
-	if (!range) {
-		return res.sendStatus(416);
-	}
 	engine.on('ready', () => {
 		engine.files.forEach((file) => {
+			const total = file.length;
 			const extension = file.name.split('.').pop();
 			if (extension === 'mp4') {
-				const positions = range.replace(/bytes=/, "").split("-");
-				const start = parseInt(positions[0], 10);
-				const total = file.length;
-				const end = positions[1] ? parseInt(positions[1], 10) : total - 1;
+				const positions = range.match(/\d+/g).map(Number);
+				const start = positions[0] | 0;
+				const end = total - 1;
 				const chunksize = (end - start) + 1;
 				res.writeHead(206, {
 					"Content-Range": "bytes " + start + "-" + end + "/" + total,

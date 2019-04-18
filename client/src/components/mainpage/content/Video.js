@@ -106,7 +106,7 @@ const Video = (props) => {
                     signal
                 });
                 res = await res.json();
-                console.log(res)
+                console.log("ici:", res)
                 if (res.isAuthenticated !== false) {
                     let commentsRes = await fetch(`http://localhost:8145/comments/movie/${imdb}`, {
                         headers: {
