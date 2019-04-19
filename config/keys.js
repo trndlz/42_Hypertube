@@ -24,5 +24,9 @@ module.exports = {
     },
     omdb: {
         key: "9548629a" //b9b51059
+    },
+    themoviedb: {
+        key: "ab68020d2916323cdab3d8e158b472e4" //api v3 not v4
+        //example call api https://api.themoviedb.org/3/movie/550?api_key=ab68020d2916323cdab3d8e158b472e4
     }
 };
