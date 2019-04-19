@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const streamTorrentByImdb = require("../controller/torrent").streamTorrentByImdb;
+const streamTorrentByHash = require("../controller/torrent").streamTorrentByHash;
 
-router.get("/:imdbId", streamTorrentByImdb);
+router.get("/:hash", streamTorrentByHash);
 
 module.exports = router;
