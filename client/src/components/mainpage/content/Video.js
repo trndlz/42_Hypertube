@@ -149,13 +149,21 @@ const Video = (props) => {
 	}
 
 	const movieHash = (data) => data.torrents.map((torrent, index) =>
-		<button key={index} onClick={() => setHash(torrent.hash)}>
+		<button className="quality-buttons" key={index} onClick={() => setHash(torrent.hash)}>
 			{torrent.quality}
-			current {hash}
 		</button>
 	);
 
-	const imdb = props.location.pathname.split("/")[2];
+	// const imdb = props.location.pathname.split("/")[2];
+	const streamUrl = "http://localhost:8145/torrent/" + hash;
+
+	function VideoComponent({ url }) {
+		return (
+			<video key={url} controls>
+				<source src={url} type="video/mp4"/>
+			</video>
+		);
+	}
 
 	return (
 		<div className="main-content-wrapper">
@@ -188,9 +196,7 @@ const Video = (props) => {
 						</div>
 					</div>
 					<div className="video-wrapper">
-						<video id="videoPlayer" controls>
-							<source src={`http://localhost:8145/torrent/${hash}`} type="video/mp4" />
-						</video>
+						<VideoComponent url={streamUrl} />
 					</div>
 					<div className="comment-wrapper">
 						<div className="your-comment">
