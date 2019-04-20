@@ -41,6 +41,7 @@ const Video = (props) => {
 	const [comments, setComments] = useState([]);
 	const [data, setData] = useState({});
 	const [stars, setStars] = useState([]);
+	const [subtitles, setSubtitles] = useState([]);
 	const [hash, setHash] = useState("");
 	const [isLoading, setIsLoading] = useState(1);
 	const [date] = useState(Date.now());
@@ -107,15 +108,16 @@ const Video = (props) => {
 					signal
 				});
 				res = await res.json();
-				console.log(res);
 				if (res.isAuthenticated !== false) {
 					let commentsRes = await fetch(`http://localhost:8145/comments/movie/${imdb}`, {
-						headers: {
-							Authorization: "Bearer " + token
-						},
-						// signal
+						headers: { Authorization: "Bearer " + token },
 					});
 					commentsRes = await commentsRes.json();
+					let availableSubtitles = await fetch(`http://localhost:8145/torrent/subtitles/${imdb}`, {
+						headers: { Authorization: "Bearer " + token }
+					});
+					availableSubtitles = await availableSubtitles.json();
+					setSubtitles(availableSubtitles);
 					setData(res.data);
 					setHash(res.data.torrents[0].hash);
 					setComments(commentsRes.comments.reverse());
@@ -123,7 +125,7 @@ const Video = (props) => {
 				} else {
 					window.location.reload();
 				}
-			} catch (err) { }
+			} catch (err) { console.log(err); }
 		})();
 		return () => {
 			controller.abort();
@@ -148,7 +150,7 @@ const Video = (props) => {
 		return hour && min ? `${hour}h ${min}min` : 'N/A';
 	}
 
-	const movieHash = (data) => data.torrents.map((torrent, index) =>
+	const movieHashByQuality = (data) => data.torrents.map((torrent, index) =>
 		<button className="quality-buttons" key={index} onClick={() => setHash(torrent.hash)}>
 			{torrent.quality}
 		</button>
@@ -191,7 +193,7 @@ const Video = (props) => {
 								Actors:{" "}{data.omdb ? data.omdb.Actors : null}
 							</div>
 							<div>
-								{movieHash(data)}
+								{movieHashByQuality(data)}
 							</div>
 						</div>
 					</div>
