@@ -159,10 +159,16 @@ const Video = (props) => {
 	// const imdb = props.location.pathname.split("/")[2];
 	const streamUrl = "http://localhost:8145/torrent/" + hash;
 
+
+	const subtitlesTracks = (subtitles) => subtitles.map((subtitle, index) =>
+		<track key={index} src={subtitle.path} label={subtitle.lang} kind="subtitles" srclang={subtitle.langShort} />
+	);
+
 	function VideoComponent({ url }) {
 		return (
 			<video key={url} controls>
 				<source src={url} type="video/mp4"/>
+				{subtitlesTracks(subtitles)}
 			</video>
 		);
 	}
