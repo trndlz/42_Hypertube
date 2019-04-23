@@ -21,6 +21,7 @@
   "dependencies": {
     "bcrypt": "^3.0.6",
     "cors": "^2.8.5",
+    "cron": "^1.7.0",
     "express": "^4.16.4",
     "ffmpeg-static": "^2.4.0",
     "fluent-ffmpeg": "^2.1.2",

@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Gallery from "./content/Gallery";
 import Profile from "./content/Profile";
 import Settings from "./content/Settings";
