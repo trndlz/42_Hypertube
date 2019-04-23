@@ -170,6 +170,10 @@ const Video = (props) => {
 		/>
 	);
 
+	const printAvailableSubtitles = (subtitles) => subtitles.map((subtitle, index) =>
+		<p key={index}>{subtitle.lang}</p>
+	);
+
 	function VideoComponent({ url }) {
 		return (
 			<video key={url} controls>
@@ -206,6 +210,10 @@ const Video = (props) => {
 							</div>
 							<div>
 								{movieHashByQuality(data)}
+							</div>
+							<div>
+								Available subtitle languages : 
+								{printAvailableSubtitles(subtitles)}
 							</div>
 						</div>
 					</div>
