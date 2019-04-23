@@ -211,10 +211,11 @@ const Video = (props) => {
 							<div>
 								{movieHashByQuality(data)}
 							</div>
+							{subtitles.length > 0 &&
 							<div>
 								Available subtitle languages : 
 								{printAvailableSubtitles(subtitles)}
-							</div>
+							</div>}
 						</div>
 					</div>
 					<div className="video-wrapper">
