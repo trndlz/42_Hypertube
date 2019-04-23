@@ -152,7 +152,7 @@ const Video = (props) => {
 
 	const movieHashByQuality = (data) => data.torrents.map((torrent, index) =>
 		<button className="quality-buttons" key={index} onClick={() => setHash(torrent.hash)}>
-			{torrent.quality}
+			{torrent.quality} {torrent.type}
 		</button>
 	);
 
@@ -161,13 +161,19 @@ const Video = (props) => {
 
 
 	const subtitlesTracks = (subtitles) => subtitles.map((subtitle, index) =>
-		<track key={index} src={subtitle.path} label={subtitle.lang} kind="subtitles" srclang={subtitle.langShort} />
+		<track
+			key={index}
+			src={`../subtitles/${subtitle.fileName}`}
+			label={subtitle.lang}
+			kind="subtitles"
+			srcLang={subtitle.langShort}
+		/>
 	);
 
 	function VideoComponent({ url }) {
 		return (
 			<video key={url} controls>
-				<source src={url} type="video/mp4"/>
+				<source src={url} type="video/mp4" />
 				{subtitlesTracks(subtitles)}
 			</video>
 		);

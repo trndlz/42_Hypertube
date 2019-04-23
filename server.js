@@ -24,6 +24,11 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(cors());
 app.use(morgan('dev'));
+app.use('/static', express.static('public'));
+
+app.use('/subtitles', express.static(__dirname + '/public/subtitles'));
+
+console.log(__dirname + '/public/subtitles');
 
 //========================================================
 // ROUTES

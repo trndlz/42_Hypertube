@@ -24,8 +24,8 @@ function progressionPrint(downloaded) {
 
 const fetchSubtitlesByImdbId = async (req, res) => {
   const imdbId = req.params.imdbId;
-  yifysubtitles(imdbId, { path: path.join(__dirname, '/download'), langs: ['en', 'fr', 'es'] })
-    .then(data => res.json(data))
+  yifysubtitles(imdbId, { path: __dirname + '/../client/public/subtitles', langs: ['en', 'fr', 'es'] })
+	.then(data => res.json(data))
     .catch(err => console.log(err));
 }
 
@@ -34,7 +34,7 @@ const streamTorrentByHash = async (req, res) => {
   const hash = req.params.hash;
   const magnet = `magnet:?xt=urn:btih:${hash}&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://torrent.gresille.org:80/announce&tr=udp://tracker.openbittorrent.com:80&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://tracker.leechers-paradise.org:6969&tr=udp://p4p.arenabg.ch:1337&tr=udp://tracker.internetwarriors.net:1337`;
   const engine = torrentStream(magnet, {
-    path: __dirname + '/download'
+    path: __dirname + '/../downloads'
   });
   const range = req.headers.range;
   engine.on('ready', () => {
@@ -61,7 +61,7 @@ const streamTorrentByHash = async (req, res) => {
       }
     });
   });
-  engine.on('download', (index) => {
+  engine.on('download', () => {
     progressionPrint(formatBytes(engine.swarm.downloaded));
   });
   engine.on('idle', function () {
