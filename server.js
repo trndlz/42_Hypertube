@@ -9,7 +9,7 @@ const cors = require('cors');
 const keys = require('./config/keys');
 const morgan = require('morgan');
 const CronJob = require('cron').CronJob;
-const deleteOldFiles = require('./config/cronscript').deleteOldFiles;
+const deleteUnusedFiles = require('./config/cronscript').deleteUnusedFiles;
 
 require('./config/passport-setup');
 require('pretty-error').start();
@@ -59,6 +59,7 @@ app.listen(port, () => console.log(`Server is running on port ${port}`));
 // CRON JOBS
 //========================================================
 
-new CronJob('0 0 1 * *', function () {
-	deleteOldFiles();
+// new CronJob('* * * * * *', function () { // For testing
+new CronJob('0 0 1 * *', function () { // For production
+	deleteUnusedFiles();
 }, null, true);

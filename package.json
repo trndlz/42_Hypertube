@@ -38,6 +38,7 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^1.0.0",
     "pretty-error": "^2.1.1",
+    "rimraf": "^2.6.3",
     "torrent-stream": "^1.1.0",
     "yifysubtitles": "^2.1.2"
   }
