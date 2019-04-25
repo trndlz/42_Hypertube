@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
 const parseTorrent = require('parse-torrent');
-var FFmpeg = require("fluent-ffmpeg");
+const FFmpeg = require('fluent-ffmpeg')
 var ffmpeg = require("ffmpeg-static");
 var torrentStream = require("torrent-stream");
 const readline = require('readline');
@@ -66,37 +66,31 @@ const streamTorrentByHash = async (req, res) => {
 				console.log("> Currently streaming", file.name, formatBytes(file.length));
 				file.createReadStream(writeResHeader(req, res, file)).pipe(res);
 			} else if (extension === 'mkv') {
-				const stream = fs.createReadStream(path + '/' + file.path);
 				res.writeHead(200, {
 					"Content-Type": "video/mp4",
 					'Connection': 'keep-alive'
 				});
-				var proc = FFmpeg(stream)
+				const stream = file.createReadStream();
+				FFmpeg()
+					.input(stream)
 					.outputOptions(['-frag_duration 100', '-movflags frag_keyframe+empty_moov+faststart'])
-					.toFormat('mp4')
+					.outputFormat('mp4')
 					.videoCodec('libx264')
 					// .videoBitrate('2048')
 					.audioCodec('aac')
 					// .audioBitrate('256')
-					.on('error', function (err, stdout, stderr) {
-						console.log('an error happened: ' + err.message);
-						console.log('ffmpeg stdout: ' + stdout);
-						console.log('ffmpeg stderr: ' + stderr);
+					.on('start', (commandLine) => console.log('Spawned FFmpeg with command: ' + commandLine))
+					.on('codecData', (data) => console.log('Input is ' + data.audio + ' audio with ' + data.video + ' video'))
+					.on('error', (err, stdout, stderr) => {
+						console.log(err.message);
+						console.log(stdout);
+						console.log(stderr);
 					})
-					.on('start', (commandLine) => {
-						console.log('Spawned FFmpeg with command: ' + commandLine);
-					})
-					.on('codecData', (data) => {
-						console.log('Input is ' + data.audio + ' audio with ' + data.video + ' video');
-					})
-					.on('end', () => {
-						console.log('Processing finished successfully');
-					})
+					.on('end', () => console.log('Processing finished successfully'))
 					.pipe(res);
-					res.on('close', () => {
-						stream.destroy()
-					  })
-
+				res.on('close', () => {
+					stream.destroy()
+				})
 			} else {
 				file.deselect();
 			}
