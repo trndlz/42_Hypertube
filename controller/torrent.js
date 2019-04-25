@@ -41,7 +41,8 @@ const writeResHeader = (req, res, file) => {
 		"Content-Range": "bytes " + start + "-" + end + "/" + total,
 		"Accept-Ranges": "bytes",
 		"Content-Length": chunksize,
-		"Content-Type": "video/mp4"
+		"Content-Type": "video/mp4",
+		'Connection': 'keep-alive'
 	});
 	return {
 		"start": start,
@@ -60,14 +61,42 @@ const streamTorrentByHash = async (req, res) => {
 
 	engine.on('ready', () => {
 		engine.files.forEach((file) => {
-			console.log(file.name);
 			const extension = file.name.split('.').pop();
 			if (extension === 'mp4') {
-				console.log("> Currently streaming", file.name);
-				console.log("> Movie size ", formatBytes(file.length));
+				console.log("> Currently streaming", file.name, formatBytes(file.length));
 				file.createReadStream(writeResHeader(req, res, file)).pipe(res);
 			} else if (extension === 'mkv') {
-				console.log("MKV")
+				const stream = fs.createReadStream(path + '/' + file.path);
+				res.writeHead(200, {
+					"Content-Type": "video/mp4",
+					'Connection': 'keep-alive'
+				});
+				var proc = FFmpeg(stream)
+					.outputOptions(['-frag_duration 100', '-movflags frag_keyframe+empty_moov+faststart'])
+					.toFormat('mp4')
+					.videoCodec('libx264')
+					// .videoBitrate('2048')
+					.audioCodec('aac')
+					// .audioBitrate('256')
+					.on('error', function (err, stdout, stderr) {
+						console.log('an error happened: ' + err.message);
+						console.log('ffmpeg stdout: ' + stdout);
+						console.log('ffmpeg stderr: ' + stderr);
+					})
+					.on('start', (commandLine) => {
+						console.log('Spawned FFmpeg with command: ' + commandLine);
+					})
+					.on('codecData', (data) => {
+						console.log('Input is ' + data.audio + ' audio with ' + data.video + ' video');
+					})
+					.on('end', () => {
+						console.log('Processing finished successfully');
+					})
+					.pipe(res);
+					res.on('close', () => {
+						stream.destroy()
+					  })
+
 			} else {
 				file.deselect();
 			}
