@@ -8,24 +8,24 @@ import SearchBar from "./SearchBar";
 const Gallery = () => {
     const [isLoading, setIsLoading] = useState(1);
     const [newPage, setNewPage] = useState(1);
-    const { search } = useContext(SearchContext);
+	const { search } = useContext(SearchContext);
     const [hasMore, setHasMore] = useState(true);
     const [moviesArr, setMoviesArr] = useState([]);
     // let cont = new AbortController();
     // cont.test = "a" + search.searchInput;
-    const [controller, setController] = useState(new AbortController());
+	const [controller, setController] = useState(new AbortController());
+	const { language } = useContext(SearchContext);
 
     const fetchMovies = async (page) => {
         const token = localStorage.getItem("jwt");
         try {
             let res = await fetch(`http://localhost:8145/video?page=${newPage}&searchInput=${search.searchInput}&stars=${search.stars}&dateFrom=${search.dateFrom}&dateTo=${search.dateTo}&category=${search.category}&sortBy=${search.sortBy}`,{      
-                headers: {
-                    Authorization: "Bearer " + token
-                },
+                headers: { Authorization: "Bearer " + token },
                 signal: controller.signal,
             });
             res = await res.json();
             if (res.isAuthenticated !== false) {
+				
                 let arr = [];
                 if (res.length !== 0) {
                     res.map((film, index) => {

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import jwt from 'jsonwebtoken';
+import { SearchContext } from '../MainPage'
 import Footer from "../../partials/Footer";
 import useAsyncState from "../../../utils/useAsyncState";
 import {
@@ -15,12 +16,14 @@ const Settings = () => {
     const [lastName, setLastName] = useState("");
     const [firstName, setFirstName] = useState("");
     const [email, setEmail] = useState("");
-    const [language, setLanguage] = useState("");
+    const [languageProfile, setLanguageProfile] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useAsyncState({});
     const [pictureChanged, setPictureChanged] = useState(false);
-    const [isLoading, setIsLoading] = useState(1);
+	const [isLoading, setIsLoading] = useState(1);
+	const { setLanguage } = useContext(SearchContext);
 
+	console.log(languageProfile);
 
     const handleChange = e => {
         let reader = new FileReader();
@@ -62,7 +65,7 @@ const Settings = () => {
                     setLastName(res.lastName);
                     setUsername(res.username);
                     setEmail(res.email);
-                    setLanguage(res.language);
+					setLanguageProfile(res.language);
                     setIsLoading(0);
                     let pic = document.querySelector("#profile-picture-settings");
                     if (pic) {
@@ -82,7 +85,8 @@ const Settings = () => {
         e.preventDefault();
         const data = new FormData(e.target);
         const selectedLanguage = document.querySelector("#language-select");
-        data.append("language", selectedLanguage.value);
+		data.append("language", selectedLanguage.value);
+		setLanguage(selectedLanguage.value);
         data.append("pictureChanged", pictureChanged);
         let invalid = {};
         await setErrors({});
@@ -233,8 +237,8 @@ const Settings = () => {
                             <i className="fas fa-globe-americas input-container__icon icon-select" />
                             <div className="select">
                                 <select
-                                    onChange={e => setLanguage(e.target.value)}
-                                    value={language}
+                                    onChange={e => setLanguageProfile(e.target.value)}
+                                    value={languageProfile}
                                     id="language-select"
                                 >
                                     <option value="en">English</option>
