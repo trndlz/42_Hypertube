@@ -4,6 +4,7 @@ const {
     googleAuth,
     localSignInAuth,
     localSignUpAuth,
+    githubAuth,
     the42Auth
 } = require("../controller/auth");
 const checkAuth = require("./check-auth");
@@ -13,6 +14,9 @@ const { upload } = require("../config/multer");
 
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 router.get("/google/redirect", passport.authenticate("google"), googleAuth);
+
+router.get("/github", passport.authenticate("github"));
+router.get("/github/redirect", passport.authenticate("github"), githubAuth);
 
 router.get("/the42", passport.authenticate("42"));
 router.get("/the42/redirect", passport.authenticate("42"), the42Auth);

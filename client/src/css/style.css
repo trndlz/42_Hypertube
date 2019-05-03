@@ -199,16 +199,26 @@ body {
 .signup-OAuth {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   margin-top: 0.8rem; }
   .signup-OAuth a {
     margin: 0 0.5rem;
     width: 12rem;
-    text-align: center; }
+    text-align: center;
+    margin-bottom: 1rem; }
 
 .google {
   min-height: 3.2rem;
   background-color: white !important;
   background-image: url(../images/google.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center; }
+
+.github {
+  min-height: 3.2rem;
+  background-color: white !important;
+  background-image: url(../images/github.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center; }

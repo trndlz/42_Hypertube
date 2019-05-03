@@ -564,6 +564,12 @@ const HomePage = props => {
                         >
                             {" "}
                         </a>
+                        <a
+                            className="github btn btn--primary"
+                            href="http://localhost:8145/auth/github"
+                        >
+                            {" "}
+                        </a>
                     </div>
                 </div>
             </div>

@@ -8,6 +8,10 @@ module.exports = {
         clientID: "252056369011515",
         clientSecret: "65c1cb9442771d3f38bc7a512935538e"
     },
+    github:{
+        clientID: "5394f95afc82cbbf97f9",
+        clientSecret: "50179360e54953c5566601876578fd36bc384888",
+    },
     mongodb: {
         dbURI: "mongodb://localhost:27017/hypertube"
     },

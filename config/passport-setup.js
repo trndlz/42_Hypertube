@@ -1,6 +1,7 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FortyTwoStrategy = require("passport-42").Strategy;
+const GithubStrategy = require("passport-github").Strategy;
 const keys = require("./keys");
 const Model = require("../model/user");
 
@@ -39,6 +40,45 @@ passport.use(
                         connectionType: "google",
                         verified: true,
                         email: profile.emails[0].value
+                    })
+                        .save()
+                        .then(newUser => {
+                            done(null, newUser);
+                        });
+                }
+            } catch (err) {
+                done(err);
+            }
+        }
+    )
+);
+
+passport.use(
+    new GithubStrategy(
+        {
+            clientID: keys.github.clientID,
+            clientSecret: keys.github.clientSecret,
+            callbackURL: "http://localhost:8145/auth/github/redirect"
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            try {
+                const currentUser = await Model.User.findOne({
+                    authId: profile.id,
+                    connectionType: "github"
+                });
+                if (currentUser) {
+                    done(null, currentUser);
+                } else {
+                    console.log(profile)
+                    new Model.User({
+                        authId: profile.id,
+                        username: profile.username.replace(/\s/g,''),
+                        picture: profile._json.avatar_url,
+                        firstName: profile.username.slice(0, profile.username.length - 1).replace(/\s/g,''),
+                        lastName: profile.username.slice(profile.username.length - 1, profile.username.length).replace(/\s/g,''),
+                        connectionType: "github",
+                        verified: true,
+                        email: profile._json.email
                     })
                         .save()
                         .then(newUser => {
