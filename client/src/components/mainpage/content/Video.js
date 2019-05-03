@@ -106,7 +106,7 @@ const Video = (props) => {
 			controller = new AbortController();
 			const signal = controller.signal;
 			try {
-				let res = await fetch(`http://localhost:8145/video/${imdb}`, {
+				let res = await fetch(`http://localhost:8145/video/${imdb}/${language}`, {
 					headers: {
 						Authorization: "Bearer " + token
 					},
@@ -124,10 +124,7 @@ const Video = (props) => {
 					availableSubtitles = await availableSubtitles.json();
 					setSubtitles(availableSubtitles);
 					setData(res.data);
-					const languageDescriptions = res.languageDescriptions;
-					if (Object.keys(languageDescriptions).includes(language)) {
-						setIntlDescriptions(languageDescriptions[language]);
-					}
+					setIntlDescriptions(res.languageDescriptions);
 					setHash(res.data.torrents[0].hash);
 					setComments(commentsRes.comments.reverse());
 					setIsLoading(0);
@@ -181,7 +178,7 @@ const Video = (props) => {
 
 	const printAvailableSubtitles = (subtitles) => subtitles.map((subtitle, index) => <p key={index}>{languageSwitcher[subtitle.langShort]}</p>);
 
-	function VideoComponent({ url }) {
+	const videoComponent = (url) => {
 		return (
 			<video key={url} controls>
 				<source src={url} type="video/mp4" />
@@ -226,7 +223,7 @@ const Video = (props) => {
 						</div>
 					</div>
 					<div className="video-wrapper">
-						<VideoComponent url={streamUrl} />
+						{videoComponent(streamUrl)}
 					</div>
 					<div className="comment-wrapper">
 						<div className="your-comment">

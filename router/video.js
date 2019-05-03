@@ -4,6 +4,6 @@ const checkAuth = require("./check-auth");
 
 router.get("", checkAuth, getVideoByPage);
 router.get("/logo", getLogo);
-router.get("/:imdb", checkAuth, getVideoByImdb);
+router.get("/:imdb/:lang", checkAuth, getVideoByImdb);
 
 module.exports = router;

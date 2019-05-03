@@ -40,17 +40,10 @@ const rearangeData = (arr) => {
 	})
 }
 
-const fetchIntlMovieDescriptions = async (imdbId) => {
-	const languages = ['en', 'fr', 'es', 'ge'];
-	const apiKey = 'ab68020d2916323cdab3d8e158b472e4';
-	const movieDbRequest = (lang, imdbId, apiKey) => `https://api.themoviedb.org/3/find/${imdbId}?api_key=${apiKey}&language=${lang}&external_source=imdb_id`;
-	const allDescriptions = languages.map((language) => fetch(movieDbRequest(language, imdbId, apiKey)));
-	const res = await Promise.all(allDescriptions)
-	.then(responses => Promise.all(responses.map(r => r.json())))
-	.then(json => json.map(i => i.movie_results[0]));
-	let keyResponse = {}
-	languages.forEach((key, index) => keyResponse[key] = Object.values(res)[index]);
-	return keyResponse;
+const fetchIntlMovieDescriptions = async (imdbId, language) => {
+	const res = await fetch(`https://api.themoviedb.org/3/find/${imdbId}?api_key=${keys.themoviedb.key}&language=${language}&external_source=imdb_id`);
+	const resJson = await res.json();
+	return resJson.movie_results[0];
 }
 
 const fetchMovies = (request) => {
@@ -64,6 +57,7 @@ const fetchMovies = (request) => {
 		}
 	});
 }
+
 const replace404Picture = async (data) => {
 	let moviesImgUrl = [];
 	if (data) {
@@ -152,7 +146,7 @@ const getVideoByImdb = async (req, res, next) => {
 	}
 	data[0].omdb = omdb;
 	await replace404Picture(data);
-	const languageDescriptions = await fetchIntlMovieDescriptions(req.params.imdb);
+	const languageDescriptions = await fetchIntlMovieDescriptions(req.params.imdb, req.params.lang);
 	res.json({
 		data: data[0],
 		languageDescriptions: languageDescriptions,
