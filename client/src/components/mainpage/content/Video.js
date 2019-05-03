@@ -168,7 +168,6 @@ const Video = (props) => {
 	// const imdb = props.location.pathname.split("/")[2];
 	const streamUrl = "http://localhost:8145/torrent/" + hash;
 
-
 	const subtitlesTracks = (subtitles) => subtitles.map((subtitle, index) =>
 		<track
 			key={index}
@@ -179,11 +178,11 @@ const Video = (props) => {
 		/>
 	);
 
-	const printAvailableSubtitles = (subtitles) => subtitles.map((subtitle, index) => <p key={index}>{languageSwitcher[subtitle.langShort]}</p>);
+	const printAvailableSubtitles = (subtitles) => subtitles.map((subtitle, index) => <span key={index}>{languageSwitcher[subtitle.langShort]}&nbsp;</span>);
 
 	function VideoComponent({ url }) {
 		return (
-			<video key={url} controls>
+			<video key={url} controls className="my-video">
 				<source src={url} type="video/mp4" />
 				{subtitlesTracks(subtitles)}
 			</video>
@@ -220,8 +219,7 @@ const Video = (props) => {
 							</div>
 							{subtitles.length > 0 &&
 								<div>
-									{languageSwitcher.availableSubtitles} :
-								{printAvailableSubtitles(subtitles)}
+									{languageSwitcher.availableSubtitles} : {printAvailableSubtitles(subtitles)}
 								</div>}
 						</div>
 					</div>
