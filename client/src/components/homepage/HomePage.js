@@ -570,6 +570,12 @@ const HomePage = props => {
                         >
                             {" "}
                         </a>
+                        <a
+                            className="facebook btn btn--primary"
+                            href="http://localhost:8145/auth/facebook"
+                        >
+                            {" "}
+                        </a>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ const {
     localSignInAuth,
     localSignUpAuth,
     githubAuth,
+    facebookAuth,
     the42Auth
 } = require("../controller/auth");
 const checkAuth = require("./check-auth");
@@ -17,6 +18,9 @@ router.get("/google/redirect", passport.authenticate("google"), googleAuth);
 
 router.get("/github", passport.authenticate("github"));
 router.get("/github/redirect", passport.authenticate("github"), githubAuth);
+
+router.get("/facebook", passport.authenticate("facebook"));
+router.get("/facebook/redirect", passport.authenticate("facebook"), facebookAuth);
 
 router.get("/the42", passport.authenticate("42"));
 router.get("/the42/redirect", passport.authenticate("42"), the42Auth);

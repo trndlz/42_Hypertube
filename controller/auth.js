@@ -26,6 +26,11 @@ const githubAuth = (req, res) => {
     res.redirect(`http://localhost:3000/?token=${token}`);
 };
 
+const facebookAuth = (req, res) => {
+    let token = createJwtToken({ _id: req.user._id, connectionType: req.user.connectionType, username: req.user.username, picture: req.user.picture });
+    res.redirect(`http://localhost:3000/?token=${token}`);
+};
+
 const the42Auth = (req, res) => {
     let token = createJwtToken({ _id: req.user._id, connectionType: req.user.connectionType, username: req.user.username, picture: req.user.picture });
     res.redirect(`http://localhost:3000/?token=${token}`);
@@ -103,6 +108,7 @@ const localSignUpAuth = async (req, res) => {
 module.exports = exports = {
     googleAuth,
     the42Auth,
+    facebookAuth,
     githubAuth,
     localSignUpAuth,
     localSignInAuth,

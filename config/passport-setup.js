@@ -2,6 +2,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FortyTwoStrategy = require("passport-42").Strategy;
 const GithubStrategy = require("passport-github").Strategy;
+const FacebookStrategy = require("passport-facebook").Strategy;
 const keys = require("./keys");
 const Model = require("../model/user");
 
@@ -69,7 +70,6 @@ passport.use(
                 if (currentUser) {
                     done(null, currentUser);
                 } else {
-                    console.log(profile)
                     new Model.User({
                         authId: profile.id,
                         username: profile.username.replace(/\s/g,''),
@@ -77,6 +77,45 @@ passport.use(
                         firstName: profile.username.slice(0, profile.username.length - 1).replace(/\s/g,''),
                         lastName: profile.username.slice(profile.username.length - 1, profile.username.length).replace(/\s/g,''),
                         connectionType: "github",
+                        verified: true,
+                        email: profile._json.email
+                    })
+                        .save()
+                        .then(newUser => {
+                            done(null, newUser);
+                        });
+                }
+            } catch (err) {
+                done(err);
+            }
+        }
+    )
+);
+
+passport.use(
+    new FacebookStrategy(
+        {
+            clientID: keys.facebook.clientID,
+            clientSecret: keys.facebook.clientSecret,
+            callbackURL: "http://localhost:8145/auth/facebook/redirect",
+            profileFields: ['id', 'displayName', 'photos', 'email']
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            try {
+                const currentUser = await Model.User.findOne({
+                    authId: profile.id,
+                    connectionType: "facebook"
+                });
+                if (currentUser) {
+                    done(null, currentUser);
+                } else {
+                    new Model.User({
+                        authId: profile.id,
+                        username: profile.displayName.replace(/\s/g,''),
+                        picture: profile.photos[0].value,
+                        firstName: profile.displayName.split(" ")[0].replace(/\s/g,''),
+                        lastName: profile.displayName.split(" ")[1].replace(/\s/g,''),
+                        connectionType: "facebook",
                         verified: true,
                         email: profile._json.email
                     })
