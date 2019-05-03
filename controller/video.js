@@ -41,14 +41,16 @@ const rearangeData = (arr) => {
 }
 
 const fetchIntlMovieDescriptions = async (imdbId) => {
-	const languages = ['en', 'fr', 'es'];
+	const languages = ['en', 'fr', 'es', 'ge'];
 	const apiKey = 'ab68020d2916323cdab3d8e158b472e4';
 	const movieDbRequest = (lang, imdbId, apiKey) => `https://api.themoviedb.org/3/find/${imdbId}?api_key=${apiKey}&language=${lang}&external_source=imdb_id`;
 	const allDescriptions = languages.map((language) => fetch(movieDbRequest(language, imdbId, apiKey)));
-
-	return Promise.all(allDescriptions)
+	const res = await Promise.all(allDescriptions)
 	.then(responses => Promise.all(responses.map(r => r.json())))
-	.then(json => json.map(i => i.movie_results));
+	.then(json => json.map(i => i.movie_results[0]));
+	let keyResponse = {}
+	languages.forEach((key, index) => keyResponse[key] = Object.values(res)[index]);
+	return keyResponse;
 }
 
 const fetchMovies = (request) => {
@@ -150,8 +152,10 @@ const getVideoByImdb = async (req, res, next) => {
 	}
 	data[0].omdb = omdb;
 	await replace404Picture(data);
+	const languageDescriptions = await fetchIntlMovieDescriptions(req.params.imdb);
 	res.json({
-		data: data[0]
+		data: data[0],
+		languageDescriptions: languageDescriptions,
 	});
 }
 

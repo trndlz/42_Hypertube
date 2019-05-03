@@ -44,6 +44,7 @@ const Video = (props) => {
 	const [data, setData] = useState({});
 	const [stars, setStars] = useState([]);
 	const [subtitles, setSubtitles] = useState([]);
+	const [intlDescriptions, setIntlDescriptions] = useState([]);
 	const [hash, setHash] = useState("");
 	const [isLoading, setIsLoading] = useState(1);
 	const [date] = useState(Date.now());
@@ -123,6 +124,10 @@ const Video = (props) => {
 					availableSubtitles = await availableSubtitles.json();
 					setSubtitles(availableSubtitles);
 					setData(res.data);
+					const languageDescriptions = res.languageDescriptions;
+					if (Object.keys(languageDescriptions).includes(language)) {
+						setIntlDescriptions(languageDescriptions[language]);
+					}
 					setHash(res.data.torrents[0].hash);
 					setComments(commentsRes.comments.reverse());
 					setIsLoading(0);
@@ -174,9 +179,7 @@ const Video = (props) => {
 		/>
 	);
 
-	const printAvailableSubtitles = (subtitles) => subtitles.map((subtitle, index) =>
-		<p key={index}>{subtitle.lang}</p>
-	);
+	const printAvailableSubtitles = (subtitles) => subtitles.map((subtitle, index) => <p key={index}>{languageSwitcher[subtitle.langShort]}</p>);
 
 	function VideoComponent({ url }) {
 		return (
@@ -197,7 +200,7 @@ const Video = (props) => {
 						<img className="video-img" src={data.large_cover_image} alt="" />
 						<div className="video-info">
 							<h2 className="video-title">
-								{data.title} <span className="video-date">({data.year})</span>
+								{intlDescriptions && intlDescriptions.title ? intlDescriptions.title : data.title} <span className="video-date">({data.year})</span>
 							</h2>
 							<div className="video-rating">
 								{[...stars]}
@@ -205,7 +208,7 @@ const Video = (props) => {
 							<div className="video-time">{minToHour(data.runtime)}</div>
 							<span className="separator" />
 							<div className="video-desc">
-								{data.summary}
+								{intlDescriptions && intlDescriptions.overview ? intlDescriptions.overview : languageSwitcher.unavailableOverview}
 							</div>
 							<div className="video-actors">
 								{languageSwitcher.director}:{" "}{data.omdb ? data.omdb.Director : null}
@@ -216,10 +219,10 @@ const Video = (props) => {
 								{movieHashByQuality(data)}
 							</div>
 							{subtitles.length > 0 &&
-							<div>
-								{languageSwitcher.availableSubtitles} : 
+								<div>
+									{languageSwitcher.availableSubtitles} :
 								{printAvailableSubtitles(subtitles)}
-							</div>}
+								</div>}
 						</div>
 					</div>
 					<div className="video-wrapper">

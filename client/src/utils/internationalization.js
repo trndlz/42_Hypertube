@@ -27,8 +27,13 @@ const internationalization = (language) => {
                 "actors": "Acteurs",
                 "availableSubtitles": "Sous-titres disponibles",
                 "validate": "Valider",
+                "unavailableOverview": "Description indisponible en français",
+                "fr": "Français",
+                "en": "Anglais",
+                "es": "Espagnol",
+                "ge": "Allemand",
             };
-        case 'sp':
+        case 'es':
             return {
                 "settings": "Configuración",
                 "logout": "Cerrar sesión",
@@ -55,8 +60,13 @@ const internationalization = (language) => {
                 "actors": "Actores",
                 "availableSubtitles": "Subtítulos disponibles",
                 "validate": "Validar",
+                "unavailableOverview": "Descripción de la película no disponible en español.",
+                "fr": "Francés",
+                "en": "Inglés",
+                "es": "Español",
+                "ge": "Alemán",
             };
-            case 'ge':
+        case 'ge':
             return {
                 "settings": "Einstellung",
                 "logout": "Abmeldung",
@@ -83,6 +93,11 @@ const internationalization = (language) => {
                 "actors": "Schauspieler",
                 "availableSubtitles": "Verfügbare Untertitel",
                 "validate": "Bestätigen",
+                "unavailableOverview": "Deutsche Filmbeschreibung nicht verfügbar",
+                "fr": "Französisch",
+                "en": "Englisch",
+                "es": "Spanisch",
+                "ge": "Deutsch",
             };
         default:
             return {
@@ -111,6 +126,11 @@ const internationalization = (language) => {
                 "actors": "Actors",
                 "availableSubtitles": "Available subtitles",
                 "validate": "Validate",
+                "unavailableOverview": "Film description unavailable in english",
+                "fr": "French",
+                "en": "English",
+                "es": "Spanish",
+                "ge": "German",
             };
     }
 }
