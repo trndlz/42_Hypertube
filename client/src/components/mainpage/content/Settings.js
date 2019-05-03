@@ -23,8 +23,6 @@ const Settings = () => {
 	const [isLoading, setIsLoading] = useState(1);
 	const { setLanguage } = useContext(SearchContext);
 
-	console.log(languageProfile);
-
     const handleChange = e => {
         let reader = new FileReader();
         if (e.target.files[0]) {

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import Gallery from "./content/Gallery";
 import Profile from "./content/Profile";
@@ -25,20 +25,36 @@ const MainPage = props => {
 		} else { return false }
 	};
 
-	const fetchUserLanguage = async () => {
+	// const fetchUserLanguage = async () => {
+	// 	const token = localStorage.getItem("jwt");
+	// 	const controller = new AbortController();
+	// 	const signal = controller.signal;
+	// 	const userProfile = fetch("http://localhost:8145/settings", {
+	// 		method: "GET",
+	// 		headers: { Authorization: "Bearer " + token },
+	// 		signal
+	// 	}).
+	// 	const userProfileJson = await userProfile.json();
+	// 	userProfileJson.language !== undefined ? setLanguage(userProfileJson.language) : setLanguage('en');
+	// }
+
+	useEffect(() => {
 		const token = localStorage.getItem("jwt");
 		const controller = new AbortController();
 		const signal = controller.signal;
-			const userProfile = await fetch("http://localhost:8145/settings", {
-				method: "GET",
-				headers: { Authorization: "Bearer " + token },
-				signal
+		fetch("http://localhost:8145/settings", {
+			method: "GET",
+			headers: { Authorization: "Bearer " + token },
+			signal
+		})
+		  .then(response => response.json())
+		  .then(userData => {
+			  console.log("COUCOU", userData.language)
+			  setLanguage(userData.language)
 			});
-			const userProfileJson = await userProfile.json();
-			setLanguage(userProfileJson.language);
-	}
-
-	fetchUserLanguage();
+	  });
+	  
+	console.log("language", language);
 
 	return (
 		<Fragment>

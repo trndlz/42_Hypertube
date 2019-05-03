@@ -1,5 +1,3 @@
-import React from "react";
-
 const internationalization = (language) => {
     switch (language) {
         case 'fr':
@@ -52,6 +50,5 @@ const internationalization = (language) => {
             };
     }
 }
-
-
+ 
 export default internationalization;

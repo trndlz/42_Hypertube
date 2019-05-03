@@ -4,9 +4,7 @@ const auth = {
         const token = localStorage.getItem("jwt");
         let res = await fetch("http://localhost:8145/auth/isauthenticated", {
             method: "GET",
-            headers: {
-                Authorization: "Bearer " + token
-            }
+            headers: { Authorization: "Bearer " + token }
         });
         res = await res.json();
         this.isAuthenticated = res.isAuthenticated;

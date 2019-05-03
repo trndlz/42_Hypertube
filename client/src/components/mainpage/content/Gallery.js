@@ -14,7 +14,6 @@ const Gallery = () => {
     // let cont = new AbortController();
     // cont.test = "a" + search.searchInput;
 	const [controller, setController] = useState(new AbortController());
-	const { language } = useContext(SearchContext);
 
     const fetchMovies = async (page) => {
         const token = localStorage.getItem("jwt");
