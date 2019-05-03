@@ -23,6 +23,66 @@ const internationalization = (language) => {
                 "ratingAsc": "Etoiles (Meilleur)",
                 "ratingDesc": "Etoiles (Pire)",
                 "allCategories": "Toutes catégories",
+                "director": "Réalisateur",
+                "actors": "Acteurs",
+                "availableSubtitles": "Sous-titres disponibles",
+                "validate": "Valider",
+            };
+        case 'sp':
+            return {
+                "settings": "Configuración",
+                "logout": "Cerrar sesión",
+                "search": "Buscar",
+                "filterBy": "Filtrado por",
+                "sortBy": "Ordenar por",
+                "action": "Action",
+                "adventure": "Aventura",
+                "animation": "Animación",
+                "comedy": "Comedia",
+                "crime": "Crimen",
+                "documentary": "Documental",
+                "drama": "Drama",
+                "family": "Familia",
+                "fantasy": "Fantasía",
+                "yearAsc": "Fecha (Más nuevo)",
+                "yearDesc": "Fecha (Más viejo)",
+                "titleAsc": "Nombre (A-Z)",
+                "titleDesc": "Nombre (Z-A)",
+                "ratingAsc": "Estrellas (mejor)",
+                "ratingDesc": "Estrellas (lo peor)",
+                "allCategories": "Todas las categorías",
+                "director": "Director",
+                "actors": "Actores",
+                "availableSubtitles": "Subtítulos disponibles",
+                "validate": "Validar",
+            };
+            case 'ge':
+            return {
+                "settings": "Einstellung",
+                "logout": "Abmeldung",
+                "search": "Suchen",
+                "filterBy": "Filtern nach",
+                "sortBy": "Sortieren by",
+                "action": "Aktion",
+                "adventure": "Adventure",
+                "animation": "Abenteuer",
+                "comedy": "Komödie",
+                "crime": "Krimi",
+                "documentary": "Doku",
+                "drama": "Drama",
+                "family": "Familien",
+                "fantasy": "Fantasy",
+                "yearAsc": "Datum (neuer)",
+                "yearDesc": "Datum (älter)",
+                "titleAsc": "Name (A-Z)",
+                "titleDesc": "Name (Z-A)",
+                "ratingAsc": "Sterne (Beste)",
+                "ratingDesc": "Sterne (Schlimmste)",
+                "allCategories": "Alle Kategorien",
+                "director": "Regisseur",
+                "actors": "Schauspieler",
+                "availableSubtitles": "Verfügbare Untertitel",
+                "validate": "Bestätigen",
             };
         default:
             return {
@@ -47,8 +107,12 @@ const internationalization = (language) => {
                 "ratingAsc": "Stars (Best)",
                 "ratingDesc": "Stars (Worst)",
                 "allCategories": "All Categories",
+                "director": "Director",
+                "actors": "Actors",
+                "availableSubtitles": "Available subtitles",
+                "validate": "Validate",
             };
     }
 }
- 
+
 export default internationalization;

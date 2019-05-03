@@ -10,6 +10,7 @@ import {
     validateLastName,
     validatePassword,
 } from "../../../validation/validation";
+import internationalization from "../../../utils/internationalization";
 
 const Settings = () => {
     const [username, setUsername] = useState("");
@@ -21,7 +22,8 @@ const Settings = () => {
     const [errors, setErrors] = useAsyncState({});
     const [pictureChanged, setPictureChanged] = useState(false);
 	const [isLoading, setIsLoading] = useState(1);
-	const { setLanguage } = useContext(SearchContext);
+    const { language, setLanguage } = useContext(SearchContext);
+    const languageSwitcher = internationalization(language);
 
     const handleChange = e => {
         let reader = new FileReader();
@@ -109,6 +111,7 @@ const Settings = () => {
             res = await res.json();
             setPictureChanged(false);
             if (res.success){
+                localStorage.setItem("language", selectedLanguage.value);
                 localStorage.setItem("jwt", res.token);
             } else {
                 setErrors({ ...res.errors });
@@ -268,7 +271,7 @@ const Settings = () => {
                         <input
                             className="btn btn--primary"
                             type="submit"
-                            value="Validate"
+                            value={languageSwitcher.validate}
                         />
                     </form>
                 )}

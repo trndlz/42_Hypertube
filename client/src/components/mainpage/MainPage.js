@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import { Redirect } from "react-router-dom";
 import Gallery from "./content/Gallery";
 import Profile from "./content/Profile";
@@ -11,7 +11,7 @@ export const SearchContext = React.createContext();
 
 const MainPage = props => {
 	const [search, setSearch] = useState({});
-	const [language, setLanguage] = useState({});
+	const [language, setLanguage] = useState(localStorage.getItem("language") || 'en');
 
 	const renderRedirect = () => {
 		if (
@@ -25,43 +25,12 @@ const MainPage = props => {
 		} else { return false }
 	};
 
-	// const fetchUserLanguage = async () => {
-	// 	const token = localStorage.getItem("jwt");
-	// 	const controller = new AbortController();
-	// 	const signal = controller.signal;
-	// 	const userProfile = fetch("http://localhost:8145/settings", {
-	// 		method: "GET",
-	// 		headers: { Authorization: "Bearer " + token },
-	// 		signal
-	// 	}).
-	// 	const userProfileJson = await userProfile.json();
-	// 	userProfileJson.language !== undefined ? setLanguage(userProfileJson.language) : setLanguage('en');
-	// }
-
-	useEffect(() => {
-		const token = localStorage.getItem("jwt");
-		const controller = new AbortController();
-		const signal = controller.signal;
-		fetch("http://localhost:8145/settings", {
-			method: "GET",
-			headers: { Authorization: "Bearer " + token },
-			signal
-		})
-		  .then(response => response.json())
-		  .then(userData => {
-			  console.log("COUCOU", userData.language)
-			  setLanguage(userData.language)
-			});
-	  });
-	  
-	console.log("language", language);
-
 	return (
 		<Fragment>
 			{renderRedirect() ?
 				<Redirect to="/" /> :
 				<Fragment>
-					<Header />
+					<Header language={language}/>
 					<main className="mainpage">
 						<input type="checkbox" name="test" id="checkbox" />
 						<label className="label-check" htmlFor="checkbox">

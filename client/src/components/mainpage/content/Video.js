@@ -1,9 +1,11 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment, useContext } from "react";
 import { Link } from 'react-router-dom'
 import Footer from "../../partials/Footer";
 import jwt from 'jsonwebtoken';
 import { validateComment } from "../../../validation/validation";
 import Loader from "./Loader";
+import internationalization from "../../../utils/internationalization";
+import { SearchContext } from "../MainPage";
 
 // const MemoComment = React.memo(props => {
 //     let comment = props.comment;
@@ -45,6 +47,8 @@ const Video = (props) => {
 	const [hash, setHash] = useState("");
 	const [isLoading, setIsLoading] = useState(1);
 	const [date] = useState(Date.now());
+	const { language } = useContext(SearchContext);
+	const languageSwitcher = internationalization(language);
 
 	const postComment = async e => {
 		e.preventDefault();
@@ -204,16 +208,16 @@ const Video = (props) => {
 								{data.summary}
 							</div>
 							<div className="video-actors">
-								Director:{" "}{data.omdb ? data.omdb.Director : null}
+								{languageSwitcher.director}:{" "}{data.omdb ? data.omdb.Director : null}
 								<br />
-								Actors:{" "}{data.omdb ? data.omdb.Actors : null}
+								{languageSwitcher.actors}:{" "}{data.omdb ? data.omdb.Actors : null}
 							</div>
 							<div>
 								{movieHashByQuality(data)}
 							</div>
 							{subtitles.length > 0 &&
 							<div>
-								Available subtitle languages : 
+								{languageSwitcher.availableSubtitles} : 
 								{printAvailableSubtitles(subtitles)}
 							</div>}
 						</div>
