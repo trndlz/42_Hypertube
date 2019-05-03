@@ -464,6 +464,9 @@ body {
       .video-description .video-info {
         text-align: center;
         padding-left: 0; } }
+    .video-description .video-info .quality-buttons {
+      padding: 0.6rem;
+      font-family: "Open Sans", sans-serif; }
     .video-description .video-info h6 {
       font-size: 14px; }
     .video-description .video-info .video-title {
