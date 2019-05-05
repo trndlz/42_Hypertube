@@ -98,7 +98,7 @@ const HomePage = props => {
         if (!validatePicture(data.get("userPicture"))) invalid.picture = true;
         if (Object.keys(invalid).length === 0) {
             setIsLoading(1);
-            let res = await fetch("http://localhost:8145/auth/signup", {
+            let res = await fetch("http://localhost:8145/auth/signup", { //! THIS IS NOT ABORTED
                 method: "POST",
                 body: data
             });
@@ -124,7 +124,7 @@ const HomePage = props => {
         const data = new FormData(e.target);
         await setErrors({});
         setMsg("");
-        let res = await fetch("http://localhost:8145/auth/signin", {
+        let res = await fetch("http://localhost:8145/auth/signin", { //! THIS IS NOT ABORTED
             method: "POST",
             body: data
         });
@@ -149,7 +149,7 @@ const HomePage = props => {
                 parsed.email &&
                 parsed.token
             ) {
-                let res = await fetch(
+                let res = await fetch( //! THIS IS NOT ABORTED
                     "http://localhost:8145/email/emailcheckverification",
                     {
                         headers: {
@@ -198,7 +198,7 @@ const HomePage = props => {
         setErrors({});
         setMsg("");
         setIsLoading(2);
-        let res = await fetch("http://localhost:8145/email/passwordforgotten", {
+        let res = await fetch("http://localhost:8145/email/passwordforgotten", { //! THIS IS NOT ABORTED
             headers: {
                 "Content-Type": "application/json"
             },
@@ -221,7 +221,7 @@ const HomePage = props => {
         e.preventDefault();
         setErrors({});
         setMsg("");
-        let res = await fetch("http://localhost:8145/email/setnewpassword", {
+        let res = await fetch("http://localhost:8145/email/setnewpassword", { //! THIS IS NOT ABORTED
             headers: {
                 "Content-Type": "application/json"
             },

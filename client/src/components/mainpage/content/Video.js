@@ -59,7 +59,7 @@ const Video = (props) => {
 		if (validateComment(trimmedComment)) {
 			const token = localStorage.getItem("jwt");
 			const imdb = props.location.pathname.split("/")[2];
-			let res = await fetch(`http://localhost:8145/comments/`, {
+			let res = await fetch(`http://localhost:8145/comments/`, { //! THIS IS NOT ABORTED
 				method: "POST",
 				headers: {
 					Authorization: "Bearer " + token,
@@ -114,11 +114,11 @@ const Video = (props) => {
 				});
 				res = await res.json();
 				if (res.isAuthenticated !== false) {
-					let commentsRes = await fetch(`http://localhost:8145/comments/movie/${imdb}`, {
+					let commentsRes = await fetch(`http://localhost:8145/comments/movie/${imdb}`, { //! THIS IS NOT ABORTED
 						headers: { Authorization: "Bearer " + token },
 					});
 					commentsRes = await commentsRes.json();
-					let availableSubtitles = await fetch(`http://localhost:8145/torrent/subtitles/${imdb}`, {
+					let availableSubtitles = await fetch(`http://localhost:8145/torrent/subtitles/${imdb}`, { //! THIS IS NOT ABORTED
 						headers: { Authorization: "Bearer " + token }
 					});
 					availableSubtitles = await availableSubtitles.json();
