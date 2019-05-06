@@ -1,6 +1,3 @@
-const fetch = require("node-fetch");
-const fs = require("fs");
-const parseTorrent = require('parse-torrent');
 const FFmpeg = require('fluent-ffmpeg')
 var ffmpeg = require("ffmpeg-static");
 var torrentStream = require("torrent-stream");
