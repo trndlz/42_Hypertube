@@ -51,7 +51,8 @@ const writeResHeader = (req, res, file) => {
 }
 
 const streamTorrentByHash = async (req, res) => {
-
+	const isChrome = req.headers['user-agent'].includes('Chrome');
+	const isFirefox = req.headers['user-agent'].includes('Firefox');
 	const hash = req.params.hash;
 	const path = __dirname + '/../downloads';
 	const magnet = `magnet:?xt=urn:btih:${hash}&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://torrent.gresille.org:80/announce&tr=udp://tracker.openbittorrent.com:80&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://tracker.leechers-paradise.org:6969&tr=udp://p4p.arenabg.ch:1337&tr=udp://tracker.internetwarriors.net:1337`;
@@ -62,10 +63,10 @@ const streamTorrentByHash = async (req, res) => {
 	engine.on('ready', () => {
 		engine.files.forEach((file) => {
 			const extension = file.name.split('.').pop();
-			if (extension === 'mp4') {
+			if (extension === 'mp4' || (extension === 'mkv' && isChrome)) {
 				console.log("> Currently streaming", file.name, formatBytes(file.length));
 				file.createReadStream(writeResHeader(req, res, file)).pipe(res);
-			} else if (extension === 'mkv') {
+			} else if (extension === 'mkv' && isFirefox) {
 				res.writeHead(200, {
 					"Content-Type": "video/mp4",
 					'Connection': 'keep-alive'
