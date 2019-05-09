@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const keys = require('../config/keys');
 const path = require("path");
 const Model = require("../model/user");
+const mongoose = require("mongoose");
 
 const removeDuplicates = (arr) => {
 	arr = arr.map((movie, index) => {
@@ -97,6 +98,19 @@ const getVideoByPage = async (req, res, next) => {
 		data = mergeArrays(data[0].data.movies, data[1]);
 		data = removeDuplicates(data);
 		await replace404Picture(data);
+		if (mongoose.Types.ObjectId.isValid(req.userData._id)) {
+			user = await Model.User.findOne({
+			  	_id: req.userData._id
+			});
+			data = data.map((movie) => {
+				if (user.moviesSeen.includes(movie.imdb_code)) {
+					movie.isSeen = true;
+				} else {
+					movie.isSeen = false;
+				}
+				return movie
+			})
+		}
 		res.json(data);
 	} else {
 		requestYts = `https://yts.am/api/v2/list_movies.json?sort_by=${sortBy}&limit=50&page=${req.query.page}&minimum_rating=${2 * req.query.stars - 2}${category}&order_by=${order}`;
@@ -104,6 +118,19 @@ const getVideoByPage = async (req, res, next) => {
 		data = await Promise.all(data);
 		data = data[0].data.movies;
 		await replace404Picture(data);
+		if (mongoose.Types.ObjectId.isValid(req.userData._id)) {
+			user = await Model.User.findOne({
+			  	_id: req.userData._id
+			});
+			data = data.map((movie) => {
+				if (user.moviesSeen.includes(movie.imdb_code)) {
+					movie.isSeen = true;
+				} else {
+					movie.isSeen = false;
+				}
+				return movie
+			})
+		}
 		res.json(data);
 	}
 }
@@ -160,5 +187,5 @@ const getLogo = (req, res, next) => {
 module.exports = exports = {
 	getVideoByPage,
 	getVideoByImdb,
-	getLogo
+	getLogo,
 };

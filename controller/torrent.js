@@ -100,7 +100,6 @@ const streamTorrentByHash = async (req, res) => {
 	engine.on('idle', function () {
 		console.log('Torrent downloaded');
 	});
-
 };
 
 module.exports = exports = {

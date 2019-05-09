@@ -38,7 +38,7 @@ const Gallery = () => {
                         }
                         arr.push(<Link to={`/video/${film.imdb_code}`} key={index + ' ' + page}>
                             <div className="film">
-                                <div className="film-min unseen">
+                                <div className={film.isSeen ? "film-min seen" : "film-min unseen"}>
                                     <img
                                         src={film.large_cover_image}
                                         alt=""

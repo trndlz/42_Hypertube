@@ -28,7 +28,8 @@ const userSchema = new Schema({
         type: String,
         default: "en"
     },
-    moviesSeen: [movieSchema],//?
+    // moviesSeen: [movieSchema],//?
+    moviesSeen: [String],
     authId: String,
     connectionType: String,
     token: String,

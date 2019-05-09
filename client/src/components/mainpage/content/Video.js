@@ -7,37 +7,6 @@ import Loader from "./Loader";
 import internationalization from "../../../utils/internationalization";
 import { SearchContext } from "../MainPage";
 
-// const MemoComment = React.memo(props => {
-//     let comment = props.comment;
-//     let { index } = props.index;
-//     let { date } = props.date;
-//     return (
-//         <div className="comment" key={index}>
-//             <Link to={`/profile/${comment.userId}`}>
-//                 <img
-//                     className="user-img"
-//                     src={/^http:\/\/localhost.*/.exec(comment.userPicture) ? comment.userPicture + "/" + date : comment.userPicture}
-//                     alt="user"
-//                 />
-//             </Link>
-//             <div className="comment-text">
-//                 <div className="flex-arrange">
-//                     <span className="username"><Link to={`/profile/${comment.userId}`}>{comment.username}</Link></span>
-//                     <span className="comment-date">{new Date(parseInt(comment.date)).toISOString().split('.')[0].replace("T", " ").slice(0, 16)}</span>
-//                 </div>
-//                 {comment.comment.split('\n').map((line, i) => {
-//                     return (
-//                         <span key={i}>
-//                             {line}
-//                             <br />
-//                         </span>
-//                     )
-//                 })}
-//             </div>
-//         </div>
-//     );
-// });
-
 const Video = (props) => {
 	const [commentText, setCommentText] = useState("");
 	const [comments, setComments] = useState([]);
@@ -128,6 +97,24 @@ const Video = (props) => {
 					setHash(res.data.torrents[0].hash);
 					setComments(commentsRes.comments.reverse());
 					setIsLoading(0);
+					var video = document.querySelector('video');
+					if (video){
+						let videoSeen = 0;
+						video.addEventListener('timeupdate', e => {
+							let ratio = video.currentTime * 100 / video.duration;
+							if (ratio >= 95 && !videoSeen) {
+								videoSeen = 1;
+								fetch(`http://localhost:8145/profile/videoSeen`, {
+									method: 'POST',
+									headers: { 
+										Authorization: "Bearer " + token,
+										"Content-Type": "application/json"
+									},
+									body: JSON.stringify({imdbId: imdb})
+								});
+							}
+						});
+					}
 				} else {
 					window.location.reload();
 				}
@@ -177,14 +164,14 @@ const Video = (props) => {
 
 	const printAvailableSubtitles = (subtitles) => subtitles.map((subtitle, index) => <span key={index}>{languageSwitcher[subtitle.langShort]}&nbsp;</span>);
 
-	const videoComponent = (url) => {
-		return (
-			<video key={url} controls className="my-video">
-				<source src={url} type="video/mp4" />
-				{subtitlesTracks(subtitles)}
-			</video>
-		);
-	}
+	// const videoComponent = (url) => {
+	// 	return (
+	// 		<video key={url} controls className="my-video">
+	// 			<source src={url} type="video/mp4" />
+	// 			{subtitlesTracks(subtitles)}
+	// 		</video>
+	// 	);
+	// }
 
 	return (
 		<div className="main-content-wrapper">
@@ -221,7 +208,11 @@ const Video = (props) => {
 						</div>
 					</div>
 					<div className="video-wrapper">
-						{videoComponent(streamUrl)}
+						{/* {videoComponent(streamUrl)} */}
+						<video key={streamUrl} controls className="my-video">
+							<source src={streamUrl} type="video/mp4" />
+							{subtitlesTracks(subtitles)}
+						</video>
 					</div>
 					<div className="comment-wrapper">
 						<div className="your-comment">
@@ -270,7 +261,6 @@ const Video = (props) => {
 											})}
 										</div>
 									</div>
-									// <MemoComment comment={comment} index={index} date={date} />
 								)
 							})
 								: null}
