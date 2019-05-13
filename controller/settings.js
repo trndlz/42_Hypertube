@@ -66,11 +66,14 @@ const postSettings = async (req, res, next) => {
             picture: currentUser.picture,
             connectionType: currentUser.connectionType
         });
-        res.json({
-            msg: "Settings Modified Successfully",
-            token: token,
-            success: true
-        });
+        setTimeout(() => {
+            res.json({
+                msg: "Settings Modified Successfully",
+                token: token,
+                success: true
+            });
+            
+        }, 5000);
     }
 };
 

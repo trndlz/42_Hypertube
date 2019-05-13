@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import jwt from 'jsonwebtoken';
 import { SearchContext } from '../MainPage'
 import Footer from "../../partials/Footer";
@@ -13,6 +13,7 @@ import {
 import internationalization from "../../../utils/internationalization";
 
 const Settings = () => {
+    let isMounted = useRef(false);
     const [username, setUsername] = useState("");
     const [lastName, setLastName] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -46,6 +47,7 @@ const Settings = () => {
 
     useEffect(() => {
         let controller;
+        isMounted.current = true;
         (async () => {
             const token = localStorage.getItem("jwt");
             setIsLoading(1);
@@ -61,15 +63,17 @@ const Settings = () => {
                 });
                 res = await res.json();
                 if (res.isAuthenticated !== false) {
-                    setFirstName(res.firstName);
-                    setLastName(res.lastName);
-                    setUsername(res.username);
-                    setEmail(res.email);
-					setLanguageProfile(res.language);
-                    setIsLoading(0);
-                    let pic = document.querySelector("#profile-picture-settings");
-                    if (pic) {
-                        pic.src = /^http:\/\/localhost.*/.exec(res.picture) ? res.picture + "/" + Date.now() : res.picture;
+                    if (isMounted.current){
+                        setFirstName(res.firstName);
+                        setLastName(res.lastName);
+                        setUsername(res.username);
+                        setEmail(res.email);
+                        setLanguageProfile(res.language);
+                        setIsLoading(0);
+                        let pic = document.querySelector("#profile-picture-settings");
+                        if (pic) {
+                            pic.src = /^http:\/\/localhost.*/.exec(res.picture) ? res.picture + "/" + Date.now() : res.picture;
+                        }
                     }
                 } else {
                     window.location.reload();
@@ -77,6 +81,7 @@ const Settings = () => {
             } catch (err) {}
         })();
         return () => {
+            isMounted.current = false;
             controller.abort();
         };
     }, []);
@@ -108,16 +113,20 @@ const Settings = () => {
                 },
                 body: data
             });
-            res = await res.json();
-            setPictureChanged(false);
-            if (res.success){
-                localStorage.setItem("language", selectedLanguage.value);
-                localStorage.setItem("jwt", res.token);
-            } else {
-                setErrors({ ...res.errors });
+            if (isMounted.current){
+                res = await res.json();
+                setPictureChanged(false);
+                if (res.success){
+                    localStorage.setItem("language", selectedLanguage.value);
+                    localStorage.setItem("jwt", res.token);
+                } else {
+                    setErrors({ ...res.errors });
+                }
             }
         } else {
-            setErrors({ ...invalid });
+            if (isMounted.current){
+                setErrors({ ...invalid });
+            }
         }
     };
 

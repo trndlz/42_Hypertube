@@ -98,6 +98,9 @@ const Video = (props) => {
 					setComments(commentsRes.comments.reverse());
 					setIsLoading(0);
 					var video = document.querySelector('video');
+					video.oncanplay = function() { //! Clean
+						video.play()
+					};
 					if (video){
 						let videoSeen = 0;
 						video.addEventListener('timeupdate', e => {
