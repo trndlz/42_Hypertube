@@ -96,7 +96,6 @@ const getVideoByPage = async (req, res, next) => {
 		requestPopcorn = `https://tv-v2.api-fetch.website/movies/${page}?sort=${sortBy}&order=${order === 'desc' ? 1 : -1}&keywords=${searchInput}`;
 		data = [fetchMovies(requestYts), fetchMovies(requestPopcorn)];
 		data = await Promise.all(data).catch(e => res.status(500).send({ error: e }));
-		if (data.data === undefined) return ;
 		rearangeData(data[1]);
 		data = mergeArrays(data[0].data.movies, data[1]);
 		data = removeDuplicates(data);
@@ -119,7 +118,6 @@ const getVideoByPage = async (req, res, next) => {
 		requestYts = `https://yts.am/api/v2/list_movies.json?sort_by=${sortBy}&limit=50&page=${page}&minimum_rating=${2 * stars - 2}${category}&order_by=${order}`;
 		data = [fetchMovies(requestYts)];
 		data = await Promise.all(data).catch(e => res.status(500).send({ error: e }));
-		if (data.data === undefined) return ;
 		data = data[0].data.movies;
 		await replace404Picture(data);
 		if (mongoose.Types.ObjectId.isValid(req.userData._id)) {
