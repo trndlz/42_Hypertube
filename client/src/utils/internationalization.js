@@ -72,7 +72,7 @@ const internationalization = (language) => {
         'logout': 'Abmeldung',
         'search': 'Suchen',
         'filterBy': 'Filtern nach',
-        'sortBy': 'Sortieren by',
+        'sortBy': 'Sortieren nach',
         'action': 'Aktion',
         'adventure': 'Adventure',
         'animation': 'Abenteuer',
