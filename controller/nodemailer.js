@@ -61,15 +61,19 @@ emailCheckVerification = async (req, res, next) => {
         if (user.token === req.body.token) {
             user.verified = true;
             user.save();
-            res.status(200).json({
-                msg: "Email Verification validated successfully",
-                error: false
-            });
+            // setTimeout(() => {
+                res.status(200).json({
+                    msg: "Email Verification validated successfully",
+                    error: false
+                });
+            // }, 20000);
         } else {
-            res.status(200).json({
-                msg: "Email Verification Unauthorized",
-                error: true
-            });
+            // setTimeout(() => {
+                res.status(200).json({
+                    msg: "Email Verification Unauthorized",
+                    error: true
+                });
+            // }, 10000);
         }
     } catch (err) {
         res.status(200).json({
@@ -107,13 +111,15 @@ emailSendVerification = async (req, res, next) => {
             html: output
         };
         await transporter.sendMail(mailOptions);
-        res.status(200).json({
-            success: true,
-            msg: "Email Verification sent successfully"
-        });
+        // setTimeout(() => {
+            res.status(200).json({
+                success: true,
+                msg: "Email Verification sent successfully"
+            });
+        // }, 20000);
     } catch (err) {
         res.status(200).json({
-            msg: `Error while posting forgottenEmail: ${err}`
+            msg: `Error while posting emailSendVerification: ${err}`
         });
     }
 };

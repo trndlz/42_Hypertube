@@ -11,8 +11,6 @@ const Gallery = () => {
 	const { search } = useContext(SearchContext);
     const [hasMore, setHasMore] = useState(true);
     const [moviesArr, setMoviesArr] = useState([]);
-    // let cont = new AbortController();
-    // cont.test = "a" + search.searchInput;
 	const [controller, setController] = useState(new AbortController());
 
     const fetchMovies = async (page) => {
@@ -94,17 +92,18 @@ const Gallery = () => {
                     pageStart={0}
                     loadMore={fetchMovies}
                     hasMore={hasMore}
-                    loader={<div className="cs-loader" style={{height: newPage !== 1 ? "5rem" : null}} key={0}>
-                {/* //    loader={<div className="cs-loader" key={0}> */}
-                                <div className="cs-loader-inner">
-                                    <label>●</label>
-                                    <label>●</label>
-                                    <label>●</label>
-                                    <label>●</label>
-                                    <label>●</label>
-                                    <label>●</label>
-                                </div>
-                            </div>}
+                    loader={
+                        <div className="cs-loader" style={{height: newPage !== 1 ? "5rem" : null}} key={0}>
+                            <div className="cs-loader-inner">
+                                <label>●</label>
+                                <label>●</label>
+                                <label>●</label>
+                                <label>●</label>
+                                <label>●</label>
+                                <label>●</label>
+                            </div>
+                        </div>
+                    }
                     useWindow={false}
                 >
                     <div className="padding-wrapper">

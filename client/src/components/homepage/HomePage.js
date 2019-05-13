@@ -59,6 +59,12 @@ const HomePage = props => {
     const [emailError, setEmailError] = useState("");
     const [errors, setErrors] = useAsyncState({});
     const [isLoading, setIsLoading] = useState(0);
+    const [controllerSignal, setControllerSignal] = useState(new AbortController());
+    // const [authController, setAuthController] = useState("");
+    // const [controllerSignIn, setControllerSignIn] = useState(new AbortController());
+    // const [controller, setController] = useState(new AbortController());
+    // const [controller, setController] = useState(new AbortController());
+    // const [controller, setController] = useState(new AbortController());
 
     const renderRedirect = () => {
         if (props.location.pathname.length > 1) {
@@ -96,51 +102,72 @@ const HomePage = props => {
         if (!validateLastName(data.get("lastName"))) invalid.lastName = true;
         if (!validatePassword(data.get("password"))) invalid.password = true;
         if (!validatePicture(data.get("userPicture"))) invalid.picture = true;
-        if (Object.keys(invalid).length === 0) {
-            setIsLoading(1);
-            let res = await fetch("http://localhost:8145/auth/signup", { //! THIS IS NOT ABORTED
-                method: "POST",
-                body: data
-            });
-            res = await res.json();
-            if (!res.success) {
-                setErrors({ ...res.errors });
+        try {
+            if (Object.keys(invalid).length === 0) {
+                setIsLoading(1);
+                let res = await fetch("http://localhost:8145/auth/signup", {
+                    method: "POST",
+                    body: data,
+                    signal: controllerSignal.signal
+                });
+                res = await res.json();
+                if (!res.success) {
+                    setErrors({ ...res.errors });
+                } else {
+                    setEmailToVerify(true);
+                    setFirstName("");
+                    setLastName("");
+                    setUsername("");
+                    setEmail("");
+                    setPassword("");
+                }
+                setIsLoading(0);
+                controllerSignal.abort();
+                setControllerSignal(new AbortController());
             } else {
-                setEmailToVerify(true);
-                setFirstName("");
-                setLastName("");
-                setUsername("");
-                setEmail("");
-                setPassword("");
+                setErrors({ ...invalid });
             }
-            setIsLoading(0);
-        } else {
-            setErrors({ ...invalid });
-        }
+        } catch (err) {}
     };
+    
+    useEffect(() => {
+        return () => {
+            controllerSignal && controllerSignal.abort();
+            // authController && authController.abort();
+        }
+    }, [])
 
     const handleSignIn = async e => {
         e.preventDefault();
         const data = new FormData(e.target);
+        // setControllerSignal(new AbortController());
         await setErrors({});
         setMsg("");
-        let res = await fetch("http://localhost:8145/auth/signin", { //! THIS IS NOT ABORTED
-            method: "POST",
-            body: data
-        });
-        res = await res.json();
-        if (!res.success) {
-            setErrors({ login: true });
-            setMsg(res.msg);
-        } else {
-            localStorage.setItem("jwt", res.token);
-            await auth.authenticate();
-            props.setRerender(!props.rerender);
-        }
+        try {
+            let res = await fetch("http://localhost:8145/auth/signin", { //! THIS IS NOT ABORTED
+                method: "POST",
+                body: data
+            });
+            res = await res.json();
+            controllerSignal.abort();
+            setControllerSignal(new AbortController());
+            if (!res.success) {
+                setErrors({ login: true });
+                setMsg(res.msg);
+            } else {
+                localStorage.setItem("jwt", res.token);
+                // let authCon = await auth.authenticate();
+                await auth.authenticate();
+                // setAuthController(authCon);
+                props.setRerender(!props.rerender);
+            }
+        } catch (err) {}
     };
 
     // Email Redirection
     useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
         (async () => {
             const parsed = queryString.parse(props.location.search);
             if (
@@ -149,24 +176,30 @@ const HomePage = props => {
                 parsed.email &&
                 parsed.token
             ) {
-                let res = await fetch( //! THIS IS NOT ABORTED
-                    "http://localhost:8145/email/emailcheckverification",
-                    {
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        method: "POST",
-                        body: JSON.stringify({
-                            email: parsed.email,
-                            token: parsed.token
-                        })
-                    }
-                );
-                res = await res.json();
-                setEmailVerified(true);
-                setEmailError(res.error);
+                try {
+                    let res = await fetch(
+                        "http://localhost:8145/email/emailcheckverification",
+                        {
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            method: "POST",
+                            body: JSON.stringify({
+                                email: parsed.email,
+                                token: parsed.token
+                            }),
+                            signal: signal
+                        }
+                    );
+                    res = await res.json();
+                    setEmailVerified(true);
+                    setEmailError(res.error);
+                } catch (err) {}
             }
         })();
+        return () => {
+            controller.abort();
+        };
     }, []);
 
     // Sign with Google or 42

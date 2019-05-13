@@ -120,6 +120,7 @@ const Settings = () => {
             setErrors({ ...invalid });
         }
     };
+
     return (
         <div className="main-content-wrapper">
             <div className="settings-form login-wrapper">

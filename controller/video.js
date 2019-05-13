@@ -123,7 +123,7 @@ const getVideoByPage = async (req, res, next) => {
 			  	_id: req.userData._id
 			});
 			data = data.map((movie) => {
-				if (user.moviesSeen.includes(movie.imdb_code)) {
+				if (user && user.moviesSeen.includes(movie.imdb_code)) {
 					movie.isSeen = true;
 				} else {
 					movie.isSeen = false;

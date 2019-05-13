@@ -26,22 +26,15 @@ const Profile = props => {
             const signal = controller.signal;
             setIsLoading(1);
             try {
-                let res = await fetch(`http://localhost:8145/profile/${id}`, { //! THIS IS NOT ABORTED
+                let res = await fetch(`http://localhost:8145/profile/${id}`, {
                     method: "GET",
                     headers: {
                         Authorization: "Bearer " + token
                     },
-                    // signal
+                    signal
                 });
                 res = await res.json();
                 if (res.isAuthenticated !== false) {
-                    let comments = await fetch(`http://localhost:8145/comments/user/${id}`,{ //! THIS IS NOT ABORTED
-                        headers: {
-                            Authorization: "Bearer " + token
-                        },
-                        // signal
-                    });
-                    await comments.json();
                     if (res.success) {
                         setIsSuccess(true);
                         setFirstName(res.firstName);
@@ -62,7 +55,7 @@ const Profile = props => {
             } catch (err) {}
         })();
         return () => {
-            // controller.abort();
+            controller.abort();
         };
     }, []);
 
