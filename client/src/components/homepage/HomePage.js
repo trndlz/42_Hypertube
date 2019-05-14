@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import queryString from "query-string";
 import { Redirect } from "react-router-dom";
 import {
@@ -41,6 +41,7 @@ function PasswordReset() {
 }
 
 const HomePage = props => {
+    let isMounted = useRef(false);
     const [username, setUsername] = useState("");
     const [lastName, setLastName] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -60,11 +61,6 @@ const HomePage = props => {
     const [errors, setErrors] = useAsyncState({});
     const [isLoading, setIsLoading] = useState(0);
     const [controllerSignal, setControllerSignal] = useState(new AbortController());
-    // const [authController, setAuthController] = useState("");
-    // const [controllerSignIn, setControllerSignIn] = useState(new AbortController());
-    // const [controller, setController] = useState(new AbortController());
-    // const [controller, setController] = useState(new AbortController());
-    // const [controller, setController] = useState(new AbortController());
 
     const renderRedirect = () => {
         if (props.location.pathname.length > 1) {
@@ -110,20 +106,22 @@ const HomePage = props => {
                     body: data,
                     signal: controllerSignal.signal
                 });
-                res = await res.json();
-                if (!res.success) {
-                    setErrors({ ...res.errors });
-                } else {
-                    setEmailToVerify(true);
-                    setFirstName("");
-                    setLastName("");
-                    setUsername("");
-                    setEmail("");
-                    setPassword("");
+                if (isMounted.current){
+                    res = await res.json();
+                    if (!res.success) {
+                        setErrors({ ...res.errors });
+                    } else {
+                        setEmailToVerify(true);
+                        setFirstName("");
+                        setLastName("");
+                        setUsername("");
+                        setEmail("");
+                        setPassword("");
+                    }
+                    setIsLoading(0);
+                    controllerSignal.abort();
+                    setControllerSignal(new AbortController());
                 }
-                setIsLoading(0);
-                controllerSignal.abort();
-                setControllerSignal(new AbortController());
             } else {
                 setErrors({ ...invalid });
             }
@@ -131,41 +129,44 @@ const HomePage = props => {
     };
     
     useEffect(() => {
+        isMounted.current = true;
         return () => {
+            isMounted.current = false;
             controllerSignal && controllerSignal.abort();
-            // authController && authController.abort();
         }
     }, [])
 
     const handleSignIn = async e => {
         e.preventDefault();
         const data = new FormData(e.target);
-        // setControllerSignal(new AbortController());
         await setErrors({});
         setMsg("");
         try {
-            let res = await fetch("http://localhost:8145/auth/signin", { //! THIS IS NOT ABORTED
+            let res = await fetch("http://localhost:8145/auth/signin", {
                 method: "POST",
                 body: data
             });
-            res = await res.json();
-            controllerSignal.abort();
-            setControllerSignal(new AbortController());
-            if (!res.success) {
-                setErrors({ login: true });
-                setMsg(res.msg);
-            } else {
-                localStorage.setItem("jwt", res.token);
-                // let authCon = await auth.authenticate();
-                await auth.authenticate();
-                // setAuthController(authCon);
-                props.setRerender(!props.rerender);
+            if (isMounted.current){
+                res = await res.json();
+                controllerSignal.abort();
+                setControllerSignal(new AbortController());
+                if (!res.success) {
+                    setErrors({ login: true });
+                    setMsg(res.msg);
+                } else {
+                    localStorage.setItem("jwt", res.token);
+                    await auth.authenticate();
+                    if (isMounted.current) {
+                        props.setRerender(!props.rerender);
+                    }
+                }
             }
         } catch (err) {}
     };
 
     // Email Redirection
     useEffect(() => {
+        isMounted.current = true;
         const controller = new AbortController();
         const signal = controller.signal;
         (async () => {
@@ -191,25 +192,30 @@ const HomePage = props => {
                             signal: signal
                         }
                     );
-                    res = await res.json();
-                    setEmailVerified(true);
-                    setEmailError(res.error);
+                    if (isMounted.current){
+                        res = await res.json();
+                        setEmailVerified(true);
+                        setEmailError(res.error);
+                    }
                 } catch (err) {}
             }
         })();
         return () => {
+            isMounted.current = false;
             controller.abort();
         };
     }, []);
 
-    // Sign with Google or 42
+    // Sign with OAuth
     useEffect(() => {
         (async () => {
             const parsed = queryString.parse(props.location.search);
             if (parsed.token) {
                 localStorage.setItem("jwt", parsed.token);
                 await auth.authenticate();
-                props.setRerender(!props.rerender);
+                if (isMounted.current){
+                    props.setRerender(!props.rerender);
+                }
             }
         })();
     }, []);
@@ -231,7 +237,7 @@ const HomePage = props => {
         setErrors({});
         setMsg("");
         setIsLoading(2);
-        let res = await fetch("http://localhost:8145/email/passwordforgotten", { //! THIS IS NOT ABORTED
+        let res = await fetch("http://localhost:8145/email/passwordforgotten", {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -240,21 +246,23 @@ const HomePage = props => {
                 email: forgotEmail
             })
         });
-        res = await res.json();
-        if (!res.error) {
-            setpasswordForgotten(2);
-        } else {
-            setErrors({ ...errors, login: true });
-            setMsg(res.msg);
+        if (isMounted.current){
+            res = await res.json();
+            if (!res.error) {
+                setpasswordForgotten(2);
+            } else {
+                setErrors({ ...errors, login: true });
+                setMsg(res.msg);
+            }
+            setIsLoading(0);
         }
-        setIsLoading(0);
     };
 
     const handlePasswordForgottenVerify = async e => {
         e.preventDefault();
         setErrors({});
         setMsg("");
-        let res = await fetch("http://localhost:8145/email/setnewpassword", { //! THIS IS NOT ABORTED
+        let res = await fetch("http://localhost:8145/email/setnewpassword", {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -265,15 +273,17 @@ const HomePage = props => {
                 token: forgotToken
             })
         });
-        res = await res.json();
-        if (!res.error) {
-            setpasswordForgotten(0);
-            setPasswordReset(true);
-            let button = document.querySelector("#passforgot");
-            button.innerHTML = "Password Forgotten";
-        } else {
-            setErrors({ ...errors, login: true });
-            setMsg(res.msg);
+        if (isMounted.current){
+            res = await res.json();
+            if (!res.error) {
+                setpasswordForgotten(0);
+                setPasswordReset(true);
+                let button = document.querySelector("#passforgot");
+                button.innerHTML = "Password Forgotten";
+            } else {
+                setErrors({ ...errors, login: true });
+                setMsg(res.msg);
+            }
         }
     };
 

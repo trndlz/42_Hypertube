@@ -61,19 +61,15 @@ emailCheckVerification = async (req, res, next) => {
         if (user.token === req.body.token) {
             user.verified = true;
             user.save();
-            // setTimeout(() => {
-                res.status(200).json({
-                    msg: "Email Verification validated successfully",
-                    error: false
-                });
-            // }, 20000);
+            res.status(200).json({
+                msg: "Email Verification validated successfully",
+                error: false
+            });
         } else {
-            // setTimeout(() => {
-                res.status(200).json({
-                    msg: "Email Verification Unauthorized",
-                    error: true
-                });
-            // }, 10000);
+            res.status(200).json({
+                msg: "Email Verification Unauthorized",
+                error: true
+            });
         }
     } catch (err) {
         res.status(200).json({
@@ -111,12 +107,10 @@ emailSendVerification = async (req, res, next) => {
             html: output
         };
         await transporter.sendMail(mailOptions);
-        // setTimeout(() => {
-            res.status(200).json({
-                success: true,
-                msg: "Email Verification sent successfully"
-            });
-        // }, 20000);
+        res.status(200).json({
+            success: true,
+            msg: "Email Verification sent successfully"
+        });
     } catch (err) {
         res.status(200).json({
             msg: `Error while posting emailSendVerification: ${err}`

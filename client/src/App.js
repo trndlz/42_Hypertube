@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./css/style.css";
 import { BrowserRouter } from "react-router-dom";
 import MainPage from "./components/mainpage/MainPage";
@@ -8,13 +8,20 @@ import { auth } from "./utils/auth";
 // LogRocket.init('qzue8a/hypertube');
 
 const App = () => {
+	let isMounted = useRef(false);
     let [isLoading, setIsLoading] = useState(true);
     let [rerender, setRerender] = useState(true);
     useEffect(() => {
+        isMounted.current = true;
         (async () => {
             await auth.authenticate();
-            setIsLoading(false);
+            if (isMounted.current){
+                setIsLoading(false);
+            }
         })();
+        return () => {
+            isMounted.current = false;
+        }
     }, []);
 
     return (

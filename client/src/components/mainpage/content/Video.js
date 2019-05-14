@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, useContext } from "react";
+import React, { useEffect, useState, Fragment, useContext, useRef } from "react";
 import { Link } from 'react-router-dom'
 import Footer from "../../partials/Footer";
 import jwt from 'jsonwebtoken';
@@ -8,6 +8,7 @@ import internationalization from "../../../utils/internationalization";
 import { SearchContext } from "../MainPage";
 
 const Video = (props) => {
+	let isMounted = useRef(false);
 	const [commentText, setCommentText] = useState("");
 	const [comments, setComments] = useState([]);
 	const [data, setData] = useState({});
@@ -22,37 +23,40 @@ const Video = (props) => {
 
 	const postComment = async e => {
 		e.preventDefault();
-		// let controller = new AbortController();
-		// const signal = controller.signal;
 		let trimmedComment = commentText.trim();
 		if (validateComment(trimmedComment)) {
 			const token = localStorage.getItem("jwt");
 			const imdb = props.location.pathname.split("/")[2];
-			let res = await fetch(`http://localhost:8145/comments/`, { //! THIS IS NOT ABORTED
+			let res = await fetch(`http://localhost:8145/comments/`, {
 				method: "POST",
 				headers: {
 					Authorization: "Bearer " + token,
 					"Content-Type": "application/json"
 				},
-				// signal,
 				body: JSON.stringify({
 					commentText: trimmedComment,
 					imdbId: imdb
 				})
 			});
-			res = await res.json();
-			if (res.success) {
-				let jwtContent = jwt.decode(localStorage.getItem('jwt'));
-				if (jwtContent) {
-					res.comment.username = jwtContent.username;
-					res.comment.userPicture = jwtContent.picture;
+			if (isMounted.current){
+				res = await res.json();
+				if (res.success) {
+					let jwtContent = jwt.decode(localStorage.getItem('jwt'));
+					if (jwtContent) {
+						res.comment.username = jwtContent.username;
+						res.comment.userPicture = jwtContent.picture;
+					}
+					const textArea = document.querySelector('#textArea');
+					textArea.style.height = '40px';
+					if (isMounted.current) {
+						setComments([res.comment, ...comments]);
+					}
 				}
-				const textArea = document.querySelector('#textArea');
-				textArea.style.height = '40px';
-				setComments([res.comment, ...comments]);
 			}
 		}
-		setCommentText('');
+		if (isMounted.current) {
+			setCommentText('');
+		}
 	}
 
 	const handleOnInput = (e) => {
@@ -69,6 +73,7 @@ const Video = (props) => {
 
 	useEffect(() => {
 		let controller;
+		isMounted.current = true;
 		(async () => {
 			const token = localStorage.getItem("jwt");
 			const imdb = props.location.pathname.split("/")[2];
@@ -81,50 +86,55 @@ const Video = (props) => {
 					},
 					signal
 				});
-				res = await res.json();
-				if (res.isAuthenticated !== false) {
-					let commentsRes = await fetch(`http://localhost:8145/comments/movie/${imdb}`, { //! THIS IS NOT ABORTED
-						headers: { Authorization: "Bearer " + token },
-					});
-					commentsRes = await commentsRes.json();
-					let availableSubtitles = await fetch(`http://localhost:8145/torrent/subtitles/${imdb}`, { //! THIS IS NOT ABORTED
-						headers: { Authorization: "Bearer " + token }
-					});
-					availableSubtitles = await availableSubtitles.json();
-					setSubtitles(availableSubtitles);
-					setData(res.data);
-					setIntlDescriptions(res.languageDescriptions);
-					setHash(res.data.torrents[0].hash);
-					setComments(commentsRes.comments.reverse());
-					setIsLoading(0);
-					var video = document.querySelector('video');
-					video.oncanplay = function() { //! Clean
-						video.play()
-					};
-					if (video){
-						let videoSeen = 0;
-						video.addEventListener('timeupdate', e => {
-							let ratio = video.currentTime * 100 / video.duration;
-							if (ratio >= 95 && !videoSeen) {
-								videoSeen = 1;
-								fetch(`http://localhost:8145/profile/videoSeen`, {
-									method: 'POST',
-									headers: { 
-										Authorization: "Bearer " + token,
-										"Content-Type": "application/json"
-									},
-									body: JSON.stringify({imdbId: imdb})
-								});
-							}
+				if (isMounted.current){
+					res = await res.json();
+					if (res.isAuthenticated !== false) {
+						let commentsRes = await fetch(`http://localhost:8145/comments/movie/${imdb}`, {
+							headers: { Authorization: "Bearer " + token },
 						});
+						commentsRes = await commentsRes.json();
+						let availableSubtitles = await fetch(`http://localhost:8145/torrent/subtitles/${imdb}`, {
+							headers: { Authorization: "Bearer " + token }
+						});
+						availableSubtitles = await availableSubtitles.json();
+						if (isMounted.current) {
+							setSubtitles(availableSubtitles);
+							setData(res.data);
+							setIntlDescriptions(res.languageDescriptions);
+							setHash(res.data.torrents[0].hash);
+							setComments(commentsRes.comments.reverse());
+							setIsLoading(0);
+						}
+						var video = document.querySelector('video');
+						video.oncanplay = () => {
+							video.play()
+						};
+						if (video) {
+							let videoSeen = 0;
+							video.addEventListener('timeupdate', e => {
+								let ratio = video.currentTime * 100 / video.duration;
+								if (ratio >= 95 && !videoSeen) {
+									videoSeen = 1;
+									fetch(`http://localhost:8145/profile/videoSeen`, {
+										method: 'POST',
+										headers: { 
+											Authorization: "Bearer " + token,
+											"Content-Type": "application/json"
+										},
+										body: JSON.stringify({imdbId: imdb})
+									});
+								}
+							});
+						}
+					} else {
+						window.location.reload();
 					}
-				} else {
-					window.location.reload();
 				}
-			} catch (err) { console.log(err); }
+			} catch (err) {}
 		})();
 		return () => {
 			controller.abort();
+			isMounted.current = false;
 		};
 	}, []);
 
@@ -137,7 +147,9 @@ const Video = (props) => {
 				starsArray.push(<i className="fas fa-star" key={i} />);
 			}
 		}
-		setStars(starsArray);
+		if (isMounted.current) {
+			setStars(starsArray);
+		}
 	}, [data]);
 
 	const minToHour = min => {
@@ -147,12 +159,11 @@ const Video = (props) => {
 	}
 
 	const movieHashByQuality = (data) => data.torrents.map((torrent, index) =>
-		<button className="quality-buttons" key={index} onClick={() => setHash(torrent.hash)}>
+		<button className="quality-buttons" key={index} onClick={() => isMounted.current && setHash(torrent.hash)}>
 			{torrent.quality} {torrent.type}
 		</button>
 	);
 
-	// const imdb = props.location.pathname.split("/")[2];
 	const streamUrl = "http://localhost:8145/torrent/" + hash;
 
 	const subtitlesTracks = (subtitles) => subtitles.map((subtitle, index) =>
@@ -166,15 +177,6 @@ const Video = (props) => {
 	);
 
 	const printAvailableSubtitles = (subtitles) => subtitles.map((subtitle, index) => <span key={index}>{languageSwitcher[subtitle.langShort]}&nbsp;</span>);
-
-	// const videoComponent = (url) => {
-	// 	return (
-	// 		<video key={url} controls className="my-video">
-	// 			<source src={url} type="video/mp4" />
-	// 			{subtitlesTracks(subtitles)}
-	// 		</video>
-	// 	);
-	// }
 
 	return (
 		<div className="main-content-wrapper">
@@ -211,7 +213,6 @@ const Video = (props) => {
 						</div>
 					</div>
 					<div className="video-wrapper">
-						{/* {videoComponent(streamUrl)} */}
 						<video key={streamUrl} controls className="my-video">
 							<source src={streamUrl} type="video/mp4" />
 							{subtitlesTracks(subtitles)}
@@ -232,7 +233,7 @@ const Video = (props) => {
 								cols=""
 								rows="1"
 								value={commentText}
-								onChange={e => setCommentText(e.target.value)}
+								onChange={e => isMounted.current && setCommentText(e.target.value)}
 								onInput={handleOnInput}
 								onKeyPress={handleOnKeyPress}
 							/>

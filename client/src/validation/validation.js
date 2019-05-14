@@ -33,13 +33,3 @@ const validateComment = comment => {
 }
 
 export { validateUsername, validateFirstName, validatePassword, validateLastName, validateEmail, validatePicture, validateComment }
-
-// module.exports = exports = {
-//     validateUsername: validateUsername,
-//     validateFirstName: validateFirstName,
-//     validatePassword: validatePassword,
-//     validateLastName: validateLastName,
-//     validateEmail: validateEmail,
-//     validatePicture: validatePicture,
-//     validateComment: validateComment
-// };

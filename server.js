@@ -7,7 +7,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const keys = require('./config/keys');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const CronJob = require('cron').CronJob;
 const deleteUnusedFiles = require('./config/cronscript').deleteUnusedFiles;
 
@@ -26,7 +26,7 @@ mongoose.set('useCreateIndex', true);
 app.use(express.json());
 app.use(passport.initialize());
 app.use(cors());
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use('/subtitles', express.static(__dirname + '/public/subtitles'));
 
 //========================================================

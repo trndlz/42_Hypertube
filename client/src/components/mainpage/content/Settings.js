@@ -106,7 +106,7 @@ const Settings = () => {
             invalid.password = true;
         if (Object.keys(invalid).length === 0) {
             const token = localStorage.getItem("jwt");
-            let res = await fetch("http://localhost:8145/settings", { //! THIS IS NOT ABORTED
+            let res = await fetch("http://localhost:8145/settings", {
                 method: "POST",
                 headers: {
                     Authorization: "Bearer " + token
