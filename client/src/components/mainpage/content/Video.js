@@ -9,6 +9,7 @@ import { SearchContext } from "../MainPage";
 
 const Video = (props) => {
 	let isMounted = useRef(false);
+	let videoFirstPlay = useRef(true);
 	const [commentText, setCommentText] = useState("");
 	const [comments, setComments] = useState([]);
 	const [data, setData] = useState({});
@@ -107,10 +108,13 @@ const Video = (props) => {
 						}
 						var video = document.querySelector('video');
 						video.oncanplay = () => {
-							video.muted = true;
-                            if (video.paused){
-                                video.play()
-                            }
+							if (videoFirstPlay.current) {
+								video.muted = true;
+								videoFirstPlay.current = false;
+							}
+							if (video.paused){
+								video.play()
+							}
 						};
 						if (video) {
 							let videoSeen = 0;
