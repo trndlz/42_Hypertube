@@ -107,7 +107,10 @@ const Video = (props) => {
 						}
 						var video = document.querySelector('video');
 						video.oncanplay = () => {
-							video.play()
+							video.muted = true;
+                            if (video.paused){
+                                video.play()
+                            }
 						};
 						if (video) {
 							let videoSeen = 0;
