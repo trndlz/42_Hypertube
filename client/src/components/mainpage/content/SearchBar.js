@@ -7,7 +7,7 @@ const SearchBar = () => {
     const [searchInput, setSearchInput] = useState(search && search.searchInput ? search.searchInput : "");
     const [stars, setStars] = useState(search && search.stars ? search.stars : "1");
     const [category, setCategory] = useState(search && search.category ? search.category : "All Categories");
-    const [sortBy, setSortBy] = useState(search && search.sortBy ? search.sortBy : "year Asc");
+    const [sortBy, setSortBy] = useState(search && search.sortBy ? search.sortBy : "download_count Asc");
     const languageSwitcher = internationalization(language);
 
     useEffect(() => {
@@ -89,24 +89,6 @@ const SearchBar = () => {
                         <i className="fas fa-star" />
                     </label>
                 </div>
-                {/* <div className="dates">
-                    <div className="select">
-                        <select
-                            defaultValue="2000"
-                            onChange={e => setDateFrom(e.target.value)}
-                        >
-                        {getYears()}
-                        </select>
-                    </div>
-                    <div className="select">
-                        <select
-                            defaultValue="2019"
-                            onChange={e => setDateTo(e.target.value)}
-                        >
-                        {getYears()}
-                        </select>
-                    </div>
-                </div> */}
                 <div className="select" style={{ marginBottom: "0" }}>
                     <select
                         defaultValue={category}
@@ -115,7 +97,6 @@ const SearchBar = () => {
                         <option value="All Categories">
                             {languageSwitcher.allCategories}
                         </option>
-                        {/* <option value="Popular">Popular</option> */}
                         <option value="Action">{languageSwitcher.action}</option>
                         <option value="Adventure">{languageSwitcher.adventure}</option>
                         <option value="Animation">{languageSwitcher.animation}</option>
@@ -133,12 +114,15 @@ const SearchBar = () => {
                         defaultValue={sortBy} id="sort-by"
                         onChange={e => setSortBy(e.target.value)}
                     >
+                        <option value="download_count Asc">{languageSwitcher.popularityAsc}</option>
+                        <option value="download_count Desc">{languageSwitcher.popularityDesc}</option>
                         <option value="year Asc">{languageSwitcher.yearAsc}</option>
                         <option value="year Desc">{languageSwitcher.yearDesc}</option>
                         <option value="title Asc">{languageSwitcher.titleAsc}</option>
                         <option value="title Desc">{languageSwitcher.titleDesc}</option>
                         <option value="rating Asc">{languageSwitcher.ratingAsc}</option>
                         <option value="rating Desc">{languageSwitcher.ratingDesc}</option>
+
                     </select>
                 </div>
             </form>

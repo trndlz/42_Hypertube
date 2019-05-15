@@ -84,9 +84,9 @@ const replace404Picture = async (data) => {
 const getVideoByPage = async (req, res, next) => {
 	let { category, sortBy, searchInput, page, stars } = req.query;
 	category = category === "All Categories" ? "" : `&genre=${category}`;
-	sortBy = sortBy || "year";
+	sortBy = sortBy || "download_count";
 	page = page || "1";
-	let order = ["year Asc", "title Desc", "rating Asc"].includes(sortBy) ? "desc" : "asc";
+	let order = ["year Asc", "title Desc", "download_count Asc", "rating Asc"].includes(sortBy) ? "desc" : "asc";
 	sortBy = sortBy.split(' ')[0];
 	let requestPopcorn;
 	let requestYts;
