@@ -23,8 +23,11 @@ function progressionPrint(downloaded) {
 const fetchSubtitlesByImdbId = async (req, res) => {
 	const imdbId = req.params.imdbId;
 	yifysubtitles(imdbId, { path: __dirname + '/../client/public/subtitles', langs: ['en', 'fr', 'es'] })
-		.then(data => res.json(data))
-		.catch(err => console.log(err));
+		.then(data => {
+			console.log(data)
+			res.json(data) //! ICI
+		})
+		.catch((err) => res.json({msg:"error"}));
 }
 
 const writeResHeader = (req, res, file) => {
@@ -60,15 +63,20 @@ const streamTorrentByHash = async (req, res) => {
 	engine.on('ready', () => {
 		engine.files.forEach((file) => {
 			const extension = file.name.split('.').pop();
+			let stream;
 			if (extension === 'mp4' || (extension === 'mkv' && isChrome)) {
 				console.log("> Currently streaming", file.name, formatBytes(file.length));
-				file.createReadStream(writeResHeader(req, res, file)).pipe(res);
+				stream = file.createReadStream(writeResHeader(req, res, file));
+				stream.pipe(res);
+				res.on('close', () => {
+					engine.destroy();
+				})
 			} else if (extension === 'mkv' && isFirefox) {
 				res.writeHead(200, {
 					"Content-Type": "video/mp4",
 					'Connection': 'keep-alive'
 				});
-				const stream = file.createReadStream();
+				stream = file.createReadStream();
 				FFmpeg()
 					.input(stream)
 					.outputOptions(['-frag_duration 100', '-movflags frag_keyframe+empty_moov+faststart'])
@@ -87,7 +95,8 @@ const streamTorrentByHash = async (req, res) => {
 					.on('end', () => console.log('Processing finished successfully'))
 					.pipe(res);
 				res.on('close', () => {
-					stream.destroy()
+					console.log("Res on close");
+					engine.destroy();
 				})
 			} else {
 				file.deselect();

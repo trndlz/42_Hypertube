@@ -99,6 +99,7 @@ const Video = (props) => {
 						});
 						availableSubtitles = await availableSubtitles.json();
 						if (isMounted.current) {
+							// console.log(availableSubtitles);
 							setSubtitles(availableSubtitles);
 							setData(res.data);
 							setIntlDescriptions(res.languageDescriptions);
@@ -173,7 +174,7 @@ const Video = (props) => {
 
 	const streamUrl = "http://localhost:8145/torrent/" + hash;
 
-	const subtitlesTracks = (subtitles) => subtitles.map((subtitle, index) =>
+	const subtitlesTracks = (subtitles) => subtitles.msg !== 'error' ? subtitles.map((subtitle, index) =>
 		<track
 			key={index}
 			src={`../subtitles/${subtitle.fileName}`}
@@ -181,9 +182,9 @@ const Video = (props) => {
 			kind="subtitles"
 			srcLang={subtitle.langShort}
 		/>
-	);
+	) : null;
 
-	const printAvailableSubtitles = (subtitles) => subtitles.map((subtitle, index) => <span key={index}>{languageSwitcher[subtitle.langShort]}&nbsp;</span>);
+	const printAvailableSubtitles = (subtitles) => subtitles.msg !== 'error' ? subtitles.map((subtitle, index) => <span key={index}>{languageSwitcher[subtitle.langShort]}&nbsp;</span>) : null;
 
 	return (
 		<div className="main-content-wrapper">
