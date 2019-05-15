@@ -39,7 +39,7 @@ const Video = (props) => {
 					imdbId: imdb
 				})
 			});
-			if (isMounted.current){
+			if (isMounted.current) {
 				res = await res.json();
 				if (res.success) {
 					let jwtContent = jwt.decode(localStorage.getItem('jwt'));
@@ -87,7 +87,7 @@ const Video = (props) => {
 					},
 					signal
 				});
-				if (isMounted.current){
+				if (isMounted.current) {
 					res = await res.json();
 					if (res.isAuthenticated !== false) {
 						let commentsRes = await fetch(`http://localhost:8145/comments/movie/${imdb}`, {
@@ -99,6 +99,7 @@ const Video = (props) => {
 						});
 						availableSubtitles = await availableSubtitles.json();
 						if (isMounted.current) {
+							// console.log(availableSubtitles);
 							setSubtitles(availableSubtitles);
 							setData(res.data);
 							setIntlDescriptions(res.languageDescriptions);
@@ -112,9 +113,16 @@ const Video = (props) => {
 								video.muted = true;
 								videoFirstPlay.current = false;
 							}
-							if (video.paused){
+							if (video.paused) {
 								video.play()
 							}
+						};
+
+						video.onseeking = (event) => {
+							video.controls = false;
+						};
+						video.onseeked = (event) => {
+							video.controls = true;
 						};
 						if (video) {
 							let videoSeen = 0;
@@ -124,11 +132,11 @@ const Video = (props) => {
 									videoSeen = 1;
 									fetch(`http://localhost:8145/profile/videoSeen`, {
 										method: 'POST',
-										headers: { 
+										headers: {
 											Authorization: "Bearer " + token,
 											"Content-Type": "application/json"
 										},
-										body: JSON.stringify({imdbId: imdb})
+										body: JSON.stringify({ imdbId: imdb })
 									});
 								}
 							});
@@ -137,7 +145,7 @@ const Video = (props) => {
 						window.location.reload();
 					}
 				}
-			} catch (err) {}
+			} catch (err) { }
 		})();
 		return () => {
 			controller.abort();
@@ -173,7 +181,7 @@ const Video = (props) => {
 
 	const streamUrl = "http://localhost:8145/torrent/" + hash;
 
-	const subtitlesTracks = (subtitles) => subtitles.map((subtitle, index) =>
+	const subtitlesTracks = (subtitles) => subtitles.msg !== 'error' ? subtitles.map((subtitle, index) =>
 		<track
 			key={index}
 			src={`../subtitles/${subtitle.fileName}`}
@@ -181,9 +189,9 @@ const Video = (props) => {
 			kind="subtitles"
 			srcLang={subtitle.langShort}
 		/>
-	);
+	) : null;
 
-	const printAvailableSubtitles = (subtitles) => subtitles.map((subtitle, index) => <span key={index}>{languageSwitcher[subtitle.langShort]}&nbsp;</span>);
+	const printAvailableSubtitles = (subtitles) => subtitles.msg !== 'error' ? subtitles.map((subtitle, index) => <span key={index}>{languageSwitcher[subtitle.langShort]}&nbsp;</span>) : null;
 
 	return (
 		<div className="main-content-wrapper">
