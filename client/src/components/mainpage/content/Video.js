@@ -220,7 +220,7 @@ const Video = (props) => {
 						</div>
 					</div>
 					<div className="video-wrapper">
-						<video key={streamUrl} controls className="my-video">
+						<video key={streamUrl} controls className="my-video" controlsList="nodownload">
 							<source src={streamUrl} type="video/mp4" />
 							{subtitlesTracks(subtitles)}
 						</video>
