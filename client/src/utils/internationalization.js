@@ -31,7 +31,9 @@ const internationalization = (language) => {
         'fr': 'Français',
         'en': 'Anglais',
         'es': 'Espagnol',
-        'ge': 'Allemand'
+        'ge': 'Allemand',
+        'popularityAsc': 'Plus populaire',
+        'popularityDesc': 'Moins populaire'
       }
     case 'es':
       return {
@@ -64,7 +66,9 @@ const internationalization = (language) => {
         'fr': 'Francés',
         'en': 'Inglés',
         'es': 'Español',
-        'ge': 'Alemán'
+        'ge': 'Alemán',
+        'popularityAsc': 'Más popular',
+        'popularityDesc': 'Menos popular'
       }
     case 'ge':
       return {
@@ -97,7 +101,9 @@ const internationalization = (language) => {
         'fr': 'Französisch',
         'en': 'Englisch',
         'es': 'Spanisch',
-        'ge': 'Deutsch'
+        'ge': 'Deutsch',
+        'popularityAsc': 'Populärste',
+        'popularityDesc': 'Am wenigsten populär'
       }
     default:
       return {
@@ -130,7 +136,9 @@ const internationalization = (language) => {
         'fr': 'French',
         'en': 'English',
         'es': 'Spanish',
-        'ge': 'German'
+        'ge': 'German',
+        'popularityAsc': 'Most popular',
+        'popularityDesc': 'Least popular'
       }
   }
 }

@@ -209,7 +209,7 @@ const Settings = () => {
                                 className="input-container__input input-type-1"
                                 placeholder="Email"
                                 onChange={e => setEmail(e.target.value)}
-                                value={email}
+                                value={email ? email : ''}
                                 name="email"
                             />
                         </div>

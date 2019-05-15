@@ -15,10 +15,6 @@ const extensionsToBeDeleted = (filename) => {
 	return movieExtensions.includes(extension);
 }
 
-function deleteFile(filePath) {
-	fs.unlinkSync(filePath);
-}
-
 const needsToBeDeleted = (file) => {
 	return (isFileTooOld(file) && extensionsToBeDeleted(file));
 }

@@ -24,7 +24,7 @@ const fetchSubtitlesByImdbId = async (req, res) => {
 	const imdbId = req.params.imdbId;
 	yifysubtitles(imdbId, { path: __dirname + '/../client/public/subtitles', langs: ['en', 'fr', 'es'] })
 		.then(data => {
-			console.log(data)
+			// console.log(data)
 			res.json(data) //! ICI
 		})
 		.catch((err) => res.json({msg:"error"}));
@@ -65,7 +65,7 @@ const streamTorrentByHash = async (req, res) => {
 			const extension = file.name.split('.').pop();
 			let stream;
 			if (extension === 'mp4' || (extension === 'mkv' && isChrome)) {
-				console.log("> Currently streaming", file.name, formatBytes(file.length));
+				// console.log("> Currently streaming", file.name, formatBytes(file.length));
 				stream = file.createReadStream(writeResHeader(req, res, file));
 				stream.pipe(res);
 				res.on('close', () => {
@@ -85,17 +85,16 @@ const streamTorrentByHash = async (req, res) => {
 					// .videoBitrate('2048')
 					.audioCodec('aac')
 					// .audioBitrate('256')
-					.on('start', (commandLine) => console.log('Spawned FFmpeg with command: ' + commandLine))
-					.on('codecData', (data) => console.log('Input is ' + data.audio + ' audio with ' + data.video + ' video'))
-					.on('error', (err, stdout, stderr) => {
-						console.log(err.message);
-						console.log(stdout);
-						console.log(stderr);
-					})
-					.on('end', () => console.log('Processing finished successfully'))
+					// .on('start', (commandLine) => console.log('Spawned FFmpeg with command: ' + commandLine))
+					// .on('codecData', (data) => console.log('Input is ' + data.audio + ' audio with ' + data.video + ' video'))
+					// .on('error', (err, stdout, stderr) => {
+					// 	console.log(err.message);
+					// 	console.log(stdout);
+					// 	console.log(stderr);
+					// })
+					// .on('end', () => console.log('Processing finished successfully'))
 					.pipe(res);
 				res.on('close', () => {
-					console.log("Res on close");
 					engine.destroy();
 				})
 			} else {
@@ -103,12 +102,12 @@ const streamTorrentByHash = async (req, res) => {
 			}
 		});
 	});
-	engine.on('download', () => {
-		progressionPrint(formatBytes(engine.swarm.downloaded));
-	});
-	engine.on('idle', function () {
-		console.log('Torrent downloaded');
-	});
+	// engine.on('download', () => {
+	// 	progressionPrint(formatBytes(engine.swarm.downloaded));
+	// });
+	// engine.on('idle', function () {
+	// 	console.log('Torrent downloaded');
+	// });
 };
 
 module.exports = exports = {

@@ -14,6 +14,7 @@ const getSettings = async (req, res, next) => {
     const currentUser = await Model.User.findOne({
         _id: req.userData._id
     });
+    if (!currentUser) return res.json({ success: false })
     res.json({
         picture: currentUser.picture,
         firstName: currentUser.firstName,
