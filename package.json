@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "all": "npm i && npm i --prefix client && ./node_modules/concurrently/bin/concurrently.js \"npm start --prefix client\" \"npm run dev\"",
+    "start:all": "./node_modules/concurrently/bin/concurrently.js \"npm start --prefix client\" \"npm run dev\"",
+    "mongo": "mongod --config /Users/mleonett/.brew/etc/mongod.conf"
   },
   "repository": {
     "type": "git",
@@ -20,6 +23,7 @@
   "homepage": "https://github.com/Bligoubloups/Hypertube#readme",
   "dependencies": {
     "bcrypt": "^3.0.6",
+    "concurrently": "^4.1.0",
     "cors": "^2.8.5",
     "cron": "^1.7.0",
     "express": "^4.16.4",

@@ -119,11 +119,13 @@ const HomePage = props => {
                         setPassword("");
                     }
                     setIsLoading(0);
-                    controllerSignal.abort();
-                    setControllerSignal(new AbortController());
                 }
+                controllerSignal.abort();
+                setControllerSignal(new AbortController());
             } else {
-                setErrors({ ...invalid });
+                if (isMounted.current){
+                    setErrors({ ...invalid });
+                }
             }
         } catch (err) {}
     };
@@ -131,7 +133,7 @@ const HomePage = props => {
     useEffect(() => {
         isMounted.current = true;
         return () => {
-            isMounted.current = false;
+            isMounted.current = false
             controllerSignal && controllerSignal.abort();
         }
     }, [])
@@ -156,9 +158,7 @@ const HomePage = props => {
                 } else {
                     localStorage.setItem("jwt", res.token);
                     await auth.authenticate();
-                    if (isMounted.current) {
-                        props.setRerender(!props.rerender);
-                    }
+                    props.setRerender(!props.rerender);
                 }
             }
         } catch (err) {}
@@ -166,7 +166,6 @@ const HomePage = props => {
 
     // Email Redirection
     useEffect(() => {
-        isMounted.current = true;
         const controller = new AbortController();
         const signal = controller.signal;
         (async () => {
@@ -201,21 +200,18 @@ const HomePage = props => {
             }
         })();
         return () => {
-            isMounted.current = false;
             controller.abort();
         };
     }, []);
 
-    // Sign with OAuth
+    // Sign with Google or 42
     useEffect(() => {
         (async () => {
             const parsed = queryString.parse(props.location.search);
             if (parsed.token) {
                 localStorage.setItem("jwt", parsed.token);
                 await auth.authenticate();
-                if (isMounted.current){
-                    props.setRerender(!props.rerender);
-                }
+                props.setRerender(!props.rerender);
             }
         })();
     }, []);
