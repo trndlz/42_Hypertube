@@ -32,10 +32,17 @@ const MainPage = props => {
 				<Fragment>
 					<Header language={language}/>
 					<main className="mainpage">
-						<input type="checkbox" name="test" id="checkbox" />
-						<label className="label-check" htmlFor="checkbox">
-							Search Options <i className="fas fa-arrow-circle-down" />
-						</label>
+						{ 
+							!/^\/profile\/(.+)$/.test(props.location.pathname) &&
+							!/^\/video(\/.*)?$/.test(props.location.pathname) &&
+							!/^\/settings\/?$/.test(props.location.pathname) &&
+							<>
+								<input type="checkbox" name="test" id="checkbox" />
+								<label className="label-check" htmlFor="checkbox">
+									Search Options <i className="fas fa-arrow-circle-down" />
+								</label>
+							</>
+						}
 						<SearchContext.Provider value={{ search, setSearch, language, setLanguage }}>
 							<ProtectedRoute exact path="/" component={Gallery} />
 							<ProtectedRoute exact path="/profile/:id" component={Profile} />
