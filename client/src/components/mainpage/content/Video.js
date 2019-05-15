@@ -39,7 +39,7 @@ const Video = (props) => {
 					imdbId: imdb
 				})
 			});
-			if (isMounted.current){
+			if (isMounted.current) {
 				res = await res.json();
 				if (res.success) {
 					let jwtContent = jwt.decode(localStorage.getItem('jwt'));
@@ -87,7 +87,7 @@ const Video = (props) => {
 					},
 					signal
 				});
-				if (isMounted.current){
+				if (isMounted.current) {
 					res = await res.json();
 					if (res.isAuthenticated !== false) {
 						let commentsRes = await fetch(`http://localhost:8145/comments/movie/${imdb}`, {
@@ -113,9 +113,16 @@ const Video = (props) => {
 								video.muted = true;
 								videoFirstPlay.current = false;
 							}
-							if (video.paused){
+							if (video.paused) {
 								video.play()
 							}
+						};
+
+						video.onseeking = (event) => {
+							video.controls = false;
+						};
+						video.onseeked = (event) => {
+							video.controls = true;
 						};
 						if (video) {
 							let videoSeen = 0;
@@ -125,11 +132,11 @@ const Video = (props) => {
 									videoSeen = 1;
 									fetch(`http://localhost:8145/profile/videoSeen`, {
 										method: 'POST',
-										headers: { 
+										headers: {
 											Authorization: "Bearer " + token,
 											"Content-Type": "application/json"
 										},
-										body: JSON.stringify({imdbId: imdb})
+										body: JSON.stringify({ imdbId: imdb })
 									});
 								}
 							});
@@ -138,7 +145,7 @@ const Video = (props) => {
 						window.location.reload();
 					}
 				}
-			} catch (err) {}
+			} catch (err) { }
 		})();
 		return () => {
 			controller.abort();
