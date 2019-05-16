@@ -29,7 +29,22 @@ passwordForgotten = async (req, res, next) => {
     try {
         const user = await Model.User.findOne({ email: req.body.email });
         if (user) {
-            const output = user.token;
+            const output = `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+                <title>Document</title>
+            </head>
+            <body>
+            <h1>Password Forgotten on Hypertube</h1>
+            <p>To change your password please copy this token:</p>
+            <p>${user.token}</p>
+            </body>
+            </html>
+            `;
             let mailOptions = {
                 from: `"HyperTube Contact" ${keys.mail.user}`,
                 to: user.email,

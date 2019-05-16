@@ -24,8 +24,7 @@ const fetchSubtitlesByImdbId = async (req, res) => {
 	const imdbId = req.params.imdbId;
 	yifysubtitles(imdbId, { path: __dirname + '/../client/public/subtitles', langs: ['en', 'fr', 'es'] })
 		.then(data => {
-			// console.log(data)
-			res.json(data) //! ICI
+			res.json(data)
 		})
 		.catch((err) => res.json({msg:"error"}));
 }
