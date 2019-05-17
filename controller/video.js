@@ -68,8 +68,10 @@ const replace404Picture = async (data) => {
 			} else {
 				let res = await fetch(`https://yts.am/api/v2/list_movies.json?query_term=${data[i].imdb_code}`);
 				res = await res.json();
-				data[i].large_cover_image = res.data.movies[0].large_cover_image
-				data[i].year = res.data.movies[0].year
+				if (res.data.movies){ //! ICI
+					data[i].large_cover_image = res.data.movies[0].large_cover_image
+					data[i].year = res.data.movies[0].year
+				}
 			}
 		}
 		const imgData = await Promise.all(moviesImgUrl.map(p => p.catch(e => e)));
@@ -118,22 +120,24 @@ const getVideoByPage = async (req, res, next) => {
 		requestYts = `https://yts.am/api/v2/list_movies.json?sort_by=${sortBy}&limit=50&page=${page}&minimum_rating=${2 * stars - 2}${category}&order_by=${order}`;
 		data = [fetchMovies(requestYts)];
 		data = await Promise.all(data).catch(e => res.status(500).send({ error: e }));
-		data = data[0].data.movies;
-		await replace404Picture(data);
-		if (mongoose.Types.ObjectId.isValid(req.userData._id)) {
-			user = await Model.User.findOne({
-				_id: req.userData._id
-			});
-			data = data.map((movie) => {
-				if (user && user.moviesSeen.includes(movie.imdb_code)) {
-					movie.isSeen = true;
-				} else {
-					movie.isSeen = false;
-				}
-				return movie
-			})
+		if (data){
+			data = data[0].data.movies;
+			await replace404Picture(data);
+			if (mongoose.Types.ObjectId.isValid(req.userData._id)) {
+				user = await Model.User.findOne({
+					_id: req.userData._id
+				});
+				data = data.map((movie) => {
+					if (user && user.moviesSeen.includes(movie.imdb_code)) {
+						movie.isSeen = true;
+					} else {
+						movie.isSeen = false;
+					}
+					return movie
+				})
+			}
+			res.json(data);
 		}
-		res.json(data);
 	}
 }
 

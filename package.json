@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "all": "npm i && npm i --prefix client && ./node_modules/concurrently/bin/concurrently.js \"npm start --prefix client\" \"npm run dev\"",
+    "all": "npm i && npm i --prefix client && cp ~/keys.js ./config/keys.js && ./node_modules/concurrently/bin/concurrently.js \"npm start --prefix client\" \"npm run dev\"",
     "start:all": "./node_modules/concurrently/bin/concurrently.js \"npm start --prefix client\" \"npm run dev\"",
-    "mongo": "mongod --config /Users/mleonett/.brew/etc/mongod.conf"
+    "mongo": "mongod --config /Users/svmathie/.brew/etc/mongod.conf"
   },
   "repository": {
     "type": "git",

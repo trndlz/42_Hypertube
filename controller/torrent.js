@@ -86,11 +86,7 @@ const streamTorrentByHash = async (req, res) => {
 					// .audioBitrate('256')
 					// .on('start', (commandLine) => console.log('Spawned FFmpeg with command: ' + commandLine))
 					// .on('codecData', (data) => console.log('Input is ' + data.audio + ' audio with ' + data.video + ' video'))
-					// .on('error', (err, stdout, stderr) => {
-					// 	console.log(err.message);
-					// 	console.log(stdout);
-					// 	console.log(stderr);
-					// })
+					.on('error', (err, stdout, stderr) => {})
 					// .on('end', () => console.log('Processing finished successfully'))
 					.pipe(res);
 				res.on('close', () => {
