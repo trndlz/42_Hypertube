@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/Bligoubloups/Hypertube#readme",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "concurrently": "^4.1.0",
     "cors": "^2.8.5",
     "cron": "^1.7.0",
